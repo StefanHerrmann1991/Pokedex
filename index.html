@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="icon" type="image/x-icon" href="/favicon2.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+    </style>
+    <script>
+
+        let currentPokemon;
+        async function loadPokemon() {
+            let pokedexSearch = document.getElementById('pokedexSearch').value.toLowerCase();
+            let url = `https://pokeapi.co/api/v2/pokemon/${pokedexSearch}`;
+            let response = await fetch(url);
+            currentPokemon = await response.json();
+            console.log('loaded pokemon', currentPokemon);
+            showPokemonInfo();
+        }
+
+
+        function showPokemonInfo() {
+            if (currentPokemon['name'] == undefined) { document.getElementById('pokemonName').innerHTML = 'Which Pokemon do you want to search?' }
+            else {
+                document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(currentPokemon['name']);
+                document.getElementById('pokemonNumber').innerHTML = 'Number: ' + (currentPokemon['id']);
+                pokemonType();
+            }
+        }
+
+        function upperCase(pokemonNameUpperCase) {
+            return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
+        }
+
+        function pokemonType() {
+            let pokemonType = document.getElementById('pokemonType');
+            pokemonType.innerHTML = "";
+            for (let i = 0; i < currentPokemon['types'].length; i++) {
+                pokemonType.innerHTML += `${currentPokemon['types'][i]['type']['name']}
+                   `
+            }
+        }
+
+       
+        const node = document.getElementById("pokedexSearch");
+        node.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                loadPokemon();
+            }
+        });
+   
+
+    </script>
+</head>
+
+<body onload="loadPokemon()">
+    <div id="pokedex">
+        <input id="pokedexSearch" placeholder="Pokemon Name" type="text">
+        <button id="searchButton" onclick="loadPokemon()">Search</button>
+        <h1>Pokedex</h1>
+        <h2 id="pokemonName"></h2>
+        <h2 id="pokemonNumber"></h2>
+        <h2 id="pokemonType"></h2>
+
+    </div>
+
+
+</body>
+
+</html>
+
+<!-- was braucht man? 
+Nummer (id) (Pos 6 id)
+Typ (am besten mit Farben im Hintergrund je nach Pokemon) Pos ()
+if type < 1 color1 = color2 (types)
+Bild (sprites) -->
