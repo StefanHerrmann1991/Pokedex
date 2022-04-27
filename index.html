@@ -41,11 +41,24 @@
             return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
         }
 
+function renderPokemon() {
+    let loadedPokemon = document.getElementById('allPokemon');
+    loadedPokemon = '';
+
+    for (let i = 0; i < array.length; i++) {
+     
+    loadedPokemon.innerHTML += `<div></div>`
+
+
+    }
+}
+
+
         function pokemonType() {
             let pokemonType = document.getElementById('pokemonType');
             pokemonType.innerHTML = "";
             for (let i = 0; i < currentPokemon['types'].length; i++) {
-                const type = currentPokemon['types'][i]['type']['name']
+                const type = currentPokemon['types'][i]['type']['name'];
                 pokemonType.innerHTML += `<div>${type}</div>
                    `
             }
@@ -56,8 +69,8 @@
 
 
         function pokemonTypeAsColor(type) {
-            let type = tasks[i]['urgency'];
-            switch (urgency) {
+            
+            switch (type) {
                 case "normal": document.getElementById('pokemonType-' + i).classList.add('normal');
                     break;
                 case "fire": document.getElementById('pokemonType-' + i).classList.add('fire');
@@ -113,6 +126,8 @@
         <h2 id="pokemonName"></h2>
         <h2 id="pokemonNumber"></h2>
         <h2 id="pokemonType"></h2>
+
+        <div id="allPokemon"></div>
 
     </div>
 
