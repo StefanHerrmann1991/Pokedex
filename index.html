@@ -45,19 +45,62 @@
             let pokemonType = document.getElementById('pokemonType');
             pokemonType.innerHTML = "";
             for (let i = 0; i < currentPokemon['types'].length; i++) {
-                pokemonType.innerHTML += `${currentPokemon['types'][i]['type']['name']}
+                const type = currentPokemon['types'][i]['type']['name']
+                pokemonType.innerHTML += `<div>${type}</div>
                    `
             }
         }
 
-       
-        const node = document.getElementById("pokedexSearch");
-        node.addEventListener("keyup", function (event) {
-            if (event.key === "Enter") {
-                loadPokemon();
+
+        /* this function sets the color of a Pokemon depending on its type */
+
+
+        function pokemonTypeAsColor(type) {
+            let type = tasks[i]['urgency'];
+            switch (urgency) {
+                case "normal": document.getElementById('pokemonType-' + i).classList.add('normal');
+                    break;
+                case "fire": document.getElementById('pokemonType-' + i).classList.add('fire');
+                    break;
+                case "flying": document.getElementById('pokemonType-' + i).classList.add('flying');
+                    break;
+                case "psychic": document.getElementById('pokemonType-' + i).classList.add('psychic');
+                    break;
+                case "water": document.getElementById('pokemonType-' + i).classList.add('water');
+                    break;
+                case "grass": document.getElementById('pokemonType-' + i).classList.add('grass');
+                    break;
+                case "rock": document.getElementById('pokemonType-' + i).classList.add('rock');
+                    break;
+                case "electric": document.getElementById('pokemonType-' + i).classList.add('electric');
+                    break;
+                case "ghost": document.getElementById('pokemonType-' + i).classList.add('ghost');
+                    break;
+                case "ice": document.getElementById('pokemonType-' + i).classList.add('ice');
+                    break;
+                case "dark": document.getElementById('pokemonType-' + i).classList.add('dark');
+                    break;
+                case "fighting": document.getElementById('pokemonType-' + i).classList.add('fighting');
+                    break;
+                case "dragon": document.getElementById('pokemonType-' + i).classList.add('dragon');
+                    break;
+                case "poison": document.getElementById('pokemonType-' + i).classList.add('poison');
+                    break;
+                case "steel": document.getElementById('pokemonType-' + i).classList.add('steel');
+                    break;
+                case "ground": document.getElementById('pokemonType-' + i).classList.add('ground');
+                    break;
+                case "fairy": document.getElementById('pokemonType-' + i).classList.add('fairy');
+                    break;
+                case "bug": document.getElementById('pokemonType-' + i).classList.add('bug');
+                    break;
             }
-        });
-   
+
+        }
+
+
+
+
 
     </script>
 </head>
@@ -75,6 +118,15 @@
 
 
 </body>
+
+<script>
+    const node = document.getElementById("pokedexSearch");
+    node.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            loadPokemon();
+        }
+    });
+</script>
 
 </html>
 
