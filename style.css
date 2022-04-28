@@ -1,74 +1,75 @@
 /* pokemon types */
 
 
-.normal {
+.pokemon-normal {
     background-color: #A8A77A;
 }
 
-.fire {
+.pokemon-fire {
     background-color: #EE8130;
+    color: red;
 }
 
-.flying {
+.pokemon-flying {
     background-color: #A98FF3;
 }
 
-.psychic {
+.pokemon-psychic {
     background-color: #F95587;
 }
 
-.water {
+.pokemon-water {
     background-color: #6390F0;
 }
 
-.grass {
+.pokemon-grass {
     background-color: #7AC74C;
 }
 
-.rock {
+.pokemon-rock {
     background-color: #B6A136;
 }
 
-.electric {
+.pokemon-electric {
     background-color: #F7D02C;
 }
 
-.ghost {
+.pokemon-ghost {
     background-color: #735797;
 }
 
-.ice {
+.pokemon-ice {
     background-color: #96D9D6;
 }
 
-.dark {
+.pokemon-dark {
     background-color: #705746;
 }
 
-.fighting {
+.pokemon-fighting {
     background-color: #C22E28;
 }
 
-.dragon {
+.pokemon-dragon {
     background-color: #6F35FC;
 }
 
-.poison {
+.pokemon-poison {
     background-color: #A33EA1;
 }
 
-.steel {
+.pokemon-steel {
     background-color: #B7B7CE;
 }
 
-.ground {
+.pokemon-ground {
     background-color: #E2BF65;
 }
 
-.fairy {
+.pokemon-fairy {
     background-color: #D685AD;
 }
 
-.bug {
+.pokemon-bug {
     background-color: #A6B91A;
 }
