@@ -1,5 +1,10 @@
 /* pokemon types */
 
+:root {
+    --water: #6390F0;
+    --normal: #A8A77A;
+}
+
 
 .pokedex {
     background-color: #7AC74C;
