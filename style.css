@@ -1,14 +1,17 @@
 /* pokemon types */
 
 
+.pokedex {
+    background-color: #7AC74C;
+}
+
 .pokemon-normal {
     background-color: #A8A77A;
 }
 
 .pokemon-fire {
-    background-color: #EE8130;
-    color: red;
-}
+    background-color: red;
+ }
 
 .pokemon-flying {
     background-color: #A98FF3;

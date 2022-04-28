@@ -14,7 +14,7 @@ function showPokemonInfo() {
     if (currentPokemon['name'] == undefined) { document.getElementById('pokemonName').innerHTML = 'Which Pokemon do you want to search?' }
     else {
         document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(currentPokemon['name']);
-        document.getElementById('pokemonNumber').innerHTML = 'Number: ' + (currentPokemon['id']);
+        document.getElementById('pokemonNumber').innerHTML = 'Number:' + (currentPokemon['id']);
         pokemonType();
     }
 }
@@ -30,17 +30,17 @@ loadedPokemon = '';
 for (let i = 0; i < array.length; i++) {
 
 loadedPokemon.innerHTML += `<div></div>`
-
-
 }
 }
+
+
 /* this function sets the color of a Pokemon depending on its type */
 function pokemonType() {
     let pokemonType = document.getElementById('pokemonType');
     pokemonType.innerHTML = "";
     for (let i = 0; i < currentPokemon['types'].length; i++) {
         const type = currentPokemon['types'][i]['type']['name'];
-        pokemonType.innerHTML += `<h2 class="pokemon-${type}">${type}</h2>
+        pokemonType.innerHTML += `<h2 class="pokemon-${(type).toLowerCase()}">${type}</h2>
            `
     }
 }
