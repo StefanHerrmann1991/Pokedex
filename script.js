@@ -11,7 +11,7 @@ async function loadPokemon() {
 
 
 function showPokemonInfo() {
-    if (currentPokemon['name'] == undefined) { document.getElementById('pokemonName').innerHTML = 'Which Pokemon do you want to search?' }
+    if (currentPokemon['name'] == undefined) { document.getElementById('pokemonName').innerHTML = 'Which Pokemon do you want to search? Bibarel' }
     else {
         document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(currentPokemon['name']);
         document.getElementById('pokemonNumber').innerHTML = 'Number:' + (currentPokemon['id']);
@@ -40,9 +40,16 @@ function pokemonType() {
     pokemonType.innerHTML = "";
     for (let i = 0; i < currentPokemon['types'].length; i++) {
         const type = currentPokemon['types'][i]['type']['name'];
-        pokemonType.innerHTML += `<h2 class="pokemon-${(type).toLowerCase()}">${type}</h2>
+        
+        pokemonType.innerHTML += `<h2 style="background-color: var(--normal);
+        background-image: linear-gradient(90deg, var(--${currentPokemon['types'][0]['type']['name']}), var(--${currentPokemon['types'][1]['type']['name']}) );">${type}</h2>
            `
     }
 }
 
 
+/* class="pokemon-${(type).toLowerCase()}"
+
+background-image: linear-gradient(to left, rgba(var(--${currentPokemon['types'][0]['type']['name']})), rgba(var(--${currentPokemon['types'][1]['type']['name']})));">${type}</h2>
+
+ */
