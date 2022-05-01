@@ -8,8 +8,7 @@ async function loadPokemon() {
     currentPokemon = await response.json();
     console.log('loaded pokemon', currentPokemon);
     showPokemonInfo();
-    renderPokemon();
-}
+ }
 
 
 
@@ -30,12 +29,11 @@ async function renderPokemon() {
    
     let pokemons = document.getElementById('allPokemon');
     pokemons.innerHTML = "";
-    let url = `https://pokeapi.co/api/v2/pokemon/1/`;
-    let responsePokemon = await fetch(url);
-    currentPokemons = await responsePokemon.json();
-    console.log('all loaded Pokemon', currentPokemons);
-
-    for (let i = 0; i < 15; i++) {
+  
+    for (let i = 1; i < 50; i++) {
+        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+        let responsePokemon = await fetch(url);
+        currentPokemons = await responsePokemon.json();
         pokemons.innerHTML += `<div>${currentPokemons['name']}<div>`;
     }
 }
