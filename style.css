@@ -1,14 +1,14 @@
 /* pokemon types */
 
 .pokedex {
-  background-color  : #e64818;
+    background-color: #e64818;
 }
 
 
 :root {
     --water: #6390F0;
     --normal: #A8A77A;
-    --fire: red;
+    --fire: #EE8130;
     --flying: #A98FF3;
     --psychic: #F95587;
     --grass: #7AC74C;

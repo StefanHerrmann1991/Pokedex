@@ -19,7 +19,7 @@
     <link href="style.css" rel="stylesheet">
 </head>
 
-<body onload="loadPokemon()">
+<body onload="loadPokemon(); renderPokemon()">
     <div id="pokedex" class="pokedex mgn-t">
         <input id="pokedexSearch" placeholder="Pokemon Name" type="text">
         <button id="searchButton" onclick="loadPokemon()">Search</button>

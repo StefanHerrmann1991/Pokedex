@@ -1,4 +1,4 @@
-
+let allPokemon;
 let currentPokemon;
 async function loadPokemon() {
     let pokedexSearch = document.getElementById('pokedexSearch').value.toLowerCase();
@@ -8,6 +8,7 @@ async function loadPokemon() {
     console.log('loaded pokemon', currentPokemon);
     showPokemonInfo();
 }
+
 
 
 function showPokemonInfo() {
@@ -23,14 +24,8 @@ function upperCase(pokemonNameUpperCase) {
     return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
 }
 
-function renderPokemon() {
-let loadedPokemon = document.getElementById('allPokemon');
-loadedPokemon = '';
+async function renderPokemon() {
 
-for (let i = 0; i < array.length; i++) {
-
-loadedPokemon.innerHTML += `<div></div>`
-}
 }
 
 
@@ -40,16 +35,9 @@ function pokemonType() {
     pokemonType.innerHTML = "";
     for (let i = 0; i < currentPokemon['types'].length; i++) {
         const type = currentPokemon['types'][i]['type']['name'];
-        
+
         pokemonType.innerHTML += `<h2 style="background-color: var(--normal);
         background-image: linear-gradient(90deg, var(--${currentPokemon['types'][0]['type']['name']}), var(--${currentPokemon['types'][1]['type']['name']}) );">${type}</h2>
            `
     }
 }
-
-
-/* class="pokemon-${(type).toLowerCase()}"
-
-background-image: linear-gradient(to left, rgba(var(--${currentPokemon['types'][0]['type']['name']})), rgba(var(--${currentPokemon['types'][1]['type']['name']})));">${type}</h2>
-
- */
