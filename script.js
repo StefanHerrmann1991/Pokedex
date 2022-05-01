@@ -1,5 +1,6 @@
-let allPokemon;
+
 let currentPokemon;
+let currentPokemons;
 async function loadPokemon() {
     let pokedexSearch = document.getElementById('pokedexSearch').value.toLowerCase();
     let url = `https://pokeapi.co/api/v2/pokemon/${pokedexSearch}`;
@@ -7,6 +8,7 @@ async function loadPokemon() {
     currentPokemon = await response.json();
     console.log('loaded pokemon', currentPokemon);
     showPokemonInfo();
+    renderPokemon();
 }
 
 
@@ -25,7 +27,17 @@ function upperCase(pokemonNameUpperCase) {
 }
 
 async function renderPokemon() {
+   
+    let pokemons = document.getElementById('allPokemon');
+    pokemons.innerHTML = "";
+    let url = `https://pokeapi.co/api/v2/pokemon/1/`;
+    let responsePokemon = await fetch(url);
+    currentPokemons = await responsePokemon.json();
+    console.log('all loaded Pokemon', currentPokemons);
 
+    for (let i = 0; i < 15; i++) {
+        pokemons.innerHTML += `<div>${currentPokemons['name']}<div>`;
+    }
 }
 
 
