@@ -1,6 +1,7 @@
 
 let currentPokemon;
 let currentPokemons;
+let defaultPokemon = 'pikachu'
 async function loadPokemon() {
     let pokedexSearch = document.getElementById('pokedexSearch').value.toLowerCase();
     let url = `https://pokeapi.co/api/v2/pokemon/${pokedexSearch}`;
@@ -12,8 +13,12 @@ async function loadPokemon() {
 
 
 
-function showPokemonInfo() {
-    if (currentPokemon['name'] == undefined) { document.getElementById('pokemonName').innerHTML = 'Which Pokemon do you want to search? Bibarel' }
+async function showPokemonInfo() {
+    if (currentPokemon['name'] == undefined) { 
+        let defaultUrl = `https://pokeapi.co/api/v2/pokemon/${defaultPokemon}`;
+        let response = await fetch(defaultUrl)
+        defaultPokemon = await response.json();
+        document.getElementById('pokemonName').innerHTML = upperCase(defaultPokemon['name']);}
     else {
         document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(currentPokemon['name']);
         document.getElementById('pokemonNumber').innerHTML = 'Number:' + (currentPokemon['id']);
@@ -29,13 +34,14 @@ async function renderPokemon() {
    
     let pokemons = document.getElementById('allPokemon');
     pokemons.innerHTML = "";
-  
-    for (let i = 1; i < 50; i++) {
+      for (let i = 1; i < 12; i++) {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let responsePokemon = await fetch(url);
         currentPokemons = await responsePokemon.json();
         pokemons.innerHTML += `<div>${currentPokemons['name']}<div>`;
     }
+
+    /* button mit i + 50 */
 }
 
 
