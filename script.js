@@ -38,8 +38,8 @@ async function renderPokemon() {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let responsePokemon = await fetch(url);
         currentPokemons = await responsePokemon.json();
-        typeOne = currentPokemons['types'][0]['type']['name'];
-        typeTwo = currentPokemons['types'][1]['type']['name'];
+       let typeOne = currentPokemons['types'][0]['type']['name'];
+       let typeTwo = currentPokemons['types'][1]['type']['name'];
         pokemons.innerHTML += `
         <div style="background-image: linear-gradient(90deg, var(--${typeOne}), var(--${typeTwo}) );">${currentPokemons['name']}<div>`;
     }
