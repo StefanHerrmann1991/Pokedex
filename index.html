@@ -17,19 +17,24 @@
     </style>
     <script src="script.js"></script>
     <link href="style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Kalam:wght@300&display=swap" rel="stylesheet"> 
 </head>
 
 <body onload="loadPokemon(); renderPokemon()">
-    <div id="pokedex" class="pokedex mgn-t">
-        <input id="pokedexSearch" placeholder="Search for Pokemon?" type="text">   
-        <button id="searchButton" onclick="loadPokemon()">Search</button>
-        <h1 style="background-color: var(--normal);
-        background-image: linear-gradient(45deg, red, rgb(184, 74, 74) );">Pokedex</h1>
+    <div id="pokedex" class="pokedex">
+        <div class="header">
+            <h1 class="mgn-l">Pokedex</h1>
+            <input id="pokedexSearch" placeholder="Search for Pokemon?" type="text">
+            <button id="searchButton" onclick="loadPokemon()">Search</button>         
+        </div>
+        <div >
         <h2 id="pokemonName"></h2>
         <h2 id="pokemonNumber"></h2>
         <h2 id="pokemonType"></h2>
         <div id="allPokemon" class="all-pokemon"></div>
-
+    </div>
     </div>
 
 

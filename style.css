@@ -1,14 +1,19 @@
 /* pokemon types */
 
-.pokedex {
-    background-color: #e64818;
+.header {
     color: white;
+    background-color: #d21212;
+    height: 200px;
+    font-family: 'Caveat', cursive;
+    font-size: 60px;
 }
+
 
 .all-pokemon {
     display: flex;
     flex-wrap: wrap;
 }
+
 :root {
     --water: #6390F0;
     --normal: #A8A77A;
@@ -38,12 +43,26 @@
     margin-top: 15px;
     margin-left: 15px;
     border: solid gray 0.2px;
-    border-radius: 20px;}
+    border-radius: 20px;
+}
 
-    .border {border-bottom: solid gray 0.2px;}
+.border {
+    border-bottom: solid gray 0.2px;
+}
 
-    .pdg {padding: 15px;} 
+.pdg {
+    padding: 15px;
+}
+
+.pdg-l {
+    padding-left: 15px;
+}
 
 
-    .mgn-l {margin-left: 15px;}
-    .mgn-t {margin-top: 15px;}
+.mgn-l {
+    margin-left: 30px;
+}
+
+.mgn-t {
+    margin-top: 15px;
+}
