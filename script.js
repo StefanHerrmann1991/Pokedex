@@ -38,13 +38,22 @@ async function renderPokemon() {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let responsePokemon = await fetch(url);
         currentPokemons = await responsePokemon.json();
+        typeOne = currentPokemons['types'][0]['type']['name'];
+        typeTwo = currentPokemons['types'][1]['type']['name'];
         pokemons.innerHTML += `
-        <div style="background-image: linear-gradient(90deg, var(--${currentPokemons['types'][0]['type']['name']}), var(--${currentPokemons['types'][1]['type']['name']}) );"">${currentPokemons['name']}<div>`;
+        <div style="background-image: linear-gradient(90deg, var(--${typeOne}), var(--${typeTwo}) );">${currentPokemons['name']}<div>`;
     }
 
     /* button mit i + 50 */
 }
 
+
+/* function linearGradientType(typeOne, typeTwo, currentPokemons) {
+   
+   if (!)  
+   typeOne = `var(--${currentPokemons['types'][0]['type']['name']})`
+   typeTwo = `var(--${currentPokemons['types'][1]['type']['name']})`
+} */
 
 /* this function sets the color of a Pokemon depending on its type */
 function pokemonType() {
@@ -52,7 +61,6 @@ function pokemonType() {
     pokemonType.innerHTML = "";
     for (let i = 0; i < currentPokemon['types'].length; i++) {
         const type = currentPokemon['types'][i]['type']['name'];
-
         pokemonType.innerHTML += `<h2 style="background-color: var(--normal);
         background-image: linear-gradient(90deg, var(--${currentPokemon['types'][0]['type']['name']}), var(--${currentPokemon['types'][1]['type']['name']}) );">${type}</h2>
            `
