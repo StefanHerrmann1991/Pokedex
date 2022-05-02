@@ -2,9 +2,13 @@
 
 .pokedex {
     background-color: #e64818;
+    color: white;
 }
 
-
+.all-pokemon {
+    display: flex;
+    flex-wrap: wrap;
+}
 :root {
     --water: #6390F0;
     --normal: #A8A77A;
@@ -26,5 +30,20 @@
     --bug: #A6B91A;
 }
 
-.pokemon-card {width: 15%;
-border: solid black ;}
+.pokemon-card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 14%;
+    margin-top: 15px;
+    margin-left: 15px;
+    border: solid gray 0.2px;
+    border-radius: 20px;}
+
+    .border {border-bottom: solid gray 0.2px;}
+
+    .pdg {padding: 15px;} 
+
+
+    .mgn-l {margin-left: 15px;}
+    .mgn-t {margin-top: 15px;}

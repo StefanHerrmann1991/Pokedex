@@ -35,7 +35,7 @@ async function renderPokemon() {
 
     let pokemons = document.getElementById('allPokemon');
     pokemons.innerHTML = "";
-    for (let i = 1; i < 12; i++) {
+    for (let i = 1; i < 10; i++) {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let responsePokemon = await fetch(url);
         currentPokemons = await responsePokemon.json();
@@ -47,11 +47,24 @@ async function renderPokemon() {
             typeTwo = currentPokemons['types'][1]['type']['name'];
         }
         pokemons.innerHTML += `
-        <div style="background-image: linear-gradient(90deg, var(--${typeOne}), var(--${typeTwo}) );">${currentPokemons['name']}<div>`;
+        <div class="pokemon-card" style="background-image: linear-gradient(to bottom, var(--${typeOne}), var(--${typeTwo}) );">
+        
+        <h2 class="mgn-l mgn-t">${upperCase(currentPokemons['name'])}</h2>
+        <div class="mgn-l border">Number: ${currentPokemons['id']}</div>
+        
+        
+        <img src="${currentPokemons['sprites']['front_default']}"
+
+        <div>`;
     }
 
     /* button mit i + 50 */
 }
+
+function showPokemon() {
+    
+}
+
 
 
 /* function linearGradientType(typeOne, typeTwo, currentPokemons) {
