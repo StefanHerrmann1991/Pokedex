@@ -49,20 +49,30 @@ async function renderPokemon() {
         pokemons.innerHTML += `
         <div class="pokemon-card" style="background-image: linear-gradient(to bottom, var(--${typeOne}), var(--${typeTwo}) );">
         
-        <h2 class="mgn-l mgn-t">${upperCase(currentPokemons['name'])}</h2>
-        <div class="mgn-l border">Number: ${currentPokemons['id']}</div>
-        
-        
-        <img src="${currentPokemons['sprites']['front_default']}"
+        <h2 class="mgn-l mgn-t">${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</h2>
+        <div class="mgn-l border"></div>
+        <img src="${currentPokemons['sprites']['front_default']}"<div>
+        <div id="pokemonType-${i}"></div>`;
 
-        <div>`;
+        let pokemonsType = document.getElementById(`pokemonType-${i}`);
+       
+        for (let j = 0; j < currentPokemons['types'].length; j++) {
+            const type = currentPokemons['types'][j]['type']['name'];
+            pokemonsType.innerHTML += `<h2>${type}</h2>`
+        }
     }
 
     /* button mit i + 50 */
 }
 
 function showPokemon() {
-    
+
+}
+
+function padLeadingZeros(num, size) {
+    var s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
 }
 
 

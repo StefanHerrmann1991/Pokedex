@@ -2,9 +2,13 @@
 
 .header {
     color: white;
-    background-color: #d21212;
+     
+    background: -moz-linear-gradient(top,  #f0b7a1 0%, #ef4609 2%, #c93d02 60%, #8c3310 80%, #8c3310 80%, #bf6e4e 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #f0b7a1 0%,#ef4609 2%,#c93d02 60%,#8c3310 80%,#8c3310 80%,#bf6e4e 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #f0b7a1 0%,#ef4609 2%,#c93d02 60%,#8c3310 80%,#8c3310 80%,#bf6e4e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  
     height: 200px;
-    font-family: 'Caveat', cursive;
+    font-family: 'Kaushan Script', cursive;
     font-size: 60px;
 }
 
@@ -44,6 +48,7 @@
     margin-left: 15px;
     border: solid gray 0.2px;
     border-radius: 20px;
+    color: white;
 }
 
 .border {
