@@ -9,16 +9,17 @@ async function loadPokemon() {
     currentPokemon = await response.json();
     console.log('loaded pokemon', currentPokemon);
     showPokemonInfo();
- }
+}
 
 
 
 async function showPokemonInfo() {
-    if (currentPokemon['name'] == undefined) { 
+    if (currentPokemon['name'] == undefined) {
         let defaultUrl = `https://pokeapi.co/api/v2/pokemon/${defaultPokemon}`;
         let response = await fetch(defaultUrl)
         defaultPokemon = await response.json();
-        document.getElementById('pokemonName').innerHTML = upperCase(defaultPokemon['name']);}
+        document.getElementById('pokemonName').innerHTML = upperCase(defaultPokemon['name']);
+    }
     else {
         document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(currentPokemon['name']);
         document.getElementById('pokemonNumber').innerHTML = 'Number:' + (currentPokemon['id']);
@@ -31,15 +32,20 @@ function upperCase(pokemonNameUpperCase) {
 }
 
 async function renderPokemon() {
-   
+
     let pokemons = document.getElementById('allPokemon');
     pokemons.innerHTML = "";
-      for (let i = 1; i < 12; i++) {
+    for (let i = 1; i < 12; i++) {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let responsePokemon = await fetch(url);
         currentPokemons = await responsePokemon.json();
-       let typeOne = currentPokemons['types'][0]['type']['name'];
-       let typeTwo = currentPokemons['types'][1]['type']['name'];
+        let typeOne = currentPokemons['types'][0]['type']['name'];
+        let typeTwo;
+        if (currentPokemons['types'].length == 1) {
+            typeTwo = typeOne;
+        } else {
+            typeTwo = currentPokemons['types'][1]['type']['name'];
+        }
         pokemons.innerHTML += `
         <div style="background-image: linear-gradient(90deg, var(--${typeOne}), var(--${typeTwo}) );">${currentPokemons['name']}<div>`;
     }
