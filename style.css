@@ -25,3 +25,6 @@
     --fairy: #D685AD;
     --bug: #A6B91A;
 }
+
+.pokemon-card {width: 15%;
+border: solid black ;}
