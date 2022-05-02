@@ -38,11 +38,8 @@ async function renderPokemon() {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let responsePokemon = await fetch(url);
         currentPokemons = await responsePokemon.json();
-        pokemons.innerHTML += `<div
-            style="background-image: linear-gradient(90deg, 
-            var(--${currentPokemons['types'][0]['type']['name']}), 
-            var(--${currentPokemons['types'][1]['type']['name']}) );">
-         ${currentPokemons['name']}<div>`;
+        pokemons.innerHTML += `
+        <div style="background-image: linear-gradient(90deg, var(--${currentPokemons['types'][0]['type']['name']}), var(--${currentPokemons['types'][1]['type']['name']}) );"">${currentPokemons['name']}<div>`;
     }
 
     /* button mit i + 50 */
