@@ -31,6 +31,7 @@ function upperCase(pokemonNameUpperCase) {
     return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
 }
 
+
 async function renderPokemon() {
 
     let pokemons = document.getElementById('allPokemon');
@@ -65,9 +66,7 @@ async function renderPokemon() {
     /* button mit i + 50 */
 }
 
-function showPokemon() {
 
-}
 
 function padLeadingZeros(num, size) {
     var s = num + "";
