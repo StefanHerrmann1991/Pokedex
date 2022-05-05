@@ -17,17 +17,19 @@
     </style>
     <script src="script.js"></script>
     <link href="style.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet"> 
 </head>
 
 <body onload="loadPokemon(); renderPokemon()">
     <div id="pokedex" class="pokedex">
         <div class="header">
             <h1 class="mgn-l">Pokedex</h1>
-            <input id="pokedexSearch" placeholder="Search for Pokemon?" type="text">
-            <button id="searchButton" onclick="loadPokemon()">Search</button>
+            <input id="pokedexSearch" class="pokedex-search mgn-l " placeholder="Search for Pokemon?" type="text">
+            <button id="searchButton" class="pokedex-search-btn" onclick="loadPokemon()"><span class="material-symbols-outlined">
+                search
+                </span></button>
         </div>
         <div>
             <h2 id="pokemonName"></h2>

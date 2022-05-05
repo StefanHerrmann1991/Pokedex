@@ -1,4 +1,5 @@
 
+
 let currentPokemon;
 let currentPokemons;
 let defaultPokemon = 'pikachu'
@@ -15,9 +16,7 @@ async function loadPokemon() {
 
 async function showPokemonInfo() {
     if (currentPokemon['name'] == undefined) {
-        let defaultUrl = `https://pokeapi.co/api/v2/pokemon/${defaultPokemon}`;
-        let response = await fetch(defaultUrl)
-        defaultPokemon = await response.json();
+     await getPokemon(defaultPokemon);
         document.getElementById('pokemonName').innerHTML = upperCase(defaultPokemon['name']);
     }
     else {
@@ -32,14 +31,19 @@ function upperCase(pokemonNameUpperCase) {
 }
 
 
+async function getPokemon(i) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+    let responsePokemon = await fetch(url);
+    currentPokemons = await responsePokemon.json(); 
+    return currentPokemons;
+}
+
 async function renderPokemon() {
 
     let pokemons = document.getElementById('allPokemon');
     pokemons.innerHTML = "";
     for (let i = 1; i < 10; i++) {
-        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        let responsePokemon = await fetch(url);
-        currentPokemons = await responsePokemon.json();
+         currentPokemons = await getPokemon(i);
         let typeOne = currentPokemons['types'][0]['type']['name'];
         let typeTwo;
         if (currentPokemons['types'].length == 1) {
@@ -50,8 +54,8 @@ async function renderPokemon() {
         pokemons.innerHTML += `
         <div class="pokemon-card" style="background-image: linear-gradient(to bottom, var(--${typeOne}), var(--${typeTwo}) );">
         
-        <h2 class="mgn-l mgn-t">${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</h2>
-        <div class="mgn-l border"></div>
+        <h2 class="mgn-l">${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</h2>
+        <div class="border"></div>
         <img src="${currentPokemons['sprites']['front_default']}"<div>
         <div id="pokemonType-${i}"></div>`;
 
@@ -59,7 +63,7 @@ async function renderPokemon() {
        
         for (let j = 0; j < currentPokemons['types'].length; j++) {
             const type = currentPokemons['types'][j]['type']['name'];
-            pokemonsType.innerHTML += `<h2>${type}</h2>`
+            pokemonsType.innerHTML += `<div class="mgn-l mgn-b">${type}</div>`
         }
     }
 
