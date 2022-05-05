@@ -10,13 +10,44 @@
     font-size: 40px;
 }
 
-h1 {padding-top: 40px;}
+h1 {
+    padding-top: 40px;
+}
 
-.pokedex-search {height: 40px;
-border: solid;
-font-size: 32px;}
+.pokedex-search {
+    height: 40px;
+    border: solid;
+    font-size: 32px;
+}
 
+.pokedex-search-menu {
+    display: flex;
+    align-items: center;
+    margin-top: 18px;
+}
 
+input {
+    border: none !important
+}
+
+input:focus {
+    outline: none;
+}
+
+input {
+    text-indent: 18px;
+}
+
+button {
+    border: none;
+    margin-left: 20px;
+}
+
+.search-symbol {
+    background-color: rgba(255, 2, 2, 0.908);
+    font-size: 40px !important;
+
+}
 
 body {
     font-family: 'DotGothic16', sans-serif;
@@ -27,7 +58,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-   
+
 }
 
 :root {
@@ -57,10 +88,10 @@ body {
     width: 13%;
     height: 380px;
     margin-left: 15px;
-    box-shadow:   -5px 0 0 0 gray,
-    5px 0 0 0 gray,
-    0 -5px 0 0 gray,
-    0 5px 0 0 gray;
+    box-shadow: -5px 0 0 0 gray,
+        5px 0 0 0 gray,
+        0 -5px 0 0 gray,
+        0 5px 0 0 gray;
     color: white;
     margin-top: 20px;
 }
@@ -90,4 +121,6 @@ body {
     margin-bottom: 16px;
 }
 
-h2 {padding: 6px;}
+h2 {
+    padding: 6px;
+}
