@@ -3,12 +3,10 @@
 let currentPokemon;
 let currentPokemons;
 let defaultPokemon = 'pikachu'
-async function loadPokemon() {
-    let pokedexSearch = document.getElementById('pokedexSearch').value.toLowerCase();
-    let url = `https://pokeapi.co/api/v2/pokemon/${pokedexSearch}`;
-    let response = await fetch(url);
-    currentPokemon = await response.json();
-    console.log('loaded pokemon', currentPokemon);
+
+
+async function searchPokemon() {
+    getPokemonByName(pokemonName);
     showPokemonInfo();
 }
 
@@ -30,12 +28,24 @@ function upperCase(pokemonNameUpperCase) {
     return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
 }
 
+/**
+ * @param {number} 
+ * @param
+ * */
 
-async function getPokemon(i) {
-    let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+ async function getPokemonByName(pokemonName) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
     let responsePokemon = await fetch(url);
-    currentPokemons = await responsePokemon.json(); 
-    return currentPokemons;
+    let pokemon = await responsePokemon.json(); 
+    return pokemon;
+}
+
+
+async function getPokemonById(pokemonId) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+    let responsePokemon = await fetch(url);
+    let pokemon = await responsePokemon.json(); 
+    return pokemon;
 }
 
 async function renderPokemon() {
@@ -88,7 +98,7 @@ function padLeadingZeros(num, size) {
 } */
 
 /* this function sets the color of a Pokemon depending on its type */
-function pokemonType() {
+function pokemonType(pokemon) {
     let pokemonType = document.getElementById('pokemonType');
     pokemonType.innerHTML = "";
     for (let i = 0; i < currentPokemon['types'].length; i++) {
