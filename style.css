@@ -86,6 +86,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 15px;
+    height: 350px;
     box-shadow: -4px 0px 0px 0px rgb(0, 0, 0),
         /* linker */
         4px 0px 0px 0px rgb(0, 0, 0),
@@ -98,18 +99,18 @@ body {
     margin-top: 20px;
 }
 
+img {height: 200px;
+width: 200px;}
+
 .pixel-shadow {
-    box-shadow: -2px 0px 0px 0px rgb(0, 0, 0),
+    box-shadow: -2px 0px 0px 0px rgb(74, 68, 68),
     /* linker */
-    2px 0px 0px 0px rgb(0, 0, 0),
+    2px 0px 0px 0px rgb(74, 68, 68),
     /* rechter */
-    0px -2px 0px 0px rgb(0, 0, 0),
+    0px -2px 0px 0px rgb(74, 68, 68),
     /* oben */
-    0px 2px 0px 0px rgb(0, 0, 0);
-    width: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    0px 2px 0px 0px rgb(74, 68, 68);
+    width: 70px
 }
 
 
@@ -128,7 +129,7 @@ body {
 
 
 .mgn-l {
-    margin-left: 12px;
+    margin-left: 32px;
 }
 
 .mgn-t {

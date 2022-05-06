@@ -5,11 +5,11 @@ async function searchPokemon() {
     showPokemonInfo(pokemon);
 }
 
-async function showPokemonInfo(pokemon) {   
-        document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(pokemon['name']);
-        document.getElementById('pokemonNumber').innerHTML = 'Number:' + (pokemon['id']);
-        pokemonType(pokemon);
-    }
+async function showPokemonInfo(pokemon) {
+    document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(pokemon['name']);
+    document.getElementById('pokemonNumber').innerHTML = 'Number:' + (pokemon['id']);
+    pokemonType(pokemon);
+}
 
 function upperCase(pokemonNameUpperCase) {
     return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
@@ -20,10 +20,10 @@ function upperCase(pokemonNameUpperCase) {
  * @param {number} i - pokemon ID that is asked for
  * */
 
- async function getPokemonByName(pokemonName) {
+async function getPokemonByName(pokemonName) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
     let responsePokemon = await fetch(url);
-    let pokemon = await responsePokemon.json(); 
+    let pokemon = await responsePokemon.json();
     return pokemon;
 }
 
@@ -31,7 +31,7 @@ function upperCase(pokemonNameUpperCase) {
 async function getPokemonById(pokemonId) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
     let responsePokemon = await fetch(url);
-    let pokemon = await responsePokemon.json(); 
+    let pokemon = await responsePokemon.json();
     return pokemon;
 }
 
@@ -49,15 +49,15 @@ async function renderPokemon() {
             typeTwo = currentPokemons['types'][1]['type']['name'];
         }
         pokemons.innerHTML += `
-        <div class="pokemon-card" style="background-image: linear-gradient(to bottom, var(--${typeOne}), var(--${typeTwo}) );">
-        
-        <h2 class="mgn-l">${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</h2>
+        <div class="pokemon-card"  style="background-image: linear-gradient(to bottom, var(--${typeOne}), var(--${typeTwo}) );">
+        <h2 class="mgn-l"><nobr>${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</nobr></h2>
         <div class="border"></div>
-        <img src="${currentPokemons['sprites']['front_default']}"<div>
-        <div id="pokemonType-${i}"></div>`;
+        <img src="${currentPokemons['sprites']['front_default']}">
+        <div id="pokemonType-${i}"></div>
+        </div>`;
 
         let pokemonsType = document.getElementById(`pokemonType-${i}`);
-       
+
         for (let j = 0; j < currentPokemons['types'].length; j++) {
             const type = currentPokemons['types'][j]['type']['name'];
             pokemonsType.innerHTML += `<div class="pixel-shadow mgn-l mgn-b">${type}</div>`
