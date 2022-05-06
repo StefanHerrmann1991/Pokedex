@@ -24,13 +24,13 @@
         rel="stylesheet">
 </head>
 
-<body onload="searchPokemon(); renderPokemon()">
+<body onload="renderPokemon()">
     <div id="pokedex" class="pokedex">
         <div class="header">
             <h1 class="mgn-l">Pokedex</h1>
             <div class="pokedex-search-menu">
             <input id="pokedexSearch" class="pokedex-search mgn-l " placeholder="Choose your Pokemon" type="text">
-            <button onclick="loadPokemon()" class="search-symbol material-symbols-outlined">
+            <button onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
                 search
             </button>
          </div>
@@ -50,7 +50,7 @@
     const node = document.getElementById("pokedexSearch");
     node.addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
-            loadPokemon();
+            searchPokemon();
         }
     });
 </script>

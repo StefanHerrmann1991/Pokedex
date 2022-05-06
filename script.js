@@ -1,4 +1,3 @@
-let defaultPokemon = 'pikachu'
 
 async function searchPokemon() {
     getPokemonByName(pokemonName);
@@ -15,12 +14,27 @@ function upperCase(pokemonNameUpperCase) {
     return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
 }
 
+/* this function sets the color of a Pokemon depending on its type */
+function pokemonType(pokemon) {
+    let pokemonType = document.getElementById('pokemonType');
+    pokemonType.innerHTML = "";
+    for (let i = 0; i < pokemon['types'].length; i++) {
+        const type = pokemon['types'][i]['type']['name'];
+        pokemonType.innerHTML += `<h2 style="background-color: var(--normal);
+        background-image: linear-gradient(deg, var(--${pokemon['types'][0]['type']['name']}), var(--${pokemon['types'][1]['type']['name']}) );">${type}</h2>
+           `
+    }
+}
+
+
 /**
  *  Ask for Pokemon from Poke API
  * @param {number} i - pokemon ID that is asked for
  * */
 
 async function getPokemonByName(pokemonName) {
+    
+    pokemonName  = document.getElementById('pokedexSearch').value;
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
     let responsePokemon = await fetch(url);
     let pokemon = await responsePokemon.json();
@@ -51,16 +65,17 @@ async function renderPokemon() {
         pokemons.innerHTML += `
         <div class="pokemon-card"  style="background-image: linear-gradient(to bottom, var(--${typeOne}), var(--${typeTwo}) );">
         <h2 class="mgn-l"><nobr>${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</nobr></h2>
-        <div class="border"></div>
-        <img src="${currentPokemons['sprites']['front_default']}">
+        <div class="pokemon-card-description">
         <div id="pokemonType-${i}"></div>
+        <img class="pokemon-img" src="${currentPokemons['sprites']['front_default']}">
+        </div>
         </div>`;
 
         let pokemonsType = document.getElementById(`pokemonType-${i}`);
 
         for (let j = 0; j < currentPokemons['types'].length; j++) {
             const type = currentPokemons['types'][j]['type']['name'];
-            pokemonsType.innerHTML += `<div class="pixel-shadow mgn-l mgn-b">${type}</div>`
+            pokemonsType.innerHTML += `<div class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
         }
     }
 
@@ -84,14 +99,3 @@ function padLeadingZeros(num, size) {
    typeTwo = `var(--${currentPokemons['types'][1]['type']['name']})`
 } */
 
-/* this function sets the color of a Pokemon depending on its type */
-function pokemonType(pokemon) {
-    let pokemonType = document.getElementById('pokemonType');
-    pokemonType.innerHTML = "";
-    for (let i = 0; i < pokemon['types'].length; i++) {
-        const type = pokemon['types'][i]['type']['name'];
-        pokemonType.innerHTML += `<h2 style="background-color: var(--normal);
-        background-image: linear-gradient(90deg, var(--${pokemon['types'][0]['type']['name']}), var(--${pokemon['types'][1]['type']['name']}) );">${type}</h2>
-           `
-    }
-}

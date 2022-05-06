@@ -82,11 +82,16 @@ body {
     --bug: #A6B91A;
 }
 
-.pokemon-card {
+
+.pokemon-card-description {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+}
+
+.pokemon-card {
+
     margin-left: 15px;
-    height: 350px;
+    height: 240px;
     box-shadow: -4px 0px 0px 0px rgb(0, 0, 0),
         /* linker */
         4px 0px 0px 0px rgb(0, 0, 0),
@@ -99,21 +104,31 @@ body {
     margin-top: 20px;
 }
 
-img {height: 200px;
-width: 200px;}
+img {
+    height: 200px;
+    width: 200px;
+}
 
 .pixel-shadow {
     box-shadow: -2px 0px 0px 0px rgb(74, 68, 68),
-    /* linker */
-    2px 0px 0px 0px rgb(74, 68, 68),
-    /* rechter */
-    0px -2px 0px 0px rgb(74, 68, 68),
-    /* oben */
-    0px 2px 0px 0px rgb(74, 68, 68);
-    width: 70px
+        /* linker */
+        2px 0px 0px 0px rgb(74, 68, 68),
+        /* rechter */
+        0px -2px 0px 0px rgb(74, 68, 68),
+        /* oben */
+        0px 2px 0px 0px rgb(74, 68, 68);
+
 }
 
 
+
+.pokemon-type-style {
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
 
 .border {
     border-bottom: solid rgb(92, 90, 90) 0.2px;
@@ -129,7 +144,7 @@ width: 200px;}
 
 
 .mgn-l {
-    margin-left: 32px;
+    margin-left: 20px;
 }
 
 .mgn-t {
