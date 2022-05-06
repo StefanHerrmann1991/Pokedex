@@ -53,7 +53,7 @@ async function renderPokemon() {
 
     let pokemons = document.getElementById('allPokemon');
     pokemons.innerHTML = "";
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 14; i++) {
         currentPokemons = await getPokemonById(i);
         let typeOne = currentPokemons['types'][0]['type']['name'];
         let typeTwo;
