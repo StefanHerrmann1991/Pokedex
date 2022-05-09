@@ -47,6 +47,11 @@ async function getPokemonByName(pokemonName) {
     return pokemon;
 }
 
+/**
+ * Ask for a pokemon from PokeAPI
+ * @param {number} pokemonId PokemonId that is asked for.
+ * @returns Returns the ID of a Pokemon.
+ */
 
 async function getPokemonById(pokemonId) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
@@ -87,9 +92,7 @@ async function renderPokemon() {
 }
 
 
-function comparePokemonType () {
-    
-}
+
 
 
 function padLeadingZeros(num, size) {
