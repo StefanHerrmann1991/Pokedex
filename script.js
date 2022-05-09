@@ -66,8 +66,7 @@ async function renderPokemon() {
     pokemon.innerHTML = "";
     for (let i = 1; i < 10+1; i++) {
         currentPokemons = await getPokemonById(i);
-        typeOne  = showPokomonType(currentPokemons);
-        typeTwo  = showPokomonType(currentPokemons);
+        [typeOne, typeTwo] = showPokomonType(currentPokemons);
         pokemon.innerHTML += `
         <div class="pokemon-card"  style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}) );">
         <h2 class="mgn-l"><nobr>${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</nobr></h2>
@@ -92,7 +91,7 @@ if (currentPokemons['types'].length == 1) {
 } else {
     typeTwo = currentPokemons['types'][1]['type']['name'];
 }
-return typeOne, typeTwo
+return [typeOne, typeTwo];
 }
 
 function padLeadingZeros(num, size) {
