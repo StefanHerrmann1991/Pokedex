@@ -1,4 +1,6 @@
 
+let pokemons = [];
+
 async function searchPokemon() {
     getPokemonByName(pokemonName);
     showPokemonInfo(pokemon);
@@ -9,6 +11,10 @@ async function showPokemonInfo(pokemon) {
     document.getElementById('pokemonNumber').innerHTML = 'Number:' + (pokemon['id']);
     pokemonType(pokemon);
 }
+
+/**This function 
+ * @param {pokemonNameUpperCase} - The word written with the first letter in uppercase.
+ */
 
 function upperCase(pokemonNameUpperCase) {
     return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
@@ -28,7 +34,7 @@ function pokemonType(pokemon) {
 
 
 /**
- *  Ask for Pokemon from Poke API
+ * Ask for Pokemon from Poke API
  * @param {number} i - pokemon ID that is asked for
  * */
 
@@ -51,9 +57,9 @@ async function getPokemonById(pokemonId) {
 
 async function renderPokemon() {
 
-    let pokemons = document.getElementById('allPokemon');
-    pokemons.innerHTML = "";
-    for (let i = 1; i < 14; i++) {
+    let pokemon = document.getElementById('allPokemon');
+    pokemon.innerHTML = "";
+    for (let i = 1; i < 10+1; i++) {
         currentPokemons = await getPokemonById(i);
         let typeOne = currentPokemons['types'][0]['type']['name'];
         let typeTwo;
@@ -62,8 +68,8 @@ async function renderPokemon() {
         } else {
             typeTwo = currentPokemons['types'][1]['type']['name'];
         }
-        pokemons.innerHTML += `
-        <div class="pokemon-card"  style="background-image: linear-gradient(to bottom, var(--${typeOne}), var(--${typeTwo}) );">
+        pokemon.innerHTML += `
+        <div class="pokemon-card"  style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}) );">
         <h2 class="mgn-l"><nobr>${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
         <div id="pokemonType-${i}"></div>
@@ -75,13 +81,15 @@ async function renderPokemon() {
 
         for (let j = 0; j < currentPokemons['types'].length; j++) {
             const type = currentPokemons['types'][j]['type']['name'];
-            pokemonsType.innerHTML += `<div class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
+            pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
         }
     }
-
-    /* button mit i + 50 */
 }
 
+
+function comparePokemonType () {
+    
+}
 
 
 function padLeadingZeros(num, size) {
@@ -91,11 +99,4 @@ function padLeadingZeros(num, size) {
 }
 
 
-
-/* function linearGradientType(typeOne, typeTwo, currentPokemons) {
-   
-   if (!)  
-   typeOne = `var(--${currentPokemons['types'][0]['type']['name']})`
-   typeTwo = `var(--${currentPokemons['types'][1]['type']['name']})`
-} */
 
