@@ -66,7 +66,7 @@ async function renderPokemon() {
     pokemon.innerHTML = "";
     for (let i = 1; i < 10+1; i++) {
         currentPokemons = await getPokemonById(i);
-        [typeOne, typeTwo] = showPokomonType(currentPokemons);
+        [typeOne, typeTwo] = comparePokomonType(currentPokemons);
         pokemon.innerHTML += `
         <div class="pokemon-card"  style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}) );">
         <h2 class="mgn-l"><nobr>${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</nobr></h2>
@@ -75,15 +75,27 @@ async function renderPokemon() {
         <img class="pokemon-img" src="${currentPokemons['sprites']['front_default']}">
         </div>
         </div>`;
-        let pokemonsType = document.getElementById(`pokemonType-${i}`);
-        for (let j = 0; j < currentPokemons['types'].length; j++) {
-            const type = currentPokemons['types'][j]['type']['name'];
-            pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
-        }
+         pokemonsType = showPokemonType(currentPokemons, i);
+        
     }
 }
 
-function showPokomonType(currentPokemons) {
+function showPokemonType(currentPokemons, i) {
+    let pokemonsType = document.getElementById(`pokemonType-${i}`);
+    for (let j = 0; j < currentPokemons['types'].length; j++) {
+        const type = currentPokemons['types'][j]['type']['name'];
+        pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
+    }
+    return pokemonsType;
+}
+
+/**The function load Pokemon types from the API and is used to compare if the pokemon have one or two types
+ * 
+ * @param {number} currentPokemons 
+ * @returns Returns the type of the Pokemon.
+ */
+
+function comparePokomonType(currentPokemons) {
 let typeOne = currentPokemons['types'][0]['type']['name'];
 let typeTwo;
 if (currentPokemons['types'].length == 1) {
@@ -94,11 +106,24 @@ if (currentPokemons['types'].length == 1) {
 return [typeOne, typeTwo];
 }
 
+/**The function inserts zeros as string before the id of a Pokemon
+ * @param { number } num The number of the Pokemon
+ * @param { number } size The number of zeros before the number of the Pokemon.
+ * @returns A Pokemon number with three zeros before the actual Pokemon ID.
+ */
+
 function padLeadingZeros(num, size) {
-    var s = num + "";
+    let s = num + "";
     while (s.length < size) s = "0" + s;
     return s;
 }
 
+/**This onclick function enables a detailed description of the chosen (by click or by search) Pokemon.
+ * 
+ * 
+*/
 
+function pokemonCardBigView() {
+
+} 
 
