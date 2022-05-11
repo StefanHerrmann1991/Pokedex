@@ -1,6 +1,9 @@
 /* pokemon types */
 
 .header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     color: white;
     background-color: rgba(255, 2, 2, 0.908);
     height: 200px;
@@ -11,13 +14,15 @@
 }
 
 h1 {
-    padding-top: 40px;
+    
+    margin-left: 86px;
 }
 
 .pokedex-search {
     height: 40px;
     border: solid;
     font-size: 32px;
+    margin-left: 86px;
 }
 
 .pokedex-search-menu {
@@ -112,6 +117,13 @@ img {
     height: 200px;
     width: 200px;
 }
+
+.spacer {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+
 
 .pixel-shadow {
     box-shadow: -2px 0px 0px 0px rgb(74, 68, 68),

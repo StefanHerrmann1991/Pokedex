@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
-    <link rel="icon" type="image/x-icon" href="/favicon2.png">
+    <link rel="icon" type="image/x-icon" href="img/favicon2.png">
     <style>
         * {
             margin: 0;
@@ -27,19 +27,18 @@
 <body onload="renderPokemon()">
     <div id="pokedex" class="pokedex">
         <div class="header">
-            <h1 class="mgn-l">Pokedex</h1>
+            <h1>Pokedex</h1>
             <div class="pokedex-search-menu">
-            <input id="pokedexSearch" class="pokedex-search mgn-l " placeholder="Choose your Pokemon" type="text">
-            <button onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
-                search
-            </button>
-         </div>
+                <input id="pokedexSearch" class="pokedex-search" placeholder="Choose your Pokemon" type="text">
+                <button onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
+                    search
+                </button>
+                <div id="myCanvas"></div>
+            </div>
         </div>
         <div>
-            <h2 id="pokemonName"></h2>
-            <h2 id="pokemonNumber"></h2>
-            <h2 id="pokemonType"></h2>
-            <div id="allPokemon" class="all-pokemon"></div>
+            <div id="allPokemon" class="spacer all-pokemon"></div>
+
         </div>
     </div>
 
