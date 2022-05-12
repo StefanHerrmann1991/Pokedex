@@ -70,8 +70,9 @@ h1 {
 .left-box {
     height: 100px;
     background-color: rgb(182, 25, 25);
-    width: 65vh;
+    width: 65.5vh;
     border-bottom: solid 5.5px black;
+    z-index: 100;
 }
 
 .triangular-box {
@@ -91,6 +92,7 @@ h1 {
     border-style: solid;
     border-width: 100px 150px 0 0;
     border-color: #b61818 transparent transparent transparent;
+    z-index: 100;
 
 }
 
@@ -105,14 +107,14 @@ h1 {
 @keyframes openPokedex {
     from {
         height: 0px;
-        z-index: 100;
+        border-right: solid 5.5px black;
+        border-bottom: solid 5.5px black;
     }
 
     to {
         height: 820px;
         border-right: solid 5.5px black;
         border-bottom: solid 5.5px black;
-        z-index: 100;
         }
 }
  
@@ -153,6 +155,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    z-index: 0;
 }
 
 :root {

@@ -89,7 +89,7 @@ async function renderPokemon() {
         const loadedPokemon = allLoadedPokemons[i];
         [typeOne, typeTwo] = comparePokomonType(loadedPokemon);
         pokemon.innerHTML += `
-        <div class="pokemon-card" onclick="showDetailedPokemonScreen()"
+        <div class="pokemon-card" onclick="showDetailedPokemonScreen(${loadedPokemon})"
         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
@@ -101,8 +101,11 @@ async function renderPokemon() {
     }
 }
 
-function showDetailedPokemonScreen() {
+function showDetailedPokemonScreen(loadedPokemon) {
 document.getElementById('onePokemon').classList.add('detailed-pokemon-static');
+
+
+
 } 
 
 
