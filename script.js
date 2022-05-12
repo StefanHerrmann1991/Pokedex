@@ -1,6 +1,12 @@
 
 let pokemons = [];
-let allLoadedPokmeons = [];
+let allLoadedPokemons = [];
+
+
+async function init() {
+    await loadPokemonInArray();
+    renderPokemon();
+}
 
 async function searchPokemon() {
     let pokemon = await getPokemonByName();
@@ -9,19 +15,20 @@ async function searchPokemon() {
 
 async function showPokemonInfo(pokemon) {
 
-    document.getElementById('onePokemon').innerHTML =`
+    document.getElementById('onePokemon').innerHTML = `
     <div>Name: ${upperCase(pokemon['name'])}</div>
     <div> Number:   ${(pokemon['id'])}</div>
     `;
-
 }
+
+
 
 /**
  * Ask for Pokemon from Poke API
  * @param {number} i - pokemon ID that is asked for
  * */
 
- async function getPokemonByName() {
+async function getPokemonByName() {
 
     let pokemonName = document.getElementById('pokedexSearch').value;
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
@@ -66,22 +73,30 @@ async function getPokemonById(pokemonId) {
     return pokemon;
 }
 
-async function renderPokemon() {
 
+async function loadPokemonInArray() {
+
+    for (let j = 1; j < 20 + 1; j++) {
+        currentPokemon = await getPokemonById(j);
+        allLoadedPokemons.push(currentPokemon)
+    }
+}
+
+async function renderPokemon() {
     let pokemon = document.getElementById('allPokemon');
     pokemon.innerHTML = "";
-    for (let i = 1; i < 10 + 1; i++) {
-        currentPokemons = await getPokemonById(i);
-        [typeOne, typeTwo] = comparePokomonType(currentPokemons);
+    for (let i = 1; i < allLoadedPokemons.length; i++) {
+        const loadedPokemon = allLoadedPokemons[i];
+        [typeOne, typeTwo] = comparePokomonType(loadedPokemon);
         pokemon.innerHTML += `
-        <div class="pokemon-card"  style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}) );">
-        <h2 class="mgn-l"><nobr>${upperCase(currentPokemons['name'])} # ${padLeadingZeros(currentPokemons['id'], 3)}</nobr></h2>
+        <div class="pokemon-card" style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}) );">
+        <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
         <div id="pokemonType-${i}"></div>
-        <img class="pokemon-img" src="${currentPokemons['sprites']['front_default']}">
+        <img class="pokemon-img" src="${loadedPokemon['sprites']['front_default']}">
         </div>
         </div>`;
-        pokemonsType = showPokemonType(currentPokemons, i);
+        pokemonsType = showPokemonType(loadedPokemon, i);
     }
 }
 
@@ -131,15 +146,52 @@ function padLeadingZeros(num, size) {
  * 
 */
 
-function pokemonCardBigView() {
-
+function pokemonCardDetailedInformation(i) {
+    document.getElementById('big-img').innerHTML = `
+    <div class="dialogue-bg" id="black-screen">
+    <div class="close-btn mgn-top mgn-right">
+    <button class="button"  onclick="closeImg()"><span class="material-icons-outlined">close</span></button></div>
+    <div class="dialogue-bg-child">
+    <button class="button mgn-left" onclick="lastImg(${i})"><span class="material-icons-outlined">arrow_back</span></button>
+    <img class="img-box-big" id="black-screen-img">
+    <button class="button mgn-right"  onclick="nextImg(${i})"><span class="material-icons-outlined">arrow_forward</span></button> 
+    </div>
+    </div>
+     `
+    document.getElementById('black-screen-img').src = `img/${i + 1}.jpg`;
 }
 
-/* function load() {
+/* function nextImg(i) {
+    {
+        if (i < images.length - 1) {
+            i++;
+        } else {
+            i = 0;
+        }
+        document.getElementById('black-screen-img').innerHTML = '';
+        showImg(i);
+    }
+}
+
+function lastImg(i) {
+    if (i > 0) {
+        i--;
+    }
+    else {
+        i = images.length - 1;
+    }
+    document.getElementById('black-screen-img').innerHTML = '';
+    pokemonCardDetailedInformation(i);
+} */
+
+/* 
+
+
+function load() {
     loadImages(25); //hier muss die Anzahl an Bildern rein
     for (i = 0; i < images.length; i++) {
         document.getElementById('img').innerHTML += `
-        <img id="${i}" onmouseenter="zoomIn(${i})" onmouseleave="zoomOut(${i})" onclick="showImg(${i})" class="img-box" src="${images[i]}"<img>
+        <img id="${i}"  onclick="showImg(${i})" class="img-box" src="${images[i]}"<img>
      `}
 }
 function loadImages(numberOfPictures) { //die Funktion lädt Bilder der Form Zahl.jpg
@@ -147,14 +199,6 @@ function loadImages(numberOfPictures) { //die Funktion lädt Bilder der Form Zah
         images.push(`img/${i}.jpg`);
     }
 
-}
-function zoomIn(i) {
-    document.getElementById(i).classList.add('zoom-in');
-}
-
-
-function zoomOut(i) {
-    document.getElementById(i).classList.remove('zoom-in');
 }
 
 function showImg(i) {

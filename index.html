@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
 
-<body onload="renderPokemon()">
+<body onload="init()">
     <div id="pokedex" class="pokedex">
         <div class="header">
             <h1>Pokedex</h1>
@@ -37,7 +37,6 @@
                     search
                 </button>
             </div>
-            <div id="myCanvas"></div>
             <img class="pokeball" src="img/Pixelball2.png">
         </div>
         <div>
@@ -56,6 +55,7 @@
             searchPokemon();
         }
     });
+ 
 </script>
 
 </html>
