@@ -21,9 +21,15 @@
 
 .pokedex-search-btn-inp {
     display: flex;
+    justify-content: center;
     align-items: center;
+    margin-top: 20px;
 }
 
+.pokedex-search-btn-inp input {
+height: 36px;
+
+}
 .pokeball {
     margin-top: 170px;
     height: 200px;
