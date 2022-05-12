@@ -146,20 +146,11 @@ function padLeadingZeros(num, size) {
  * 
 */
 
-function pokemonCardDetailedInformation(i) {
-    document.getElementById('big-img').innerHTML = `
-    <div class="dialogue-bg" id="black-screen">
-    <div class="close-btn mgn-top mgn-right">
-    <button class="button"  onclick="closeImg()"><span class="material-icons-outlined">close</span></button></div>
-    <div class="dialogue-bg-child">
-    <button class="button mgn-left" onclick="lastImg(${i})"><span class="material-icons-outlined">arrow_back</span></button>
-    <img class="img-box-big" id="black-screen-img">
-    <button class="button mgn-right"  onclick="nextImg(${i})"><span class="material-icons-outlined">arrow_forward</span></button> 
-    </div>
-    </div>
-     `
-    document.getElementById('black-screen-img').src = `img/${i + 1}.jpg`;
+function showPokemonDetails() {
+    
 }
+
+
 
 /* function nextImg(i) {
     {

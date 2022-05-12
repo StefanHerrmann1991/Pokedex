@@ -56,6 +56,39 @@ h1 {
         0px 2px 0px 0px rgb(74, 68, 68);
 }
 
+.border-style-header {
+    display: flex;
+}
+
+.left-box {
+    height: 100px;
+    background-color: rgb(182, 25, 25);
+    width: 50%;
+    border-bottom: solid 5.5px black;
+}
+
+.triangular-box {
+    width: 0;
+    height: 0;
+   top: 2px;
+    border-style: solid;  
+    border-width: 105.5px 156px 0 0;
+    border-color: black transparent transparent transparent;
+   }
+
+.inner-triangle {
+    position: relative;
+    top: -105.5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 100px 150px 0 0;
+    border-color: #b61818 transparent transparent transparent;
+
+}
+
+
+
 input {
     border: none !important
 }
@@ -203,119 +236,6 @@ h2 {
 
 
 
-.imgcon {
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1;
-    flex-direction: row;
 
-}
-
-.img-box {
-    height: 20vh;
-    width: auto;
-    object-fit: cover;
-    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 9px 22px 22px 20px rgba(0, 0, 0, 0);
-    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 9px 22px 22px 20px rgba(0, 0, 0, 0);
-    margin-right: 16px;
-    cursor: pointer;
-}
-
-.dialogue-bg-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-between;
-
-}
-
-.close-btn {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.compass {
-    height: 12em;
-    padding-right: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.img-box-big {
-    height: 65vh;
-    max-width: 70vw;
-    object-fit: contain;
-    margin-bottom: 6%;
-
-}
-
-
-.mgn-top {
-    margin-top: 6%;
-}
-
-.mgn-left {
-    margin-left: 2%;
-}
-
-.mgn-right {
-    margin-right: 2%;
-}
-
-.button {
-    font-size: 0.8em;
-    height: 5em;
-    width: 5em;
-    border-radius: 40px;
-    background-color: lightgray;
-}
-
-.button:hover {
-    height: 5em;
-    width: 5em;
-    border-radius: 40px;
-    background-color: gray;
-    background-position: 20% 20%;
-    opacity: 0.8;
-    background-size: 200px;
-}
-
-.material-icons-outlined {
-    font-size: 3em !important;
-    color: rgba(17, 11, 11, 0.6);
-
-}
-
-.img-container {
-    padding-left: 120px;
-    padding-right: 120px;
-}
-
-.zoom-in {
-    transform: scale(1.1);
-}
-
-.d-none {
-    display: none !important;
-}
-
-.dialogue-bg {
-
-    height: 100vh;
-    background-color: rgba(14, 11, 11);
-    z-index: 999;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-
-}
-
-.overflow-hidden{
-    overflow: hidden;
-}
 
 @media (width: 1350px) {}
