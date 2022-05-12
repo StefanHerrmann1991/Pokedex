@@ -98,7 +98,14 @@ h1 {
     background-color: rgb(182, 25, 25);
     width: 50%;
     margin-top: -4px;
-    height: 10px;
+  }
+
+  
+.height400 {
+    transition: ease-in-out;
+    height: 60vh;
+    border-right: solid 5.5px black;
+    border-bottom: solid 5.5px black;
 }
 
 @keyframes openPokedex {

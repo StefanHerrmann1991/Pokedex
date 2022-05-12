@@ -107,7 +107,7 @@ function showPokemonDetails() {
 }
 
 function transformScalePokedex() {
-  document.getElementById('onePokemon').style.transform = 'scaleY(400px)'; }
+  document.getElementById('onePokemon').classList.add('height400')}
 
 
 function showPokemonType(currentPokemons, i) {
