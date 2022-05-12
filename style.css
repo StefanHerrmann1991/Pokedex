@@ -5,12 +5,20 @@
     justify-content: flex-start;
     align-items: center;
     color: white;
-    background-color: rgba(255, 2, 2, 0.908);
+    background-color: rgb(221, 18, 18);
     height: 200px;
     -webkit-text-stroke: 2px rgb(6, 6, 125);
     font-family: 'Press Start 2P';
     color: yellow;
     font-size: 40px;
+    border-bottom: solid 4px black;
+}
+
+.pokeball {
+    margin-top: 204px;
+    height: 160px;
+    width: 160px;
+    z-index: 2;
 }
 
 h1 {
@@ -29,6 +37,13 @@ h1 {
     display: flex;
     align-items: center;
     margin-top: 18px;
+    box-shadow: -2px 0px 0px 0px rgb(74, 68, 68),
+    /* linker */
+    2px 0px 0px 0px rgb(74, 68, 68),
+    /* rechter */
+    0px -2px 0px 0px rgb(74, 68, 68),
+    /* oben */
+    0px 2px 0px 0px rgb(74, 68, 68);
 }
 
 input {
@@ -49,7 +64,7 @@ button {
 }
 
 .search-symbol {
-    background-color: rgba(255, 2, 2, 0.908);
+    background-color: rgb(221, 18, 18);
     font-size: 40px !important;
 
 }
