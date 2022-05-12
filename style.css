@@ -70,11 +70,9 @@ h1 {
 .left-box {
     height: 100px;
     background-color: rgb(182, 25, 25);
-    width: 50%;
+    width: 65vh;
     border-bottom: solid 5.5px black;
 }
-
-
 
 .triangular-box {
     width: 0;
@@ -98,25 +96,24 @@ h1 {
 
 .detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
-    width: 50%;
-    margin-top: -4px;
+    margin-top: 45.5px;
     height: 0px;
     z-index: 100;
-
     animation: openPokedex 3500ms ease-in-out 1000ms 1 forwards; 
 }
   
 @keyframes openPokedex {
     from {
         height: 0px;
+        z-index: 100;
     }
 
     to {
-        height: 600px;
+        height: 820px;
         border-right: solid 5.5px black;
         border-bottom: solid 5.5px black;
-        
-    }
+        z-index: 100;
+        }
 }
  
 input {
@@ -155,7 +152,7 @@ body {
 .all-pokemon {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 :root {
@@ -201,8 +198,6 @@ body {
     margin-top: 20px;
 }
 
-
-
 img {
     height: 200px;
     width: 200px;
@@ -212,8 +207,6 @@ img {
     margin-bottom: 40px;
     margin-top: 40px;
 }
-
-
 
 .pixel-shadow {
     box-shadow: -2px 0px 0px 0px rgb(74, 68, 68),
@@ -225,8 +218,6 @@ img {
         0px 2px 0px 0px rgb(74, 68, 68);
 
 }
-
-
 
 .pokemon-type-style {
     width: 70px;
@@ -263,9 +254,5 @@ img {
 h2 {
     padding: 6px;
 }
-
-
-
-
 
 @media (width: 1350px) {}
