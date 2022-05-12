@@ -76,7 +76,7 @@ async function getPokemonById(pokemonId) {
 
 async function loadPokemonInArray() {
 
-    for (let j = 1; j < 20 + 1; j++) {
+    for (let j = 1; j < 10+1; j++) {
         currentPokemon = await getPokemonById(j);
         allLoadedPokemons.push(currentPokemon)
     }
@@ -85,11 +85,11 @@ async function loadPokemonInArray() {
 async function renderPokemon() {
     let pokemon = document.getElementById('allPokemon');
     pokemon.innerHTML = "";
-    for (let i = 1; i < allLoadedPokemons.length; i++) {
+    for (let i = 0; i < allLoadedPokemons.length; i++) {
         const loadedPokemon = allLoadedPokemons[i];
         [typeOne, typeTwo] = comparePokomonType(loadedPokemon);
         pokemon.innerHTML += `
-        <div class="pokemon-card" onclick="transformScalePokedex()" 
+        <div class="pokemon-card" onclick="showDetailedPokemonScreen()"
         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
@@ -101,13 +101,9 @@ async function renderPokemon() {
     }
 }
 
-
-function showPokemonDetails() {
-    
-}
-
-function transformScalePokedex() {
-  document.getElementById('onePokemon').classList.add('height400')}
+function showDetailedPokemonScreen() {
+document.getElementById('onePokemon').classList.add('detailed-pokemon-static');
+} 
 
 
 function showPokemonType(currentPokemons, i) {

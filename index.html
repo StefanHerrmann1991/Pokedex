@@ -31,14 +31,10 @@
     <div id="pokedex" class="pokedex">
         <div class="header">
             <h1>Pokedex</h1>
-
         </div>
-
-
-        <!-- <img class="pokeball" src="img/Pixelball2.png"> -->
     </div>
     <div class="border-style-header">
-        <div class="left-box">
+        <div id="leftBox" class="left-box transformation">
             <div class="pokedex-search-btn-inp">
                 <input placeholder="Choose your Pokemon" type="text">
                 <button id="pokedexSearch" onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
@@ -48,19 +44,12 @@
         <div class="triangular-box">
             <div class="inner-triangle"></div>
         </div>
-        
-    </div>
-    <div id="onePokemon" class="detailed-pokemon-screen"></div>
 
-    <div>
+    </div>
+    <div class="one-all-pokedex">
+        <div id="onePokemon"></div>
         <div id="allPokemon" class="spacer all-pokemon"></div>
     </div>
-    </div>
-
-
-
-
-
 </body>
 
 <script>

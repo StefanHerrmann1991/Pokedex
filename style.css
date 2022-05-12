@@ -74,6 +74,8 @@ h1 {
     border-bottom: solid 5.5px black;
 }
 
+
+
 .triangular-box {
     width: 0;
     height: 0;
@@ -94,20 +96,16 @@ h1 {
 
 }
 
-.detailed-pokemon-screen {
+.detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
     width: 50%;
     margin-top: -4px;
-  }
+    height: 0px;
+    z-index: 100;
 
-  
-.height400 {
-    transition: ease-in-out;
-    height: 60vh;
-    border-right: solid 5.5px black;
-    border-bottom: solid 5.5px black;
+    animation: openPokedex 3500ms ease-in-out 1000ms 1 forwards; 
 }
-
+  
 @keyframes openPokedex {
     from {
         height: 0px;
@@ -117,9 +115,10 @@ h1 {
         height: 600px;
         border-right: solid 5.5px black;
         border-bottom: solid 5.5px black;
+        
     }
 }
-
+ 
 input {
     border: none !important
 }
