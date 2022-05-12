@@ -101,7 +101,7 @@ h1 {
     margin-top: 45.5px;
     height: 0px;
     z-index: 100;
-    animation: openPokedex 3500ms ease-in-out 1000ms 1 forwards; 
+    animation: openPokedex 2500ms ease-in-out 1000ms 1 forwards; 
 }
   
 @keyframes openPokedex {

@@ -13,14 +13,6 @@ async function searchPokemon() {
     showPokemonInfo(pokemon);
 }
 
-async function showPokemonInfo(pokemon) {
-
-    document.getElementById('onePokemon').innerHTML = `
-    <div>Name: ${upperCase(pokemon['name'])}</div>
-    <div> Number:   ${(pokemon['id'])}</div>
-    `;
-}
-
 
 
 /**
@@ -58,8 +50,6 @@ function pokemonType(pokemon) {
     }
 }
 
-
-
 /**
  * Ask for a pokemon from PokeAPI
  * @param {number} pokemonId PokemonId that is asked for.
@@ -76,20 +66,20 @@ async function getPokemonById(pokemonId) {
 
 async function loadPokemonInArray() {
 
-    for (let j = 1; j < 10+1; j++) {
+    for (let j = 1; j < 10 + 1; j++) {
         currentPokemon = await getPokemonById(j);
         allLoadedPokemons.push(currentPokemon)
     }
 }
 
-async function renderPokemon() {
+function renderPokemon() {
     let pokemon = document.getElementById('allPokemon');
     pokemon.innerHTML = "";
     for (let i = 0; i < allLoadedPokemons.length; i++) {
         const loadedPokemon = allLoadedPokemons[i];
         [typeOne, typeTwo] = comparePokomonType(loadedPokemon);
         pokemon.innerHTML += `
-        <div class="pokemon-card" onclick="showDetailedPokemonScreen(${loadedPokemon})"
+        <div onclick="${showDetailedPokemonScreen(loadedPokemon, i)}" class="pokemon-card" 
         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
@@ -101,12 +91,15 @@ async function renderPokemon() {
     }
 }
 
-function showDetailedPokemonScreen(loadedPokemon) {
-document.getElementById('onePokemon').classList.add('detailed-pokemon-static');
 
+function showDetailedPokemonScreen(pokemon, i) {
+    /* document.getElementById('onePokemon').classList.add('detailed-pokemon-static'); */
 
-
-} 
+    document.getElementById('onePokemon').innerHTML = `
+    <div>Name: ${upperCase(pokemon['name'])}</div>
+    <div> Number:   ${(pokemon['id'])}</div>
+    `
+}
 
 
 function showPokemonType(currentPokemons, i) {
