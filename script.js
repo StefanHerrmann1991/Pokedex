@@ -2,15 +2,33 @@
 let pokemons = [];
 
 async function searchPokemon() {
-    let pokemon = getPokemonByName();
+    let pokemon = await getPokemonByName();
     showPokemonInfo(pokemon);
 }
 
 async function showPokemonInfo(pokemon) {
-    document.getElementById('pokemonName').innerHTML = 'Name: ' + upperCase(pokemon['name']);
-    document.getElementById('pokemonNumber').innerHTML = 'Number:' + (pokemon['id']);
-    pokemonType(pokemon);
+
+    document.getElementById('onePokemon').innerHTML =`
+    <div>Name: ${upperCase(pokemon['name'])}</div>
+    <div> Number:   ${(pokemon['id'])}</div>
+    `;
+
 }
+
+/**
+ * Ask for Pokemon from Poke API
+ * @param {number} i - pokemon ID that is asked for
+ * */
+
+ async function getPokemonByName() {
+
+    let pokemonName = document.getElementById('pokedexSearch').value;
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+    let responsePokemon = await fetch(url);
+    let pokemon = await responsePokemon.json();
+    return pokemon;
+}
+
 
 /**This function 
  * @param {pokemonNameUpperCase} - The word written with the first letter in uppercase.
@@ -33,19 +51,6 @@ function pokemonType(pokemon) {
 }
 
 
-/**
- * Ask for Pokemon from Poke API
- * @param {number} i - pokemon ID that is asked for
- * */
-
-async function getPokemonByName() {
-    
-    let pokemonName  = document.getElementById('pokedexSearch').value;
-    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
-    let responsePokemon = await fetch(url);
-    let pokemon = await responsePokemon.json();
-    return pokemon;
-}
 
 /**
  * Ask for a pokemon from PokeAPI
@@ -64,7 +69,7 @@ async function renderPokemon() {
 
     let pokemon = document.getElementById('allPokemon');
     pokemon.innerHTML = "";
-    for (let i = 1; i < 10+1; i++) {
+    for (let i = 1; i < 10 + 1; i++) {
         currentPokemons = await getPokemonById(i);
         [typeOne, typeTwo] = comparePokomonType(currentPokemons);
         pokemon.innerHTML += `
@@ -75,10 +80,13 @@ async function renderPokemon() {
         <img class="pokemon-img" src="${currentPokemons['sprites']['front_default']}">
         </div>
         </div>`;
-         pokemonsType = showPokemonType(currentPokemons, i);
-        
+        pokemonsType = showPokemonType(currentPokemons, i);
+
     }
 }
+
+
+
 
 function showPokemonType(currentPokemons, i) {
     let pokemonsType = document.getElementById(`pokemonType-${i}`);
@@ -96,14 +104,14 @@ function showPokemonType(currentPokemons, i) {
  */
 
 function comparePokomonType(currentPokemons) {
-let typeOne = currentPokemons['types'][0]['type']['name'];
-let typeTwo;
-if (currentPokemons['types'].length == 1) {
-    typeTwo = typeOne;
-} else {
-    typeTwo = currentPokemons['types'][1]['type']['name'];
-}
-return [typeOne, typeTwo];
+    let typeOne = currentPokemons['types'][0]['type']['name'];
+    let typeTwo;
+    if (currentPokemons['types'].length == 1) {
+        typeTwo = typeOne;
+    } else {
+        typeTwo = currentPokemons['types'][1]['type']['name'];
+    }
+    return [typeOne, typeTwo];
 }
 
 /**The function inserts zeros as string before the id of a Pokemon
@@ -125,7 +133,7 @@ function padLeadingZeros(num, size) {
 
 function pokemonCardBigView() {
 
-} 
+}
 
 /* function load() {
     loadImages(25); //hier muss die Anzahl an Bildern rein
