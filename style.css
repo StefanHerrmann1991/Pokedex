@@ -95,14 +95,10 @@ h1 {
 }
 
 .detailed-pokemon-screen {
-
-    width: 50%;
-}
-
-.detailed-pokemon-screen {
     background-color: rgb(182, 25, 25);
     width: 50%;
     margin-top: -4px;
+    height: 10px;
 }
 
 @keyframes openPokedex {
