@@ -89,7 +89,7 @@ async function renderPokemon() {
         const loadedPokemon = allLoadedPokemons[i];
         [typeOne, typeTwo] = comparePokomonType(loadedPokemon);
         pokemon.innerHTML += `
-        <div class="pokemon-card" style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}) );">
+        <div class="pokemon-card" onclick="" style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
         <div id="pokemonType-${i}"></div>
@@ -101,6 +101,12 @@ async function renderPokemon() {
 }
 
 
+function showPokemonDetails() {
+    
+}
+
+function transformScalePokedex() {
+  let transfromPokedex = document.getElementById('onePokemon'); }
 
 
 function showPokemonType(currentPokemons, i) {
@@ -146,9 +152,6 @@ function padLeadingZeros(num, size) {
  * 
 */
 
-function showPokemonDetails() {
-    
-}
 
 
 
