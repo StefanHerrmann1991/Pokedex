@@ -1,5 +1,6 @@
 
 let pokemons = [];
+let allLoadedPokmeons = [];
 
 async function searchPokemon() {
     let pokemon = await getPokemonByName();
@@ -81,7 +82,6 @@ async function renderPokemon() {
         </div>
         </div>`;
         pokemonsType = showPokemonType(currentPokemons, i);
-
     }
 }
 

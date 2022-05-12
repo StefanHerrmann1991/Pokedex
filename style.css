@@ -1,28 +1,34 @@
 /* pokemon types */
 
+.pokedex {
+    width: 100%;
+}
+
 .header {
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     color: white;
-    background-color: rgb(221, 18, 18);
+    background-color: rgb(182, 25, 25);
     height: 200px;
     -webkit-text-stroke: 2px rgb(6, 6, 125);
     font-family: 'Press Start 2P';
     color: yellow;
     font-size: 40px;
-    border-bottom: solid 4px black;
+    border-bottom: solid 5.5px black;
 }
 
+
 .pokeball {
-    margin-top: 204px;
-    height: 160px;
-    width: 160px;
+    margin-top: 170px;
+    height: 200px;
+    width: 200px;
     z-index: 2;
 }
 
 h1 {
-    
+
     margin-left: 86px;
 }
 
@@ -38,12 +44,12 @@ h1 {
     align-items: center;
     margin-top: 18px;
     box-shadow: -2px 0px 0px 0px rgb(74, 68, 68),
-    /* linker */
-    2px 0px 0px 0px rgb(74, 68, 68),
-    /* rechter */
-    0px -2px 0px 0px rgb(74, 68, 68),
-    /* oben */
-    0px 2px 0px 0px rgb(74, 68, 68);
+        /* linker */
+        2px 0px 0px 0px rgb(74, 68, 68),
+        /* rechter */
+        0px -2px 0px 0px rgb(74, 68, 68),
+        /* oben */
+        0px 2px 0px 0px rgb(74, 68, 68);
 }
 
 input {
@@ -64,7 +70,7 @@ button {
 }
 
 .search-symbol {
-    background-color: rgb(221, 18, 18);
+    background-color: rgb(182, 25, 25);
     font-size: 40px !important;
 
 }
@@ -127,6 +133,8 @@ body {
     color: white;
     margin-top: 20px;
 }
+
+
 
 img {
     height: 200px;
