@@ -13,7 +13,13 @@ async function searchPokemon() {
     showPokemonInfo(pokemon);
 }
 
+async function showPokemonInfo(pokemon) {
 
+    document.getElementById('onePokemon').innerHTML = `
+    <div>Name: ${upperCase(pokemon['name'])}</div>
+    <div> Number:   ${(pokemon['id'])}</div>
+    `;
+}
 
 /**
  * Ask for Pokemon from Poke API
@@ -63,7 +69,6 @@ async function getPokemonById(pokemonId) {
     return pokemon;
 }
 
-
 async function loadPokemonInArray() {
 
     for (let j = 1; j < 10 + 1; j++) {
@@ -76,10 +81,11 @@ function renderPokemon() {
     let pokemon = document.getElementById('allPokemon');
     pokemon.innerHTML = "";
     for (let i = 0; i < allLoadedPokemons.length; i++) {
-        const loadedPokemon = allLoadedPokemons[i];
-        [typeOne, typeTwo] = comparePokomonType(loadedPokemon);
-        pokemon.innerHTML += `
-        <div onclick="${showDetailedPokemonScreen(loadedPokemon, i)}" class="pokemon-card" 
+        let loadedPokemon = allLoadedPokemons[i];
+        [typeOne, typeTwo] = comparePokemonType(loadedPokemon);
+        pokemon.innerHTML +=
+            `
+        <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
@@ -88,19 +94,18 @@ function renderPokemon() {
         </div>
         </div>`;
         pokemonsType = showPokemonType(loadedPokemon, i);
+        console.log(loadedPokemon);
     }
 }
 
 
-function showDetailedPokemonScreen(pokemon, i) {
-    /* document.getElementById('onePokemon').classList.add('detailed-pokemon-static'); */
-
-    document.getElementById('onePokemon').innerHTML = `
-    <div>Name: ${upperCase(pokemon['name'])}</div>
-    <div> Number:   ${(pokemon['id'])}</div>
-    `
+function showDetailedPokemonScreen(i) {
+    let currentPokemon = allLoadedPokemons[i];
+    let oneDetailedPokemonCard = document.getElementById('onePokemon');
+    oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
+    oneDetailedPokemonCard.innerHTML = `${currentPokemon['name']}`;
+    
 }
-
 
 function showPokemonType(currentPokemons, i) {
     let pokemonsType = document.getElementById(`pokemonType-${i}`);
@@ -117,7 +122,7 @@ function showPokemonType(currentPokemons, i) {
  * @returns Returns the type of the Pokemon.
  */
 
-function comparePokomonType(currentPokemons) {
+function comparePokemonType(currentPokemons) {
     let typeOne = currentPokemons['types'][0]['type']['name'];
     let typeTwo;
     if (currentPokemons['types'].length == 1) {

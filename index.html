@@ -36,8 +36,8 @@
     <div class="border-style-header">
         <div id="leftBox" class="left-box transformation">
             <div class="pokedex-search-btn-inp">
-                <input placeholder="Choose your Pokemon" type="text">
-                <button id="pokedexSearch" onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
+                <input id="pokedexSearch" placeholder="Choose your Pokemon" type="text">
+                <button  onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
                     search</button>
             </div>
             <div id="onePokemon"></div>
@@ -47,7 +47,6 @@
         </div>
     </div>
     <div id="allPokemon" class="spacer all-pokemon"></div>
-
 </body>
 
 <script>
@@ -57,7 +56,6 @@
             searchPokemon();
         }
     });
-
 </script>
 
 </html>

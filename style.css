@@ -19,6 +19,8 @@
     border-bottom: solid 5.5px black;
 }
 
+
+
 .pokedex-search-btn-inp {
     display: flex;
     justify-content: center;
@@ -257,5 +259,7 @@ img {
 h2 {
     padding: 6px;
 }
+
+
 
 @media (width: 1350px) {}
