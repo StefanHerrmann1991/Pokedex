@@ -86,7 +86,7 @@ function renderPokemon() {
         [typeOne, typeTwo] = comparePokemonType(loadedPokemon);
         pokemon.innerHTML +=
             `
-        <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i}); openOnePokemonScreen()"
+        <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
@@ -99,16 +99,22 @@ function renderPokemon() {
     }
 }
 
-function openOnePokemonScreen() {
+
+function showDetailedPokemonScreen(i) {
+    let currentPokemon = allLoadedPokemons[i];
+    let oneDetailedPokemonCard = document.getElementById('onePokemon');
     if (!onePokemonScreen) {
         document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
-        document.getElementById('onePokemon').classList.add('one-pokemon');
+        oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
+        oneDetailedPokemonCard.innerHTML = `${currentPokemon['name']}`;
     }
     else {
+        oneDetailedPokemonCard.classList.remove('detailed-pokemon-static');
         document.getElementById('allPokemon').classList.remove('all-pokemon-open-menu');
-        document.getElementById('onePokemon').classList.remove('one-pokemon');
+        oneDetailedPokemonCard.innerHTML = '';
     }
 }
+
 
 function closeOnePokemonScreen() {
     if (onePokemonScreen) {
@@ -122,13 +128,7 @@ function closeOnePokemonScreen() {
 }
 
 
-function showDetailedPokemonScreen(i) {
-    let currentPokemon = allLoadedPokemons[i];
-    let oneDetailedPokemonCard = document.getElementById('onePokemon');
-    oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
-    oneDetailedPokemonCard.innerHTML = `${currentPokemon['name']}`;
 
-}
 
 function showPokemonType(currentPokemons, i) {
     let pokemonsType = document.getElementById(`pokemonType-${i}`);

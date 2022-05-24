@@ -104,7 +104,7 @@ h1 {
 }
 
 .one-pokemon {
-    width: 50%  
+    width: 50%
 }
 
 
@@ -113,15 +113,29 @@ h1 {
 
 .all-pokemon {
     display: flex;
-    justify-content: flex-start;
     flex-wrap: wrap;
     padding-right: 20px;
+
+
 }
 
 .all-pokemon-open-menu {
-    width: 44%;
-    justify-content: flex-end !important;
+    display: flex;
+    width: 100%;
+    animation: widthanimation 2500ms ease-in-out 1000ms 1 forwards;
 }
+
+@keyframes widthanimation {
+    from {
+        width: 150%;
+    }
+
+    to {
+        width: 44%;
+    }
+
+}
+
 
 .detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
