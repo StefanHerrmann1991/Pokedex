@@ -1,6 +1,7 @@
 
 let pokemons = [];
 let allLoadedPokemons = [];
+let onePokemonScreen = false;
 
 
 async function init() {
@@ -85,7 +86,7 @@ function renderPokemon() {
         [typeOne, typeTwo] = comparePokemonType(loadedPokemon);
         pokemon.innerHTML +=
             `
-        <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
+        <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i}); openOnePokemonScreen()"
         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
         <div class="pokemon-card-description">
@@ -98,13 +99,35 @@ function renderPokemon() {
     }
 }
 
+function openOnePokemonScreen() {
+    if (!onePokemonScreen) {
+        document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
+        document.getElementById('onePokemon').classList.add('one-pokemon');
+    }
+    else {
+        document.getElementById('allPokemon').classList.remove('all-pokemon-open-menu');
+        document.getElementById('onePokemon').classList.remove('one-pokemon');
+    }
+}
+
+function closeOnePokemonScreen() {
+    if (onePokemonScreen) {
+        document.getElementById('allPokemon').classList.remove('all-pokemon-open-menu');
+        document.getElementById('onePokemon').classList.remove('one-pokemon');
+    }
+    else {
+        document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
+        document.getElementById('onePokemon').classList.add('one-pokemon');
+    }
+}
+
 
 function showDetailedPokemonScreen(i) {
     let currentPokemon = allLoadedPokemons[i];
     let oneDetailedPokemonCard = document.getElementById('onePokemon');
     oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
     oneDetailedPokemonCard.innerHTML = `${currentPokemon['name']}`;
-    
+
 }
 
 function showPokemonType(currentPokemons, i) {

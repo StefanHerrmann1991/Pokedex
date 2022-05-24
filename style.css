@@ -72,7 +72,7 @@ h1 {
 .left-box {
     height: 100px;
     background-color: rgb(182, 25, 25);
-    width: 65.5vh;
+    width: 50%;
     border-bottom: solid 5.5px black;
     z-index: 100;
 }
@@ -98,15 +98,40 @@ h1 {
 
 }
 
+.all-and-one-pokemon {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.one-pokemon {
+    width: 50%  
+}
+
+
+/* all-pokemon-open-menu */
+
+
+.all-pokemon {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding-right: 20px;
+}
+
+.all-pokemon-open-menu {
+    width: 44%;
+    justify-content: flex-end !important;
+}
+
 .detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
-    margin-top: 45.5px;
+    margin-top: -5px;
     height: 0px;
-    z-index: 100;
-    animation: openPokedex 2500ms ease-in-out 1000ms 1 forwards; 
+    z-index: 0;
+    animation: openPokedex-onePokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
-  
-@keyframes openPokedex {
+
+@keyframes openPokedex-onePokemon {
     from {
         height: 0px;
         border-right: solid 5.5px black;
@@ -117,9 +142,12 @@ h1 {
         height: 820px;
         border-right: solid 5.5px black;
         border-bottom: solid 5.5px black;
-        }
+    }
 }
- 
+
+
+
+
 input {
     border: none !important
 }
@@ -151,13 +179,6 @@ button {
 body {
     font-family: 'DotGothic16', sans-serif;
     font-size: 16px;
-}
-
-.all-pokemon {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    z-index: 0;
 }
 
 :root {
@@ -209,8 +230,8 @@ img {
 }
 
 .spacer {
-    margin-bottom: 40px;
-    margin-top: 40px;
+    padding-bottom: 40px;
+    margin-top: -5px;
 }
 
 .pixel-shadow {

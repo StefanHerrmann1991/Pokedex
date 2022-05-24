@@ -28,25 +28,29 @@
 </head>
 
 <body onload="init()">
-    <div id="pokedex" class="pokedex">
-        <div class="header">
-            <h1>Pokedex</h1>
-        </div>
-    </div>
-    <div class="border-style-header">
-        <div id="leftBox" class="left-box transformation">
-            <div class="pokedex-search-btn-inp">
-                <input id="pokedexSearch" placeholder="Choose your Pokemon" type="text">
-                <button  onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
-                    search</button>
+    <header>
+        <div id="pokedex" class="pokedex">
+            <div class="header">
+                <h1>Pokedex</h1>
             </div>
-            <div id="onePokemon"></div>
         </div>
-        <div class="triangular-box">
-            <div class="inner-triangle"></div>
+        <div class="border-style-header">
+            <div id="leftBox" class="left-box transformation">
+                <div class="pokedex-search-btn-inp">
+                    <input id="pokedexSearch" placeholder="Choose your Pokemon" type="text">
+                    <button onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
+                        search</button>
+                </div>
+            </div>
+            <div class="triangular-box">
+                <div class="inner-triangle"></div>
+            </div>
         </div>
+    </header>
+    <div class="all-and-one-pokemon">
+        <div id="onePokemon"></div>
+        <div id="allPokemon" class="spacer all-pokemon"></div>
     </div>
-    <div id="allPokemon" class="spacer all-pokemon"></div>
 </body>
 
 <script>
