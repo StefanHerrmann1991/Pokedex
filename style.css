@@ -108,34 +108,40 @@ h1 {
 }
 
 
-/* all-pokemon-open-menu */
-
 
 .all-pokemon {
     display: flex;
     flex-wrap: wrap;
     padding-right: 20px;
-
-
 }
+
 
 .all-pokemon-open-menu {
-    display: flex;
-    width: 100%;
-    animation: widthanimation 2500ms ease-in-out 1000ms 1 forwards;
+
+
+    animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
 
-@keyframes widthanimation {
-    from {
-        width: 150%;
+
+
+
+@keyframes openPokedex-allPokemon {
+    33% {
+        width: 100%;
+
     }
 
-    to {
+    66% {
         width: 44%;
+        justify-content: flex-start;
+
     }
 
+    100% {
+        width: 44%;
+        justify-content: center;
+    }
 }
-
 
 .detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
@@ -148,12 +154,14 @@ h1 {
 @keyframes openPokedex-onePokemon {
     from {
         height: 0px;
+        width: 0%;
         border-right: solid 5.5px black;
         border-bottom: solid 5.5px black;
     }
 
     to {
         height: 820px;
+        width: 50%;
         border-right: solid 5.5px black;
         border-bottom: solid 5.5px black;
     }
@@ -295,6 +303,17 @@ h2 {
     padding: 6px;
 }
 
+/* font animation */
 
+.typingAnimation {
+    font-family: 'DotGothic16', sans-serif;
+    color: white;
+    animation: typing 3.5s steps(40, end);
+}
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
 
 @media (width: 1350px) {}

@@ -105,8 +105,16 @@ function showDetailedPokemonScreen(i) {
     let oneDetailedPokemonCard = document.getElementById('onePokemon');
     if (!onePokemonScreen) {
         document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
-        oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
-        oneDetailedPokemonCard.innerHTML = `${currentPokemon['name']}`;
+        setTimeout(function () { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 1000);
+        setTimeout(
+            function () {
+                oneDetailedPokemonCard.innerHTML = `<h2 class="typingAnimation">${currentPokemon['name']}</h2>
+            <img class="pokemon-img" src="${currentPokemon['sprites']['front_default']}">
+            <div>Type: ${currentPokemon['abilities']['type']} </div>
+            <div>Abilities:${currentPokemon['abilities']['name']} </div>
+            <div></div>
+            <div></div>
+        `}, 5000)
     }
     else {
         oneDetailedPokemonCard.classList.remove('detailed-pokemon-static');
@@ -115,6 +123,17 @@ function showDetailedPokemonScreen(i) {
     }
 }
 
+function detailedPokemonInformation() {
+
+}
+
+function searchTopic(jsonSubmenus) {
+    let jsonSubmenu = [];
+    for (let k = 0; k < jsonSubmenus.length; k++) {
+        jsonSubmenu.push(jsonSubmenus[k]);      
+    }
+    return [jsonSubmenu];
+}
 
 function closeOnePokemonScreen() {
     if (onePokemonScreen) {
