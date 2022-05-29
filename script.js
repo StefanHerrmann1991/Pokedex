@@ -4,6 +4,7 @@ let allLoadedPokemons = [];
 let onePokemonScreen = false;
 
 
+
 async function init() {
     await loadPokemonInArray();
     renderPokemon();
@@ -104,6 +105,7 @@ async function showDetailedPokemonScreen(i) {
     let oneDetailedPokemonCard = document.getElementById('onePokemon');
     let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability');
     let pokemonMoves = await getPokemonInformation(currentPokemon, 'moves', 'move');
+    [typeOne, typeTwo] = comparePokemonType(currentPokemon);
 
     if (!onePokemonScreen) {
         document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
@@ -112,7 +114,7 @@ async function showDetailedPokemonScreen(i) {
             function () {
                 oneDetailedPokemonCard.innerHTML = `
             <div class="one-pokemon-screen">
-            <div class="one-pokemon-header">
+            <div class="one-pokemon-header" style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
             <h2 class="typingAnimation">${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
             <img class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}">
             <div class="align-items" id="onePokemonType-${i}" ></div>
@@ -120,7 +122,7 @@ async function showDetailedPokemonScreen(i) {
             <div>Abilities: ${pokemonAbility} </div>
             <div>Moves: ${pokemonMoves} </div>
             <div>Weight: </div>
-            <div>Height: </div>
+            <div>Height: </div>             
             </div>
         `
                 showPokemonTypeOnePokemon(currentPokemon, i)

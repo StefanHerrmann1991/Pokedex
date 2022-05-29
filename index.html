@@ -51,17 +51,15 @@
         <div id="onePokemon"></div>
         <div id="allPokemon" class="spacer all-pokemon"></div>
     </div>
+    <script>
+        const node = document.getElementById("pokedexSearch");
+        node.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                searchPokemon();
+            }
+        });
+    </script>
 </body>
-
-<script>
-    const node = document.getElementById("pokedexSearch");
-    node.addEventListener("keyup", function (event) {
-        if (event.key === "Enter") {
-            searchPokemon();
-        }
-    });
-</script>
-
 </html>
 
 <!-- was braucht man? 

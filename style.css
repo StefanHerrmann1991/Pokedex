@@ -317,7 +317,11 @@ h2 {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border: solid white 8px;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    clip-path: polygon(100% 0%, 100% 64.5%, 73.1% 100%, 0% 100%, 0% 0%);
 }
 /* font animation */
 
@@ -326,10 +330,19 @@ h2 {
     color: white;
     animation: typing 3.5s steps(40, end);
 }
+
+
+
+
 /* The typing effect */
 @keyframes typing {
     from { width: 0 }
     to { width: 100% }
   }
+
+
+/* game boy style game pad */
+
+
 
 @media (width: 1350px) {}
