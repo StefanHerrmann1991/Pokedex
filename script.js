@@ -38,7 +38,7 @@ async function getPokemonByName() {
 
 
 /**This function 
- * @param {pokemonNameUpperCase} - The word written with the first letter in uppercase.
+ * @param {pokemonNameUpperCase} The word written with the first letter in uppercase.
  */
 
 function upperCase(pokemonNameUpperCase) {
@@ -100,20 +100,26 @@ function renderPokemon() {
 }
 
 
-function showDetailedPokemonScreen(i) {
+async function showDetailedPokemonScreen(i) {
     let currentPokemon = allLoadedPokemons[i];
     let oneDetailedPokemonCard = document.getElementById('onePokemon');
+    let pokemonType = showPokemonType(currentPokemon, i)
+    let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability');
+    let pokemonMoves = await getPokemonInformation(currentPokemon, 'moves', 'move');
+
     if (!onePokemonScreen) {
         document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
-        setTimeout(function () { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 1000);
+        setTimeout(function () { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 500);
         setTimeout(
             function () {
-                oneDetailedPokemonCard.innerHTML = `<h2 class="typingAnimation">${currentPokemon['name']}</h2>
+                oneDetailedPokemonCard.innerHTML = `<div class="one-pokemon-screen"><h2 class="typingAnimation">${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
             <img class="pokemon-img" src="${currentPokemon['sprites']['front_default']}">
-            <div>Type: ${currentPokemon['abilities']['type']} </div>
-            <div>Abilities:${currentPokemon['abilities']['name']} </div>
-            <div></div>
-            <div></div>
+            <div>Type: ${pokemonType} </div>
+            <div>Abilities: ${pokemonAbility} </div>
+            <div>Moves: ${pokemonMoves} </div>
+            <div>Weight: </div>
+            <div>Height: </div>
+            </div>
         `}, 5000)
     }
     else {
@@ -123,14 +129,19 @@ function showDetailedPokemonScreen(i) {
     }
 }
 
-function detailedPokemonInformation() {
-
+function getPokemonInformation(currentPokemon, properties, property) {
+    let pokemonProperty = [];
+    for (let y = 0; y < currentPokemon[properties].length; y++) {
+        const element = currentPokemon[properties][y][property]['name'];
+        pokemonProperty.push(element);
+    }
+    return [pokemonProperty];
 }
 
 function searchTopic(jsonSubmenus) {
     let jsonSubmenu = [];
     for (let k = 0; k < jsonSubmenus.length; k++) {
-        jsonSubmenu.push(jsonSubmenus[k]);      
+        jsonSubmenu.push(jsonSubmenus[k]);
     }
     return [jsonSubmenu];
 }
@@ -147,6 +158,13 @@ function closeOnePokemonScreen() {
 }
 
 
+function assignToId(name, arrays, index) {
+    let nameId = document.getElementById(`${name}-${index}`)
+    for (let m = 0; m < arrays.length; m++) {
+        const array = array[i];
+    }
+    return [index, name, nameId]
+}
 
 
 function showPokemonType(currentPokemons, i) {

@@ -132,14 +132,14 @@ h1 {
     }
 
     66% {
-        width: 44%;
-        justify-content: flex-start;
+        width: 75%;
+        
 
     }
 
     100% {
-        width: 44%;
-        justify-content: center;
+        width: 48%;
+     
     }
 }
 
