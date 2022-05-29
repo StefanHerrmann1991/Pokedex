@@ -84,8 +84,7 @@ function renderPokemon() {
     for (let i = 0; i < allLoadedPokemons.length; i++) {
         let loadedPokemon = allLoadedPokemons[i];
         [typeOne, typeTwo] = comparePokemonType(loadedPokemon);
-        pokemon.innerHTML +=
-            `
+        pokemon.innerHTML += `
         <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
@@ -103,7 +102,6 @@ function renderPokemon() {
 async function showDetailedPokemonScreen(i) {
     let currentPokemon = allLoadedPokemons[i];
     let oneDetailedPokemonCard = document.getElementById('onePokemon');
-    let pokemonType = showPokemonType(currentPokemon, i)
     let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability');
     let pokemonMoves = await getPokemonInformation(currentPokemon, 'moves', 'move');
 
@@ -112,15 +110,22 @@ async function showDetailedPokemonScreen(i) {
         setTimeout(function () { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 500);
         setTimeout(
             function () {
-                oneDetailedPokemonCard.innerHTML = `<div class="one-pokemon-screen"><h2 class="typingAnimation">${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
-            <img class="pokemon-img" src="${currentPokemon['sprites']['front_default']}">
-            <div>Type: ${pokemonType} </div>
+                oneDetailedPokemonCard.innerHTML = `
+            <div class="one-pokemon-screen">
+            <div class="one-pokemon-header">
+            <h2 class="typingAnimation">${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
+            <img class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}">
+            <div class="align-items" id="onePokemonType-${i}" ></div>
+            </div>
             <div>Abilities: ${pokemonAbility} </div>
             <div>Moves: ${pokemonMoves} </div>
             <div>Weight: </div>
             <div>Height: </div>
             </div>
-        `}, 5000)
+        `
+                showPokemonTypeOnePokemon(currentPokemon, i)
+            }
+            , 5000)
     }
     else {
         oneDetailedPokemonCard.classList.remove('detailed-pokemon-static');
@@ -164,6 +169,15 @@ function assignToId(name, arrays, index) {
         const array = array[i];
     }
     return [index, name, nameId]
+}
+
+function showPokemonTypeOnePokemon(currentPokemons, i) {
+    let pokemonsType = document.getElementById(`onePokemonType-${i}`);
+    for (let j = 0; j < currentPokemons['types'].length; j++) {
+        const type = currentPokemons['types'][j]['type']['name'];
+        pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
+    }
+    return pokemonsType;
 }
 
 
