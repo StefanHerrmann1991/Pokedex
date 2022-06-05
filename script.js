@@ -73,7 +73,7 @@ async function getPokemonById(pokemonId) {
 
 async function loadPokemonInArray() {
 
-    for (let j = 1; j < 10 + 1; j++) {
+    for (let j = 1; j < 30 + 1; j++) {
         currentPokemon = await getPokemonById(j);
         allLoadedPokemons.push(currentPokemon)
     }

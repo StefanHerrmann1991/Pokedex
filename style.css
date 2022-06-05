@@ -82,7 +82,7 @@ h1 {
     height: 0;
     top: 2px;
     border-style: solid;
-    border-width: 105.5px 156px 0 0;
+    border-width: 105.5px 158px 0 0;
     border-color: black transparent transparent transparent;
 }
 
@@ -104,7 +104,8 @@ h1 {
 }
 
 .one-pokemon {
-    width: 50%
+    width: 50%;
+   
 }
 
 
@@ -148,9 +149,11 @@ h1 {
 
 .detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
-    margin-top: -5px;
+    margin-top: 0px;
     height: 0px;
     z-index: 0;
+    position: sticky; 
+    top: 0;
     animation: openPokedex-onePokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
 
@@ -158,15 +161,16 @@ h1 {
     from {
         height: 0px;
         width: 0%;
-        border-right: solid 5.5px black;
-        border-bottom: solid 5.5px black;
+        
+        
     }
 
     to {
         height: 820px;
         width: 50%;
-        border-right: solid 5.5px black;
-        border-bottom: solid 5.5px black;
+        outline: solid 5.5px black;
+        
+        
     }
 }
 
@@ -332,7 +336,15 @@ h2 {
 }
 
 
-
+.footer {
+    height: 100px;
+    position: absolute;
+    background-color: rgb(182, 25, 25); 
+    color: white;
+    width: 100%;
+    border-top: solid 5.5px black;
+    top: 90%;
+}
 
 /* The typing effect */
 @keyframes typing {
