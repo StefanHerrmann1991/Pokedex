@@ -191,7 +191,7 @@ function showPokemonTypeOnePokemon(currentPokemons, i) {
 function generateCross(sideLength) {
   let cross = document.getElementById("cross");
   let coord1 = sideLength * 3 / 8;
-  let coord2 = sideLength * 6 / 8;
+  let coord2 = sideLength * 5 / 8;
   cross.innerHTML = `
       <img class='cross-map' src='PNG/Cross.png' usemap='#image-map' height="${sideLength}px !important" width="${sideLength}px !important" >
         <map name='image-map'>
