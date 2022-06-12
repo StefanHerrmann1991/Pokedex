@@ -108,6 +108,10 @@ h1 {
 
 }
 
+.pokemon-img {
+    height: 200px;
+    width: 200px;
+}
 
 
 .all-pokemon {
@@ -246,10 +250,6 @@ body {
     margin-top: 20px;
 }
 
-img {
-    height: 200px;
-    width: 200px;
-}
 
 .spacer {
     padding-bottom: 40px;
@@ -356,6 +356,9 @@ h2 {
     width: 100%;
     border-top: solid 5.5px black;
     top: 90%;
+}
+area{
+    cursor: pointer;
 }
 
 /* The typing effect */
