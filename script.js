@@ -73,9 +73,9 @@ async function getPokemonById(pokemonId) {
 
 async function loadPokemonInArray() {
 
-  for (let j = 1; j < 30 + 1; j++) {
+  for (let j = 1; j < 10 + 1; j++) {
     currentPokemon = await getPokemonById(j);
-    allLoadedPokemons.push(currentPokemon)
+    allLoadedPokemons.push(currentPokemon);
   }
 }
 
@@ -98,6 +98,28 @@ function renderPokemon() {
     console.log(loadedPokemon);
   }
 }
+
+
+/* function save() {
+
+}
+
+function load() {
+   */
+
+function savePokemon(arr) {
+  let variableAsText = arr;
+  let arrays = JSON.stringify(arr);
+  localStorage.setItem(`${arrays}`, variableAsText);
+}
+
+function loadPokemon() {
+  let postsAsText = localStorage.getItem('posts');
+  if (postsAsText) {
+    posts = JSON.parse(postsAsText);
+  }
+}
+
 
 
 async function showDetailedPokemonScreen(i) {
@@ -123,14 +145,23 @@ async function showDetailedPokemonScreen(i) {
             </div>
             </div>
             </div>
+            <div class="one-pokemon-details">
+            <div class="mgn-l">
             <div>Abilities: ${pokemonAbility} </div>
-            <div>Weight: </div>
-            <div>Height: </div> 
-            <div id="cross"></div>            
+            <div>Weight: ${currentPokemon.weight} </div>
+            <div>Height: ${currentPokemon.height} </div> 
+            </div>
+            <img class="cross-map" src="PNG/Cross.png" usemap="#image-map" height="200px" width="200px">
+                   <map name='image-map'>
+            <area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
+            <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
+            <area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
+            <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
+        </map>   
+        </div> 
             </div>
         `
-        generateCross(200);
-        showPokemonTypeOnePokemon(currentPokemon, i)
+        showPokemonTypeOnePokemon(currentPokemon, i);
       }
       , 5000)
   }
@@ -188,19 +219,46 @@ function showPokemonTypeOnePokemon(currentPokemons, i) {
 }
 
 
-function generateCross(sideLength) {
+function generateCross(sideLength, i) {
   let cross = document.getElementById("cross");
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
   cross.innerHTML = `
-      <img class='cross-map' src='PNG/Cross.png' usemap='#image-map' height="${sideLength}px !important" width="${sideLength}px !important" >
+      <img class='cross-map' src='PNG/Cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
         <map name='image-map'>
-            <area target="" alt="up"    title="up"     coords="${coord1},0,${coord2},${coord1}" shape="rect">
-            <area target="" alt="left"  title="left"   coords="0,${coord1},${coord1},${coord2}" shape="rect">
-            <area target="" alt="down"  title="down"   coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
-            <area target="" alt="right" title="right"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
+            <area target="" alt="up"    title="up"      coords="${coord1},0,${coord2},${coord1}" shape="rect">
+            <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
+            <area target="" alt="down"  title="down"    coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
+            <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
         </map> `;
 }
+
+/* onclick="lastPokemon(${i})" 
+*/
+
+function nextPokemon(i) {
+  {
+    if (i < allLoadedPokemons.length - 1) {
+      i++;
+    } else {
+      i = 0;
+    }
+    console.log(i);
+    showDetailedPokemonScreen(i);
+  }
+}
+
+function lastPokemon(i) {
+  if (i > 0) {
+    i--;
+  }
+  else {
+    i = allLoadedPokemons.length - 1;
+  }
+  console.log(i);
+  showDetailedPokemonScreen(i);
+}
+
 
 function showPokemonType(currentPokemons, i) {
   let pokemonsType = document.getElementById(`pokemonType-${i}`);
@@ -248,9 +306,9 @@ function padLeadingZeros(num, size) {
 
 
 
-/* function nextImg(i) {
+/* function nextPokemon(i) {
     {
-        if (i < images.length - 1) {
+        if (i < all.length - 1) {
             i++;
         } else {
             i = 0;
@@ -260,7 +318,7 @@ function padLeadingZeros(num, size) {
     }
 }
 
-function lastImg(i) {
+function lastPokemon(i) {
     if (i > 0) {
         i--;
     }
@@ -300,28 +358,7 @@ function showImg(i) {
     document.getElementById('black-screen-img').src = `img/${i + 1}.jpg`;
 
 }
-function nextImg(i) {
-    {
-        if (i < images.length - 1) {
-            i++;
-        } else {
-            i = 0;
-        }
-        document.getElementById('black-screen-img').innerHTML = '';
-        showImg(i);
-    }
-}
 
-function lastImg(i) {
-    if (i > 0) {
-        i--;
-    }
-    else {
-        i = images.length - 1;
-    }
-    document.getElementById('black-screen-img').innerHTML = '';
-    showImg(i);
-}
 
 function closeImg() {
 

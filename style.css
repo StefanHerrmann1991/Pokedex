@@ -19,7 +19,9 @@
     border-bottom: solid 5.5px black;
 }
 
-
+.mgn-l {
+    margin-left: 30px;
+}
 
 .pokedex-search-btn-inp {
     display: flex;
@@ -113,6 +115,8 @@ h1 {
     width: 200px;
 }
 
+div {color: white;
+font-size: 20px;}
 
 .all-pokemon {
     display: flex;
@@ -120,6 +124,12 @@ h1 {
     padding-right: 20px;
 }
 
+
+.one-pokemon-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .all-pokemon-open-menu {
 
@@ -168,7 +178,7 @@ h1 {
     }
 
     to {
-        height: 820px;
+        height: 900px;
         width: 50%;
         outline: solid 5.5px black;
     }
