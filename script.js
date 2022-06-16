@@ -2,10 +2,11 @@
 let pokemons = [];
 let allLoadedPokemons = [];
 let onePokemonScreen = false;
-
+let numberOfLoadedPokemons = 0;
 
 
 async function init() {
+
   await loadPokemonInArray();
   renderPokemon();
 }
@@ -71,13 +72,7 @@ async function getPokemonById(pokemonId) {
   return pokemon;
 }
 
-async function loadPokemonInArray() {
 
-  for (let j = 1; j < 10 + 1; j++) {
-    currentPokemon = await getPokemonById(j);
-    allLoadedPokemons.push(currentPokemon);
-  }
-}
 
 function renderPokemon() {
   let pokemon = document.getElementById('allPokemon');
@@ -108,7 +103,7 @@ function load() {
    */
 
 function savePokemon(arr) {
-  let variableAsText = arr;
+  let variableAsText = arr + 'asText';
   let arrays = JSON.stringify(arr);
   localStorage.setItem(`${arrays}`, variableAsText);
 }
@@ -119,8 +114,6 @@ function loadPokemon() {
     posts = JSON.parse(postsAsText);
   }
 }
-
-
 
 async function showDetailedPokemonScreen(i) {
   let currentPokemon = allLoadedPokemons[i];
@@ -172,6 +165,9 @@ async function showDetailedPokemonScreen(i) {
   }
 }
 
+
+
+
 function getPokemonInformation(currentPokemon, properties, property) {
   let pokemonProperty = [];
   for (let y = 0; y < currentPokemon[properties].length; y++) {
@@ -216,6 +212,19 @@ function showPokemonTypeOnePokemon(currentPokemons, i) {
     pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
   }
   return pokemonsType;
+}
+
+function showMorePokemon() {
+numberOfLoadedPokemons + 10;
+console.log(numberOfLoadedPokemons);
+}
+
+async function loadPokemonInArray() {
+   
+  for (let j = 1; j < numberOfLoadedPokemons + 10 + 1; j++) {
+    currentPokemon = await getPokemonById(j);
+    allLoadedPokemons.push(currentPokemon);
+    }
 }
 
 

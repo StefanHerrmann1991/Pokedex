@@ -19,6 +19,9 @@
     border-bottom: solid 5.5px black;
 }
 
+.more-pokemon
+{height: 40px;}
+
 .mgn-l {
     margin-left: 30px;
 }
@@ -122,6 +125,7 @@ font-size: 20px;}
     display: flex;
     flex-wrap: wrap;
     padding-right: 20px;
+    overflow: auto;
 }
 
 
@@ -132,8 +136,6 @@ font-size: 20px;}
 }
 
 .all-pokemon-open-menu {
-
-
     animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
 
@@ -179,7 +181,7 @@ font-size: 20px;}
 
     to {
         height: 900px;
-        width: 50%;
+        width: 50%; /* 230% */
         outline: solid 5.5px black;
     }
 }
@@ -351,11 +353,7 @@ h2 {
     background-color: black;
 }
 
-.typingAnimation {
-    font-family: 'DotGothic16', sans-serif;
-    color: white;
-    animation: typing 3.5s steps(40, end);
-}
+
 
 
 .footer {
@@ -371,16 +369,7 @@ area{
     cursor: pointer;
 }
 
-/* The typing effect */
-@keyframes typing {
-    from {
-        width: 0
-    }
 
-    to {
-        width: 100%
-    }
-}
 
 
 /* game boy style game pad */
