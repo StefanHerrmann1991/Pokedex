@@ -241,12 +241,12 @@ function showPokemonTypeOnePokemon(currentPokemons, i) {
 
 function showMorePokemon() {
 
-  window.onscroll = function () {
+window.onscroll =   async function () {
     if (window.scrollY + window.innerHeight >= document.body.clientHeight) {
       console.log("bottom!");
       numberOfLoadedPokemons += 10;
       console.log(numberOfLoadedPokemons);
-      loadPokemonInArray();
+      await loadPokemonInArray();
       renderPokemon();
     }
   }
@@ -259,7 +259,7 @@ function showMorePokemon() {
 
 async function loadPokemonInArray() {
 
-  for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 10 + 1; j++) {
+  for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 10; j++) {
     currentPokemon = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemon);
   }
