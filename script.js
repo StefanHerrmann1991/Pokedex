@@ -1,21 +1,45 @@
 
 let pokemons = [];
+
+/**
+ * In this array all Pokemon from the API will be pushed.
+ * @type {Array.json} 
+ */
 let allLoadedPokemons = [];
+/**
+ * The variable serves as test if the detailed Pokemon window on the left side of the screen has been opened.
+ * @type {boolean}
+ */
 let onePokemonScreen = false;
+
+/**
+ * In this variable the number of loaded Pokemon is stored in case more Pokemon needs to be loaded.
+ */
 let numberOfLoadedPokemons = 0;
 
-
+/**
+ * This function loads and renders the pokemon in an array when the side is loaded
+ */
 async function init() {
 
   await loadPokemonInArray();
   renderPokemon();
 }
 
+/**
+ * this function loads a pokemon from the pokemon API and then shows information about it
+ */
 async function searchPokemon() {
   let pokemon = await getPokemonByName();
   showPokemonInfo(pokemon);
 }
 
+
+/**
+ * The function shows information about a searched pokemon,
+ * further it sets its name to upper case.
+ * @param {number|string} pokemon - ID of the pokemon or its name
+ */
 async function showPokemonInfo(pokemon) {
 
   document.getElementById('onePokemon').innerHTML = `
@@ -26,7 +50,7 @@ async function showPokemonInfo(pokemon) {
 
 /**
  * Ask for Pokemon from Poke API
- * @param {number} i - pokemon ID that is asked for
+ * 
  * */
 
 async function getPokemonByName() {
@@ -39,8 +63,9 @@ async function getPokemonByName() {
 }
 
 
-/**This function 
- * @param {pokemonNameUpperCase} The word written with the first letter in uppercase.
+/**
+ * The functions takes a word and returns the string with the first letter in upper case
+ * @param {string} pokemonNameUpperCase - The string which first letter should be written in upper case
  */
 
 function upperCase(pokemonNameUpperCase) {
@@ -95,12 +120,7 @@ function renderPokemon() {
 }
 
 
-/* function save() {
 
-}
-
-function load() {
-   */
 
 function savePokemon(arr) {
   let variableAsText = arr + 'asText';
@@ -144,16 +164,22 @@ async function showDetailedPokemonScreen(i) {
             <div>Weight: ${currentPokemon.weight} </div>
             <div>Height: ${currentPokemon.height} </div> 
             </div>
-            <img class="cross-map" src="PNG/Cross.png" usemap="#image-map" height="200px" width="200px">
-                   <map name='image-map'>
-            <area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
-            <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
-            <area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
-            <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
-        </map>   
+            <div id="crossPosition"></div>
+          
         </div> 
             </div>
+            
         `
+        let crossPosition = document.getElementById('crossPosition');
+        let text = `<img class="cross-map" src="PNG/Cross.png" usemap="#image-map" height="200px" width="200px">
+        <map name='image-map'>
+        <area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
+        <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
+        <area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
+        <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
+        </map> `
+        crossPosition.insertAdjacentHTML('afterbegin', text)
+
         showPokemonTypeOnePokemon(currentPokemon, i);
       }
       , 5000)
@@ -164,7 +190,6 @@ async function showDetailedPokemonScreen(i) {
     oneDetailedPokemonCard.innerHTML = '';
   }
 }
-
 
 
 
@@ -215,16 +240,29 @@ function showPokemonTypeOnePokemon(currentPokemons, i) {
 }
 
 function showMorePokemon() {
-numberOfLoadedPokemons + 10;
-console.log(numberOfLoadedPokemons);
+
+  window.onscroll = function () {
+    if (window.scrollY + window.innerHeight >= document.body.clientHeight) {
+      console.log("bottom!");
+      numberOfLoadedPokemons += 10;
+      console.log(numberOfLoadedPokemons);
+      loadPokemonInArray();
+      renderPokemon();
+    }
+  }
+  
 }
 
+/**
+ * The function is for loading a certain number of Pokemon and pushes them into the allLoadedPokemons array.
+ */
+
 async function loadPokemonInArray() {
-   
-  for (let j = 1; j < numberOfLoadedPokemons + 10 + 1; j++) {
+
+  for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 10 + 1; j++) {
     currentPokemon = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemon);
-    }
+  }
 }
 
 
@@ -242,8 +280,6 @@ function generateCross(sideLength, i) {
         </map> `;
 }
 
-/* onclick="lastPokemon(${i})" 
-*/
 
 function nextPokemon(i) {
   {
@@ -278,10 +314,12 @@ function showPokemonType(currentPokemons, i) {
   return pokemonsType;
 }
 
-/**The function load Pokemon types from the API and is used to compare if the pokemon have one or two types
+/**
+ * The function load Pokemon types from the API and is used to compare if the pokemon have one or two types
+ * depending on the number of types available the types are returned
+ * @param {number} currentPokemons the ID of the current Pokemon
+ * @returns {string} the first type of the current Pokemon
  * 
- * @param {number} currentPokemons 
- * @returns Returns the type of the Pokemon.
  */
 
 function comparePokemonType(currentPokemons) {
@@ -296,9 +334,9 @@ function comparePokemonType(currentPokemons) {
 }
 
 /**The function inserts zeros as string before the id of a Pokemon
- * @param { number } num The number of the Pokemon
+ * @param { number } num The number/ID of the Pokemon
  * @param { number } size The number of zeros before the number of the Pokemon.
- * @returns A Pokemon number with three zeros before the actual Pokemon ID.
+ * @returns {string} A Pokemon number with three zeros before the actual Pokemon ID.
  */
 
 function padLeadingZeros(num, size) {
