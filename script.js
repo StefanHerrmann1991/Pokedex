@@ -115,7 +115,6 @@ function renderPokemon() {
         </div>
         </div>`;
     pokemonsType = showPokemonType(loadedPokemon, i);
-    console.log(loadedPokemon);
   }
 }
 
@@ -239,27 +238,34 @@ function showPokemonTypeOnePokemon(currentPokemons, i) {
   return pokemonsType;
 }
 
-function showMorePokemon() {
+function showPokemonType(currentPokemons, i) {
+  let pokemonsType = document.getElementById(`pokemonType-${i}`);
+  for (let j = 0; j < currentPokemons['types'].length; j++) {
+    const type = currentPokemons['types'][j]['type']['name'];
+    pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
+  }
+  return pokemonsType;
+}
 
-window.onscroll =   async function () {
+
+/**
+ * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
+ * It loads always 10 new Pokemon when the scrollbar hits the button.
+ */
+  window.onscroll = async function () {
     if (window.scrollY + window.innerHeight >= document.body.clientHeight) {
-      console.log("bottom!");
       numberOfLoadedPokemons += 10;
-      console.log(numberOfLoadedPokemons);
       await loadPokemonInArray();
       renderPokemon();
-    }
-  }
-  
+      }
 }
 
 /**
- * The function is for loading a certain number of Pokemon and pushes them into the allLoadedPokemons array.
+ * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
  */
 
 async function loadPokemonInArray() {
-
-  for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 10; j++) {
+  for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
     currentPokemon = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemon);
   }
@@ -288,7 +294,7 @@ function nextPokemon(i) {
     } else {
       i = 0;
     }
-    console.log(i);
+
     showDetailedPokemonScreen(i);
   }
 }
@@ -300,23 +306,16 @@ function lastPokemon(i) {
   else {
     i = allLoadedPokemons.length - 1;
   }
-  console.log(i);
+
   showDetailedPokemonScreen(i);
 }
 
 
-function showPokemonType(currentPokemons, i) {
-  let pokemonsType = document.getElementById(`pokemonType-${i}`);
-  for (let j = 0; j < currentPokemons['types'].length; j++) {
-    const type = currentPokemons['types'][j]['type']['name'];
-    pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
-  }
-  return pokemonsType;
-}
+
 
 /**
- * The function load Pokemon types from the API and is used to compare if the pokemon have one or two types
- * depending on the number of types available the types are returned
+ * The function load Pokemon types from the API and is used to compare if the pokemon have one or two types.
+ * Depending on the number of Pokemon types available the types are returned.
  * @param {number} currentPokemons the ID of the current Pokemon
  * @returns {string} the first type of the current Pokemon
  * 
