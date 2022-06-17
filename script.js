@@ -169,16 +169,8 @@ async function showDetailedPokemonScreen(i) {
             </div>
             
         `
-        let crossPosition = document.getElementById('crossPosition');
-        let text = `<img class="cross-map" src="PNG/Cross.png" usemap="#image-map" height="200px" width="200px">
-        <map name='image-map'>
-        <area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
-        <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
-        <area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
-        <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
-        </map> `
-        crossPosition.insertAdjacentHTML('afterbegin', text)
 
+        insertCross(i);
         showPokemonTypeOnePokemon(currentPokemon, i);
       }
       , 5000)
@@ -188,6 +180,18 @@ async function showDetailedPokemonScreen(i) {
     document.getElementById('allPokemon').classList.remove('all-pokemon-open-menu');
     oneDetailedPokemonCard.innerHTML = '';
   }
+}
+
+function insertCross(i) {
+  let crossPosition = document.getElementById('crossPosition');
+  let text = `<img class="cross-map" src="PNG/Cross.png" usemap="#image-map" height="200px" width="200px">
+<map name='image-map'>
+<area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
+<area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
+<area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
+<area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
+</map> `
+  crossPosition.insertAdjacentHTML('afterbegin', text)
 }
 
 
@@ -252,12 +256,12 @@ function showPokemonType(currentPokemons, i) {
  * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
  * It loads always 10 new Pokemon when the scrollbar hits the button.
  */
-  window.onscroll = async function () {
-    if (window.scrollY + window.innerHeight >= document.body.clientHeight) {
-      numberOfLoadedPokemons += 10;
-      await loadPokemonInArray();
-      renderPokemon();
-      }
+window.onscroll = async function () {
+  if (window.scrollY + window.innerHeight >= document.body.clientHeight) {
+    numberOfLoadedPokemons += 10;
+    await loadPokemonInArray();
+    renderPokemon();
+  }
 }
 
 /**
