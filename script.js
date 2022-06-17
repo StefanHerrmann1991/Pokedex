@@ -1,6 +1,3 @@
-
-let pokemons = [];
-
 /**
  * In this array all Pokemon from the API will be pushed.
  * @type {Array.json} 
@@ -21,7 +18,6 @@ let numberOfLoadedPokemons = 0;
  * This function loads and renders the pokemon in an array when the side is loaded
  */
 async function init() {
-
   await loadPokemonInArray();
   renderPokemon();
 }
@@ -97,8 +93,6 @@ async function getPokemonById(pokemonId) {
   return pokemon;
 }
 
-
-
 function renderPokemon() {
   let pokemon = document.getElementById('allPokemon');
   pokemon.innerHTML = "";
@@ -118,17 +112,14 @@ function renderPokemon() {
   }
 }
 
-
-
-
 function savePokemon(arr) {
   let variableAsText = arr + 'asText';
   let arrays = JSON.stringify(arr);
   localStorage.setItem(`${arrays}`, variableAsText);
 }
 
-function loadPokemon() {
-  let postsAsText = localStorage.getItem('posts');
+function loadPokemon(arr) {
+  let variableAsText = localStorage.getItem(`${arrays}`);
   if (postsAsText) {
     posts = JSON.parse(postsAsText);
   }
@@ -281,6 +272,8 @@ window.onscroll = async function () {
   }
 }
 
+
+
 /**
  * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
  */
@@ -308,6 +301,22 @@ function generateCross(sideLength, i) {
 }
 
 
+
+document.addEventListener('mousedown', function (event) {
+  if (event.detail > 1) {
+    event.preventDefault();
+    // of course, you still do not know what you prevent here...
+    // You could also check event.ctrlKey/event.shiftKey/event.altKey
+    // to not prevent something useful.
+  }
+}, false);
+
+/**
+ * The function increments the number of the PokemonID and renders the new Pokemon. 
+ * When the last Pokemon is reached, i is set to 0 to start from the beginning.
+ * @param {number} i The ID of the actual Pokemon.
+ */
+
 function nextPokemon(i) {
   {
     if (i < allLoadedPokemons.length - 1) {
@@ -315,10 +324,15 @@ function nextPokemon(i) {
     } else {
       i = 0;
     }
-
     showDetailedPokemonScreen(i);
   }
 }
+
+/**
+ * The function decrements the number of the PokemonID and renders the new Pokemon. 
+ * When the first Pokemon is reached, i is set to the last Pokemon in the array.
+ * @param {number} i The ID of the actual Pokemon.
+ */
 
 function lastPokemon(i) {
   if (i > 0) {
@@ -327,7 +341,6 @@ function lastPokemon(i) {
   else {
     i = allLoadedPokemons.length - 1;
   }
-
   showDetailedPokemonScreen(i);
 }
 
@@ -364,68 +377,6 @@ function padLeadingZeros(num, size) {
   while (s.length < size) s = "0" + s;
   return s;
 }
-
-/**This onclick function enables a detailed description of the chosen (by click or by search) Pokemon.
- * 
- * 
-*/
-
-
-
-
-/* function nextPokemon(i) {
-    {
-        if (i < all.length - 1) {
-            i++;
-        } else {
-            i = 0;
-        }
-        document.getElementById('black-screen-img').innerHTML = '';
-        showImg(i);
-    }
-}
-
-function lastPokemon(i) {
-    if (i > 0) {
-        i--;
-    }
-    else {
-        i = images.length - 1;
-    }
-    document.getElementById('black-screen-img').innerHTML = '';
-    pokemonCardDetailedInformation(i);
-} */
-
-/* 
-
-
-function load() {
-    loadImages(25); //hier muss die Anzahl an Bildern rein
-    for (i = 0; i < images.length; i++) {
-        document.getElementById('img').innerHTML += `
-        <img id="${i}"  onclick="showImg(${i})" class="img-box" src="${images[i]}"<img>
-     `}
-}
-function loadImages(numberOfPictures) { //die Funktion lädt Bilder der Form Zahl.jpg
-    for (let i = 1; i < numberOfPictures + 1; i++) {
-        images.push(`img/${i}.jpg`);
-    }
-
-}
-
-function showImg(i) {
-    document.getElementById('big-img').innerHTML = `
-    <div class="dialogue-bg" id="black-screen"><div class="close-btn mgn-top mgn-right"><button class="button"  onclick="closeImg()"><span class="material-icons-outlined">close</span></button></div>
-    <div class="dialogue-bg-child"><button class="button mgn-left"  onclick="lastImg(${i})"><span class="material-icons-outlined">arrow_back</span></button>
-    <img class="img-box-big" id="black-screen-img">
-    <button class="button mgn-right"  onclick="nextImg(${i})"><span class="material-icons-outlined">arrow_forward</span></button> 
-    </div>
-    </div>
-     `
-    document.getElementById('black-screen-img').src = `img/${i + 1}.jpg`;
-
-}
-
 
 function closeImg() {
 
