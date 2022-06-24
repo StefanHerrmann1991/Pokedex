@@ -128,27 +128,26 @@ function loadPokemon(arr) {
 async function showDetailedPokemonScreen(i) {
   let currentPokemon = allLoadedPokemons[i];
   let oneDetailedPokemonCard = document.getElementById('onePokemon');
-  let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability');
-  /* let pokemonMoves = await getPokemonInformation(currentPokemon, 'moves', 'move'); */
   [typeOne, typeTwo] = comparePokemonType(currentPokemon);
 
   if (!onePokemonScreen) {
-
     document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
-    setTimeout(() => { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 500);
     setTimeout(() => {
-      oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility)
+      oneDetailedPokemonCard.classList.add('detailed-pokemon-static')
+    }, 500);
+    setTimeout(() => {
+      oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+      renderPokemonInformation(currentPokemon, i);
       insertCross(i);
       showPokemonTypeOnePokemon(currentPokemon, i);
       onePokemonScreen = true;
-    }
-      , 5000)
+    }, 5000)
   }
   if (onePokemonScreen) {
-    oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility)
+    oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+    renderPokemonInformation(currentPokemon, i);
     insertCross(i);
     showPokemonTypeOnePokemon(currentPokemon, i);
-
   }
 
 
@@ -159,8 +158,8 @@ async function showDetailedPokemonScreen(i) {
     } */
 }
 
-function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility) {
-  return `   <div class="one-pokemon-screen">
+function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
+  return `  <div class="one-pokemon-screen">
             <div class="outer-polygon">
             <div class="border-one-pokemon">
             <div class="one-pokemon-header" style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
@@ -172,30 +171,57 @@ function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemo
             </div>
             <div class="one-pokemon-details">
             <div class="mgn-l">
-            <div id="abilities-${i}" >Abilities: ${pokemonAbility} </div>
-            <div id="weight-${i}">Weight: ${currentPokemon.weight} </div>
-            <div id="height-${i}">Height: ${currentPokemon.height} </div> 
+            <div id="abilities-${i}"></div>
+            <div id="weight-${i}"></div>
+            <div id="height-${i}"></div> 
             </div>
             <div id="crossPosition"></div>
             </div> 
             </div>        
         `;
+
+       
 }
 
-function getHeight(currentPokemon) {
+function renderPokemonInformation(currentPokemon, i) {
+  getHeight(currentPokemon, i);
+  getWeight(currentPokemon, i);
+  getAbilities(currentPokemon, i);
+}
+
+function getHeight(currentPokemon, i) {
   let height = document.getElementById(`height-${i}`);
+  let text = `<div>Height: ${currentPokemon['height']}</div>`;
   height.insertAdjacentHTML('afterbegin', text);
 };
 
-function getWeight(currentPokemon) {
+function getWeight(currentPokemon, i) {
   let weight = document.getElementById(`weight-${i}`);
+  let text = `<div>Weight: ${currentPokemon['weight']}</div>`;
   weight.insertAdjacentHTML('afterbegin', text);
 };
 
-function getAbilities(currentPokemon) {
+async function getAbilities(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
+  let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability');
+
+ /*  let abilitiesArray = [];
+  for (let o = 0; o < currentPokemon['abilities'].length; o++) {
+     abilitiesArray.push(currentPokemon['abilities'][o]['ability']['name']);
+  }  */
+  console.log(pokemonAbility)
+  let text = `<div>Abilities: ${pokemonAbility}</div>`;
   abilities.insertAdjacentHTML('afterbegin', text);
 };
+
+function getPokemonInformation(currentPokemon, properties, property) {
+  let pokemonProperty = [];
+  for (let y = 0; y < currentPokemon[`${properties}`].length; y++) {
+    const element = currentPokemon[`${properties}`][y][`${property}`]['name'];
+    pokemonProperty.push(element);
+  }
+  return [pokemonProperty];
+}
 
 
 function insertCross(i) {
@@ -212,14 +238,7 @@ function insertCross(i) {
 
 
 
-function getPokemonInformation(currentPokemon, properties, property) {
-  let pokemonProperty = [];
-  for (let y = 0; y < currentPokemon[properties].length; y++) {
-    const element = currentPokemon[properties][y][property]['name'];
-    pokemonProperty.push(element);
-  }
-  return [pokemonProperty];
-}
+
 
 function searchTopic(jsonSubmenus) {
   let jsonSubmenu = [];
