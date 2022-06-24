@@ -135,9 +135,8 @@ async function showDetailedPokemonScreen(i) {
   if (!onePokemonScreen) {
 
     document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
-    setTimeout(function () { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 500);
-    setTimeout(
-      function () {
+    setTimeout(() => { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 500);
+    setTimeout(() => {
         oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility)
         insertCross(i);
         showPokemonTypeOnePokemon(currentPokemon, i);
