@@ -137,20 +137,18 @@ async function showDetailedPokemonScreen(i) {
     document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
     setTimeout(() => { oneDetailedPokemonCard.classList.add('detailed-pokemon-static') }, 500);
     setTimeout(() => {
-        oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility)
-        insertCross(i);
-        showPokemonTypeOnePokemon(currentPokemon, i);
-        console.log(onePokemonScreen);
-        onePokemonScreen = true;
-      }
+      oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility)
+      insertCross(i);
+      showPokemonTypeOnePokemon(currentPokemon, i);
+      onePokemonScreen = true;
+    }
       , 5000)
-
   }
   if (onePokemonScreen) {
     oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility)
     insertCross(i);
     showPokemonTypeOnePokemon(currentPokemon, i);
-    console.log(onePokemonScreen);
+
   }
 
 
@@ -161,16 +159,12 @@ async function showDetailedPokemonScreen(i) {
     } */
 }
 
-
-
-
-
 function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemonAbility) {
   return `   <div class="one-pokemon-screen">
             <div class="outer-polygon">
             <div class="border-one-pokemon">
             <div class="one-pokemon-header" style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-            <h2 class="typingAnimation">${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
+            <h2>${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
             <img class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}">
             <div class="align-items" id="onePokemonType-${i}"></div>
             </div>
@@ -187,6 +181,21 @@ function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemo
             </div>        
         `;
 }
+
+function getHeight(currentPokemon) {
+  let height = document.getElementById(`height-${i}`);
+  height.insertAdjacentHTML('afterbegin', text);
+};
+
+function getWeight(currentPokemon) {
+  let weight = document.getElementById(`weight-${i}`);
+  weight.insertAdjacentHTML('afterbegin', text);
+};
+
+function getAbilities(currentPokemon) {
+  let abilities = document.getElementById(`abilities-${i}`);
+  abilities.insertAdjacentHTML('afterbegin', text);
+};
 
 
 function insertCross(i) {
@@ -379,7 +388,8 @@ function padLeadingZeros(num, size) {
 
 function closeImg() {
 
-    document.getElementById('black-screen').classList.add('d-none');}
+  document.getElementById('black-screen').classList.add('d-none');
+}
 
 
 
