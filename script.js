@@ -178,9 +178,9 @@ function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo, pokemo
             </div>
             <div class="one-pokemon-details">
             <div class="mgn-l">
-            <div>Abilities: ${pokemonAbility} </div>
-            <div>Weight: ${currentPokemon.weight} </div>
-            <div>Height: ${currentPokemon.height} </div> 
+            <div id="abilities-${i}" >Abilities: ${pokemonAbility} </div>
+            <div id="weight-${i}">Weight: ${currentPokemon.weight} </div>
+            <div id="height-${i}">Height: ${currentPokemon.height} </div> 
             </div>
             <div id="crossPosition"></div>
             </div> 
