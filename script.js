@@ -126,52 +126,39 @@ function loadPokemon(arr) {
 } */
 
 async function showDetailedPokemonScreen(i) {
-  let currentPokemon = allLoadedPokemons[i];
   let oneDetailedPokemonCard = document.getElementById('onePokemon');
-  [typeOne, typeTwo] = comparePokemonType(currentPokemon);
-
   if (window.innerWidth <= 700 && !onePokemonScreen) {
-    /* the viewport is 600 pixels wide or less window.scrollY + window.innerHeight >= document.body.clientHeight */
     document.getElementById('allPokemon').classList.add('d-none');
     oneDetailedPokemonCard.classList.add('detailed-pokemon-static-2');
-    oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
-    renderPokemonInformation(currentPokemon, i);
-    insertCross(i);
-    showPokemonTypeOnePokemon(currentPokemon, i);
+    createOnePokemonScreen(i, oneDetailedPokemonCard);
     onePokemonScreen = true;
   }
-
   if (window.innerWidth > 700 && !onePokemonScreen) {
     document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
     setTimeout(() => {
       oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
     }, 500);
     setTimeout(() => {
-      oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
-      renderPokemonInformation(currentPokemon, i);
-      insertCross(i);
-      showPokemonTypeOnePokemon(currentPokemon, i);
+      createOnePokemonScreen(i, oneDetailedPokemonCard);
       onePokemonScreen = true;
     }, 5000)
   }
   if (onePokemonScreen) {
-    oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
-    renderPokemonInformation(currentPokemon, i);
-    insertCross(i);
-    showPokemonTypeOnePokemon(currentPokemon, i);
+    createOnePokemonScreen(i, oneDetailedPokemonCard);
   }
 }
 
+function createOnePokemonScreen(i, oneDetailedPokemonCard) {
+  let currentPokemon = allLoadedPokemons[i];
+  [typeOne, typeTwo] = comparePokemonType(currentPokemon);
+  oneDetailedPokemonCard.innerHTML = renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+  renderPokemonInformation(currentPokemon, i);
+  insertCross(i);
+  showPokemonTypeOnePokemon(currentPokemon, i);
+}
 
 
-
-
-
-
-
-
-
-function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
+function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
             <div class="outer-polygon">
             <div class="border-one-pokemon">
@@ -192,8 +179,6 @@ function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
             </div> 
             </div>        
         `;
-
-
 }
 
 function renderPokemonInformation(currentPokemon, i) {
@@ -228,6 +213,16 @@ async function getPokemonStats(currentPokemon, i) {
   let pokemonAbility = await getPokemonInformation(currentPokemon, 'base_stat', 'stats');
 }
 
+/**
+ * The function searches through the list of pokemon JSON objects and returns there properties.
+ * 
+ * @param {string|number} currentPokemon Is equivalent to the number or name of the current Pokemon.
+ * @param {string} properties If a property from a menu of an object is given.
+ * @param {string} property If a single or more properties from a submenu of an object is given.
+ * @param {string} name If the name of an object is given.
+ * @returns A specific Pokemon property.
+ */
+
 function getPokemonInformation(currentPokemon, properties, property, name) {
   let pokemonProperty = [];
   if (name) {
@@ -245,25 +240,41 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
   return [pokemonProperty];
 }
 
+/**
+ * The function enables the responsivness of the cross element.
+ * 
+ * @param {number} i The current Pokemon ID.
+ */
 
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
-  
-  let text = `<img class="cross-map" src="PNG/Cross.png" usemap="#image-map" height="200px" width="200px">
-              <map name='image-map'>
-              <area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
-              <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
-              <area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
-              <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
-              </map> `
-  crossPosition.insertAdjacentHTML('afterbegin', text)
+  if (window.innerWidth <= 700) {
+    let text = generateCross(200, i);
+    crossPosition.insertAdjacentHTML('afterbegin', text)
+  };
+  if (window.innerWidth > 700 && window.innerWidth < 1100) {
+    let text = generateCross(150, i);
+    crossPosition.insertAdjacentHTML('afterbegin', text)
+  };
+  if (window.innerWidth > 1100) {
+    let text = generateCross(150, i);
+    crossPosition.insertAdjacentHTML('afterbegin', text)
+  };
 }
 
+/**
+ * This function generates a cross with an area function fitting the img of the cross element.
+ * Depending of the side length the scale of the cross element is determined.
+ * @param {number} sideLength The side length of the cross element.
+ * @param {number} i the current Pokemon ID 
+ * @returns {string} Returns the cross properties.
+ */
+
 function generateCross(sideLength, i) {
-  let cross = document.getElementById("cross");
+
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
-  cross.innerHTML = `
+  cross = `
       <img class='cross-map' src='PNG/Cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
         <map name='image-map'>
             <area target="" alt="up"    title="up"      coords="${coord1},0,${coord2},${coord1}" shape="rect">
@@ -271,6 +282,7 @@ function generateCross(sideLength, i) {
             <area target="" alt="down"  title="down"    coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
             <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
         </map> `;
+  return cross;
 }
 
 
@@ -321,7 +333,6 @@ function showPokemonType(currentPokemons, i) {
   return pokemonsType;
 }
 
-
 /**
  * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
  * It loads always 10 new Pokemon when the scrollbar hits the button.
@@ -333,9 +344,6 @@ window.onscroll = async function () {
     renderPokemon();
   }
 }
-
-
-
 /**
  * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
  */
@@ -347,17 +355,15 @@ async function loadPokemonInArray() {
   }
 }
 
-
-
-
+/**
+ * The function disables the double click of the cross element in the Pokemon detailed screen view.
+ * @param {string} event Mouse Event which needs to be prevented.
+ */
 
 document.addEventListener('mousedown', function (event) {
   if (event.detail > 1) {
     event.preventDefault();
-    // of course, you still do not know what you prevent here...
-    // You could also check event.ctrlKey/event.shiftKey/event.altKey
-    // to not prevent something useful.
-  }
+    }
 }, false);
 
 /**
@@ -392,9 +398,6 @@ function lastPokemon(i) {
   }
   showDetailedPokemonScreen(i);
 }
-
-
-
 
 /**
  * The function load Pokemon types from the API and is used to compare if the pokemon have one or two types.
@@ -431,17 +434,3 @@ function closeImg() {
 
   document.getElementById('black-screen').classList.add('d-none');
 }
-
-
-
-/* i in currentImage umbennenen zum besseren Verständnis 
- document.getElementById('black-screen').classList.remove('dialogue-bg');
-    document.getElementById('img-box-big').classList.remove('black-screen-img');*/
-
-/* function openImage() {
-    openImage(currentImage);
-    currentImage++;
-    if (currentImage == images.length) {
-        currentImage = 0;
-    }
-} */
