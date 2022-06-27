@@ -160,13 +160,6 @@ async function showDetailedPokemonScreen(i) {
     insertCross(i);
     showPokemonTypeOnePokemon(currentPokemon, i);
   }
-
-
-  /*   else {
-      oneDetailedPokemonCard.classList.remove('detailed-pokemon-static');
-      document.getElementById('allPokemon').classList.remove('all-pokemon-open-menu');
-      oneDetailedPokemonCard.innerHTML = '';
-    } */
 }
 
 
@@ -255,17 +248,30 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
 
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
+  
   let text = `<img class="cross-map" src="PNG/Cross.png" usemap="#image-map" height="200px" width="200px">
-<map name='image-map'>
-<area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
-<area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
-<area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
-<area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
-</map> `
+              <map name='image-map'>
+              <area target="" alt="up"    title="up"      coords="75,0,125,75" shape="rect">
+              <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,75,75,125" shape="rect">
+              <area target="" alt="down"  title="down"    coords="125,125,75,200" shape="rect">
+              <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="200,75,125,125" shape="rect">   
+              </map> `
   crossPosition.insertAdjacentHTML('afterbegin', text)
 }
 
-
+function generateCross(sideLength, i) {
+  let cross = document.getElementById("cross");
+  let coord1 = sideLength * 3 / 8;
+  let coord2 = sideLength * 5 / 8;
+  cross.innerHTML = `
+      <img class='cross-map' src='PNG/Cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
+        <map name='image-map'>
+            <area target="" alt="up"    title="up"      coords="${coord1},0,${coord2},${coord1}" shape="rect">
+            <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
+            <area target="" alt="down"  title="down"    coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
+            <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
+        </map> `;
+}
 
 
 
@@ -342,19 +348,6 @@ async function loadPokemonInArray() {
 }
 
 
-function generateCross(sideLength, i) {
-  let cross = document.getElementById("cross");
-  let coord1 = sideLength * 3 / 8;
-  let coord2 = sideLength * 5 / 8;
-  cross.innerHTML = `
-      <img class='cross-map' src='PNG/Cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
-        <map name='image-map'>
-            <area target="" alt="up"    title="up"      coords="${coord1},0,${coord2},${coord1}" shape="rect">
-            <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
-            <area target="" alt="down"  title="down"    coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
-            <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
-        </map> `;
-}
 
 
 

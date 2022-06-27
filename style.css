@@ -397,8 +397,29 @@ area {
 
 
 @media (max-width: 700px) {
+
+    .pokemon-card {
+        margin-right: 15px;
+    }
+
+    .all-pokemon {
+        justify-content: center;
+    }
+
     .one-pokemon-screeen {
         width: 100%;
+    }
+
+    h1 {
+        font-size: 60px;
+    }
+
+    div {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 25px;
     }
 
     .triangular-box {
@@ -416,9 +437,6 @@ area {
 }
 
 @media (max-width: 600px) {
-    h1 {
-        font-size: 60px;
-    }
 
     .pokemon-img {
         height: 150px;
@@ -426,16 +444,26 @@ area {
     }
 
     .one-pokemon-header {
-           margin-left: 10%;
-    margin-right: 13%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding-right: 65px;
-    clip-path: polygon(100% 0%, 100% 62.5%, 73.1% 100%, 0% 100%, 0% 0%);
+        margin-left: 10%;
+        margin-right: 13%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding-right: 65px;
+        clip-path: polygon(100% 0%, 100% 62.5%, 73.1% 100%, 0% 100%, 0% 0%);
     }
 
     .border-one-pokemon {
         clip-path: polygon(92% 0%, 92% 63.5%, 72.1% 100%, 6% 100%, 6% 0%);
         background-color: white;
+    }
+}
+
+@media (max-width: 450px) {
+    h1 {
+        font-size: 45px;
+    }
+
+    .header {
+        height: 100px;
     }
 }
