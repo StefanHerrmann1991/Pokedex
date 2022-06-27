@@ -59,8 +59,6 @@ async function getPokemonByName() {
   let pokemon = await responsePokemon.json();
   return pokemon;
 }
-
-
 /**
  * The functions takes a word and returns the string with the first letter in upper case
  * @param {string} pokemonNameUpperCase - The string which first letter should be written in upper case
@@ -78,7 +76,7 @@ function pokemonType(pokemon) {
     const type = pokemon['types'][i]['type']['name'];
     pokemonType.innerHTML += `<h2 style="background-color: var(--normal);
         background-image: linear-gradient(deg, var(--${pokemon['types'][0]['type']['name']}), var(--${pokemon['types'][1]['type']['name']}) );">${type}</h2>
-           `
+ `
   }
 }
 
@@ -114,7 +112,7 @@ function renderPokemon() {
   }
 }
 
-function savePokemon(arr) {
+/* function savePokemon(arr) {
   let variableAsText = arr + 'asText';
   let arrays = JSON.stringify(arr);
   localStorage.setItem(`${arrays}`, variableAsText);
@@ -125,7 +123,7 @@ function loadPokemon(arr) {
   if (postsAsText) {
     posts = JSON.parse(postsAsText);
   }
-}
+} */
 
 async function showDetailedPokemonScreen(i) {
   let currentPokemon = allLoadedPokemons[i];
@@ -135,7 +133,7 @@ async function showDetailedPokemonScreen(i) {
   if (window.innerWidth <= 700 && !onePokemonScreen) {
     /* the viewport is 600 pixels wide or less window.scrollY + window.innerHeight >= document.body.clientHeight */
     document.getElementById('allPokemon').classList.add('d-none');
-    oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
+    oneDetailedPokemonCard.classList.add('detailed-pokemon-static-2');
     oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
     renderPokemonInformation(currentPokemon, i);
     insertCross(i);

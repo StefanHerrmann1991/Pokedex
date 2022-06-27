@@ -156,13 +156,28 @@ div {
     33% {
         width: 100%;
     }
+
     66% {
         width: 75%;
     }
+
     100% {
         width: 48%;
     }
 }
+
+.detailed-pokemon-static-2 {
+    background-color: rgb(182, 25, 25);
+    margin-top: 0px;
+    height: 900px;
+    width: 100%;
+    z-index: 0;
+    position: sticky;
+    top: 0;
+}
+
+
+
 
 .detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
@@ -176,12 +191,12 @@ div {
 
 @keyframes openPokedex-onePokemon {
     from {
-        height: 0%;
+        height: 0px;
         width: 0%;
     }
 
     to {
-        height: 100%;
+        height: 900px;
         width: 50%;
         /* 230% */
         outline: solid 5.5px black;
@@ -371,6 +386,9 @@ area {
     cursor: pointer;
 }
 
+.cross-map {
+    margin-right: 15%;
+}
 
 
 
@@ -379,7 +397,45 @@ area {
 
 
 @media (max-width: 700px) {
-  .one-pokemon-screeen {width: 100%;}
-  .triangular-box {display: none;}
-  .left-box {border-right: solid 5.4px black !important; }
+    .one-pokemon-screeen {
+        width: 100%;
+    }
+
+    .triangular-box {
+        display: none;
+    }
+
+    .left-box {
+        outline: solid 1.3px black !important;
+        width: 100%
+    }
+
+    h1 {
+        margin-left: 0px;
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 60px;
+    }
+
+    .pokemon-img {
+        height: 150px;
+        width: 150px;
+    }
+
+    .one-pokemon-header {
+           margin-left: 10%;
+    margin-right: 13%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-right: 65px;
+    clip-path: polygon(100% 0%, 100% 62.5%, 73.1% 100%, 0% 100%, 0% 0%);
+    }
+
+    .border-one-pokemon {
+        clip-path: polygon(92% 0%, 92% 63.5%, 72.1% 100%, 6% 100%, 6% 0%);
+        background-color: white;
+    }
 }
