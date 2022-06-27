@@ -13,16 +13,22 @@ let onePokemonScreen = false;
  * In this variable the number of loaded Pokemon is stored in case more Pokemon needs to be loaded.
  */
 let numberOfLoadedPokemons = 0;
+/**
+ * In this variable the number or name of the Pokemon which has been clicked is stored.
+ *  @type {numer|string}
+ */
 
-
+let currentPokemon;
 
 /**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
 async function init() {
   await loadPokemonInArray();
-  renderPokemon();
+  await renderPokemon();
 }
+
+
 
 /**
  * this function loads a pokemon from the pokemon API and then shows information about it
@@ -124,8 +130,17 @@ function loadPokemon(arr) {
     posts = JSON.parse(postsAsText);
   }
 } */
+async function adjustWindow() {
+  init();
+  if (currentPokemon && onePokemonScreen) {
+    await showDetailedPokemonScreen(currentPokemon);
+  }
+
+
+}
 
 async function showDetailedPokemonScreen(i) {
+  currentPokemon = i;
   let oneDetailedPokemonCard = document.getElementById('onePokemon');
   if (window.innerWidth <= 700 && !onePokemonScreen) {
     document.getElementById('allPokemon').classList.add('d-none');
@@ -156,7 +171,6 @@ function createOnePokemonScreen(i, oneDetailedPokemonCard) {
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
 }
-
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
@@ -239,6 +253,7 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
   }
   return [pokemonProperty];
 }
+
 
 /**
  * The function enables the responsivness of the cross element.
@@ -363,7 +378,7 @@ async function loadPokemonInArray() {
 document.addEventListener('mousedown', function (event) {
   if (event.detail > 1) {
     event.preventDefault();
-    }
+  }
 }, false);
 
 /**
