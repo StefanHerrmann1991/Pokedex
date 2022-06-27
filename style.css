@@ -166,19 +166,6 @@ div {
     }
 }
 
-.detailed-pokemon-static-2 {
-    background-color: rgb(182, 25, 25);
-    margin-top: 0px;
-    height: 900px;
-    width: 100%;
-    z-index: 0;
-    position: sticky;
-    top: 0;
-}
-
-
-
-
 .detailed-pokemon-static {
     background-color: rgb(182, 25, 25);
     margin-top: 0px;
@@ -398,6 +385,16 @@ area {
 
 @media (max-width: 700px) {
 
+    .detailed-pokemon-static {
+        background-color: rgb(182, 25, 25);
+        height: 900px;
+        width: 100%;
+        animation: paused;
+    }
+    .all-pokemon-open-menu {
+        animation: paused;
+    }
+
     .pokemon-card {
         margin-right: 15px;
     }
@@ -435,6 +432,8 @@ area {
         margin-left: 0px;
     }
 }
+
+
 
 @media (max-width: 600px) {
 

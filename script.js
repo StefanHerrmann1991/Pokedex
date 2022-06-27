@@ -144,7 +144,7 @@ async function showDetailedPokemonScreen(i) {
   let oneDetailedPokemonCard = document.getElementById('onePokemon');
   if (window.innerWidth <= 700 && !onePokemonScreen) {
     document.getElementById('allPokemon').classList.add('d-none');
-    oneDetailedPokemonCard.classList.add('detailed-pokemon-static-2');
+    oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
     createOnePokemonScreen(i, oneDetailedPokemonCard);
     onePokemonScreen = true;
   }
