@@ -4,7 +4,7 @@
     width: 100%;
 }
 
- 
+
 .header {
     width: 100%;
     display: flex;
@@ -20,8 +20,9 @@
     border-bottom: solid 5.5px black;
 }
 
-.more-pokemon
-{height: 40px;}
+.more-pokemon {
+    height: 40px;
+}
 
 .mgn-l {
     margin-left: 30px;
@@ -122,13 +123,15 @@ h1 {
     width: 200px;
 }
 
-div {color: white;
-font-size: 20px;}
+div {
+    color: white;
+    font-size: 20px;
+}
 
 .all-pokemon {
     display: flex;
     flex-wrap: wrap;
-    padding-right: 20px;
+    padding-right: 4px;
     overflow: auto;
 }
 
@@ -152,18 +155,12 @@ font-size: 20px;}
 @keyframes openPokedex-allPokemon {
     33% {
         width: 100%;
-
     }
-
     66% {
         width: 75%;
-
-
     }
-
     100% {
         width: 48%;
-
     }
 }
 
@@ -179,13 +176,14 @@ font-size: 20px;}
 
 @keyframes openPokedex-onePokemon {
     from {
-        height: 0px;
+        height: 0%;
         width: 0%;
     }
 
     to {
-        height: 900px;
-        width: 50%; /* 230% */
+        height: 100%;
+        width: 50%;
+        /* 230% */
         outline: solid 5.5px black;
     }
 }
@@ -324,7 +322,9 @@ h2 {
     width: 300px;
 }
 
-
+.d-none {
+    display: none;
+}
 
 .one-pokemon-header {
     display: flex;
@@ -349,16 +349,13 @@ h2 {
 }
 
 .outer-polygon {
-    border-top:  solid 1px black;
-    border-bottom:  solid 1px black;
-    clip-path:   polygon(93% 7%, 93% 62%, 72.1% 93%, 5% 93%, 5% 7%);
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    clip-path: polygon(93% 7%, 93% 62%, 72.1% 93%, 5% 93%, 5% 7%);
 
-  
+
     background-color: black;
 }
-
-
-
 
 .footer {
     height: 100px;
@@ -369,7 +366,8 @@ h2 {
     border-top: solid 5.5px black;
     top: 90%;
 }
-area{
+
+area {
     cursor: pointer;
 }
 
@@ -380,4 +378,8 @@ area{
 
 
 
-@media (width: 1350px) {}
+@media (max-width: 700px) {
+  .one-pokemon-screeen {width: 100%;}
+  .triangular-box {display: none;}
+  .left-box {border-right: solid 5.4px black !important; }
+}

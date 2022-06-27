@@ -14,6 +14,8 @@ let onePokemonScreen = false;
  */
 let numberOfLoadedPokemons = 0;
 
+
+
 /**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
@@ -130,13 +132,24 @@ async function showDetailedPokemonScreen(i) {
   let oneDetailedPokemonCard = document.getElementById('onePokemon');
   [typeOne, typeTwo] = comparePokemonType(currentPokemon);
 
-  if (!onePokemonScreen) {
+  if (window.innerWidth <= 700 && !onePokemonScreen) {
+    /* the viewport is 600 pixels wide or less window.scrollY + window.innerHeight >= document.body.clientHeight */
+    document.getElementById('allPokemon').classList.add('d-none');
+    oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
+    oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+    renderPokemonInformation(currentPokemon, i);
+    insertCross(i);
+    showPokemonTypeOnePokemon(currentPokemon, i);
+    onePokemonScreen = true;
+  }
+
+  if (window.innerWidth > 700 && !onePokemonScreen) {
     document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
     setTimeout(() => {
-      oneDetailedPokemonCard.classList.add('detailed-pokemon-static')
+      oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
     }, 500);
     setTimeout(() => {
-      oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+      oneDetailedPokemonCard.innerHTML = insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
       renderPokemonInformation(currentPokemon, i);
       insertCross(i);
       showPokemonTypeOnePokemon(currentPokemon, i);
@@ -157,6 +170,15 @@ async function showDetailedPokemonScreen(i) {
       oneDetailedPokemonCard.innerHTML = '';
     } */
 }
+
+
+
+
+
+
+
+
+
 
 function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
@@ -180,7 +202,7 @@ function insertDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
             </div>        
         `;
 
-       
+
 }
 
 function renderPokemonInformation(currentPokemon, i) {
@@ -203,22 +225,31 @@ function getWeight(currentPokemon, i) {
 
 async function getAbilities(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
-  let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability');
-
- /*  let abilitiesArray = [];
-  for (let o = 0; o < currentPokemon['abilities'].length; o++) {
-     abilitiesArray.push(currentPokemon['abilities'][o]['ability']['name']);
-  }  */
+  let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
   console.log(pokemonAbility)
   let text = `<div>Abilities: ${pokemonAbility}</div>`;
   abilities.insertAdjacentHTML('afterbegin', text);
 };
 
-function getPokemonInformation(currentPokemon, properties, property) {
+
+async function getPokemonStats(currentPokemon, i) {
+  let abilities = document.getElementById(`abilities-${i}`);
+  let pokemonAbility = await getPokemonInformation(currentPokemon, 'base_stat', 'stats');
+}
+
+function getPokemonInformation(currentPokemon, properties, property, name) {
   let pokemonProperty = [];
-  for (let y = 0; y < currentPokemon[`${properties}`].length; y++) {
-    const element = currentPokemon[`${properties}`][y][`${property}`]['name'];
-    pokemonProperty.push(element);
+  if (name) {
+    for (let y = 0; y < currentPokemon[properties].length; y++) {
+      const element = currentPokemon[properties][y][property][name];
+      pokemonProperty.push(element);
+    }
+  }
+  else {
+    for (let y = 0; y < currentPokemon[properties].length; y++) {
+      const element = currentPokemon[properties][y][property];
+      pokemonProperty.push(element);
+    }
   }
   return [pokemonProperty];
 }
