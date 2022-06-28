@@ -109,11 +109,18 @@ async function showDetailedPokemonScreen(i) {
   currentPokemon = i;
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
-  allPokemon.classList.add('all-pokemon-menu-open');
-  onePokemon.classList.add('detailed-pokemon-on');
+
   onePokemon.classList.remove('detailed-pokemon-off');
   allPokemon.classList.remove('all-pokemon-menu-close');
-  createOnePokemonScreen(i, onePokemon);
+
+  setTimeout(() => {
+    onePokemon.classList.add('detailed-pokemon-on');
+    allPokemon.classList.add('all-pokemon-menu-open');
+  }, 500);
+  setTimeout(() => {
+    createOnePokemonScreen(i, onePokemon)
+  }, 5000);
+
 }
 
 

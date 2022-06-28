@@ -184,7 +184,7 @@ div {
     align-items: center;
 }
 
-.all-pokemon-open-menu {
+.all-pokemon-menu-open {
     animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
 
