@@ -20,6 +20,24 @@
     border-bottom: solid 5.5px black;
 }
 
+.close-details {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.close-btn {
+    background-color: rgb(182, 25, 25);
+}
+
+.close-btn-pic {
+   
+    cursor: pointer;
+    background-color: rgb(182, 25, 25);
+}
+.close-btn-pic img { height: 100px;}
+
 .more-pokemon {
     height: 40px;
 }
@@ -138,8 +156,9 @@ div {
 
 .one-pokemon-details {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
 }
 
 .all-pokemon-open-menu {
@@ -391,6 +410,7 @@ area {
         width: 100%;
         animation: paused;
     }
+
     .all-pokemon-open-menu {
         animation: paused;
     }
