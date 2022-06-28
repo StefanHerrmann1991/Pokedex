@@ -109,43 +109,60 @@ async function showDetailedPokemonScreen(i) {
   currentPokemon = i;
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
+  allPokemon.classList.add('all-pokemon-menu-open');
+  onePokemon.classList.add('detailed-pokemon-on');
+  onePokemon.classList.remove('detailed-pokemon-off');
+  allPokemon.classList.remove('all-pokemon-menu-close');
+  createOnePokemonScreen(i, onePokemon);
+}
+
+
+/* async function showDetailedPokemonScreen(i) {
+  currentPokemon = i;
+  let onePokemon = document.getElementById('onePokemon');
+  let allPokemon = document.getElementById('allPokemon');
   if (window.innerWidth <= 700 && !onePokemonScreen) {
-    document.getElementById('allPokemon').classList.add('d-none');
-    onePokemon.classList.add('detailed-pokemon-static');
+    allPokemon.classList.add('d-none');
+    onePokemon.classList.add('detailed-pokemon-on');
+    onePokemon.classList.remove('detailed-pokemon-off');
     createOnePokemonScreen(i, onePokemon);
     onePokemonScreen = true;
   }
   if (window.innerWidth > 700 && !onePokemonScreen) {
-    document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
+    allPokemon.classList.add('all-pokemon-menu-open');
     setTimeout(() => {
-      onePokemon.classList.add('detailed-pokemon-static');
+      onePokemon.classList.add('detailed-pokemon-on');
+      onePokemon.classList.remove('detailed-pokemon-off');
     }, 500);
     setTimeout(() => {
       createOnePokemonScreen(i, onePokemon);
       onePokemonScreen = true;
     }, 5000)
   }
- 
 }
 
 function closeDetailedPokemonScreen() {
 
   let onePokemon = document.getElementById('onePokemon');
+  let allPokemon = document.getElementById('allPokemon');
+
   if (window.innerWidth <= 700 && onePokemonScreen) {
-    document.getElementById('allPokemon').classList.remove('d-none');
-    onePokemon.classList.add('d-none');
+    allPokemon.classList.remove('d-none');
+    onePokemon.classList.remove('detailed-pokemon-on');
+    onePokemon.classList.add('detailed-pokemon-off');
     onePokemonScreen = false;
   }
   if (window.innerWidth > 700 && onePokemonScreen) {
-    document.getElementById('allPokemon').classList.remove('all-pokemon-open-menu');
+    document.getElementById('allPokemon').classList.remove('all-pokemon-menu-open');
     setTimeout(() => {
-      onePokemon.classList.remove('detailed-pokemon-static');
+      onePokemon.classList.remove('detailed-pokemon-on');
+      onePokemon.classList.add('detailed-pokemon-off');
     }, 500);
     setTimeout(() => {
       onePokemonScreen = false;
     }, 5000)
   }
-}
+} */
 
 function createOnePokemonScreen(i, onePokemon) {
   let currentPokemon = allLoadedPokemons[i];

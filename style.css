@@ -220,7 +220,32 @@ div {
     }
 }
 
-.detailed-pokemon-static {
+.detailed-pokemon-off {
+    background-color: rgb(182, 25, 25);
+    margin-top: 0px;
+    height: 900px;
+    width: 50%;
+    z-index: 0;
+    position: sticky;
+    top: 0;
+    animation: closePokedex-onePokemon 2500ms ease-in-out 1000ms 1 forwards;
+}
+
+@keyframes closePokedex-onePokemon {
+    from {
+        height: 900px;
+        width: 50%;
+        outline: solid 5.5px black;     
+    }
+
+    to {
+        height: 0px;
+        width: 0%;
+        outline: none;
+    }
+}
+
+.detailed-pokemon-on {
     background-color: rgb(182, 25, 25);
     margin-top: 0px;
     height: 0px;
@@ -234,12 +259,12 @@ div {
     from {
         height: 0px;
         width: 0%;
+        outline: none;
     }
 
     to {
         height: 900px;
         width: 50%;
-        /* 230% */
         outline: solid 5.5px black;
     }
 }
