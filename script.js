@@ -34,37 +34,23 @@ async function init() {
  * this function loads a pokemon from the pokemon API and then shows information about it
  */
 async function searchPokemon() {
-  let pokemon = await getPokemonByName();
-  showPokemonInfo(pokemon);
-}
-
-
-/**
- * The function shows information about a searched pokemon,
- * further it sets its name to upper case.
- * @param {number|string} pokemon - ID of the pokemon or its name
- */
-async function showPokemonInfo(pokemon) {
-
-  document.getElementById('onePokemon').innerHTML = `
-    <div>Name: ${upperCase(pokemon['name'])}</div>
-    <div> Number:   ${(pokemon['id'])}</div>
-    `;
-}
+  await getPokemonByName();
+  await showDetailedPokemonScreen(currentPokemon);
+  await loadPokemonInArray();}
 
 /**
- * Ask for Pokemon from Poke API
+ * Asks for Pokemon from Poke API.
  * 
  * */
 
 async function getPokemonByName() {
-
   let pokemonName = document.getElementById('pokedexSearch').value;
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
   let responsePokemon = await fetch(url);
   let pokemon = await responsePokemon.json();
-  return pokemon;
-}
+  numberOfLoadedPokemons = pokemon['id'];
+  currentPokemon  =  Number(pokemon['id'] - 1);
+ }
 /**
  * The functions takes a word and returns the string with the first letter in upper case
  * @param {string} pokemonNameUpperCase - The string which first letter should be written in upper case
@@ -149,6 +135,7 @@ async function showDetailedPokemonScreen(i) {
     onePokemonScreen = true;
   }
   if (window.innerWidth > 700 && !onePokemonScreen) {
+    document.getElementById('allPokemon').classList.remove('d-none');
     document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
     setTimeout(() => {
       oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
@@ -158,10 +145,7 @@ async function showDetailedPokemonScreen(i) {
       onePokemonScreen = true;
     }, 5000)
   }
-  if (onePokemonScreen) {
-    createOnePokemonScreen(i, oneDetailedPokemonCard);
-  }
-}
+ }
 
 function createOnePokemonScreen(i, oneDetailedPokemonCard) {
   let currentPokemon = allLoadedPokemons[i];
@@ -286,7 +270,6 @@ function insertCross(i) {
  */
 
 function generateCross(sideLength, i) {
-
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
   cross = `
@@ -348,6 +331,8 @@ function showPokemonType(currentPokemons, i) {
   return pokemonsType;
 }
 
+window.onresize = async function () {}
+
 /**
  * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
  * It loads always 10 new Pokemon when the scrollbar hits the button.
@@ -365,8 +350,8 @@ window.onscroll = async function () {
 
 async function loadPokemonInArray() {
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
-    currentPokemon = await getPokemonById(j);
-    allLoadedPokemons.push(currentPokemon);
+    currentPokemons = await getPokemonById(j);
+    allLoadedPokemons.push(currentPokemons);
   }
 }
 
@@ -417,18 +402,18 @@ function lastPokemon(i) {
 /**
  * The function load Pokemon types from the API and is used to compare if the pokemon have one or two types.
  * Depending on the number of Pokemon types available the types are returned.
- * @param {number} currentPokemons the ID of the current Pokemon
+ * @param {number} currentPokemon the ID of the current Pokemon
  * @returns {string} the first type of the current Pokemon
  * 
  */
 
-function comparePokemonType(currentPokemons) {
-  let typeOne = currentPokemons['types'][0]['type']['name'];
+function comparePokemonType(currentPokemon) {
+  let typeOne = currentPokemon['types'][0]['type']['name'];
   let typeTwo;
-  if (currentPokemons['types'].length == 1) {
+  if (currentPokemon['types'].length == 1) {
     typeTwo = typeOne;
   } else {
-    typeTwo = currentPokemons['types'][1]['type']['name'];
+    typeTwo = currentPokemon['types'][1]['type']['name'];
   }
   return [typeOne, typeTwo];
 }
@@ -445,7 +430,3 @@ function padLeadingZeros(num, size) {
   return s;
 }
 
-function closeImg() {
-
-  document.getElementById('black-screen').classList.add('d-none');
-}
