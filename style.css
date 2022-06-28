@@ -177,14 +177,15 @@ div {
     justify-content: flex-end;
 }
 
-.all-pokemon-open-menu {
-    animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
-}
 
 
 .align-items {
     display: flex;
     align-items: center;
+}
+
+.all-pokemon-open-menu {
+    animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
 
 @keyframes openPokedex-allPokemon {
@@ -198,6 +199,24 @@ div {
 
     100% {
         width: 48%;
+    }
+}
+
+.all-pokemon-close-menu {
+    animation: closePokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
+}
+
+@keyframes closePokedex-allPokemon {
+    33% {
+        width: 48%;
+    }
+
+    66% {
+        width: 75%;
+    }
+
+    100% {
+        width: 100%;
     }
 }
 
@@ -410,14 +429,7 @@ area {
 
 .cross-map {
     margin-right: 5%;
-    padding-top: 8%;
-}
-
-
-
-/* game boy style game pad */
-
-
+   }
 
 @media (max-width: 700px) {
 

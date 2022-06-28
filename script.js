@@ -107,37 +107,50 @@ function renderPokemon() {
 
 async function showDetailedPokemonScreen(i) {
   currentPokemon = i;
-  let oneDetailedPokemonCard = document.getElementById('onePokemon');
+  let onePokemon = document.getElementById('onePokemon');
+  let allPokemon = document.getElementById('allPokemon');
   if (window.innerWidth <= 700 && !onePokemonScreen) {
     document.getElementById('allPokemon').classList.add('d-none');
-    oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
-    createOnePokemonScreen(i, oneDetailedPokemonCard);
+    onePokemon.classList.add('detailed-pokemon-static');
+    createOnePokemonScreen(i, onePokemon);
     onePokemonScreen = true;
   }
   if (window.innerWidth > 700 && !onePokemonScreen) {
     document.getElementById('allPokemon').classList.add('all-pokemon-open-menu');
     setTimeout(() => {
-      oneDetailedPokemonCard.classList.add('detailed-pokemon-static');
+      onePokemon.classList.add('detailed-pokemon-static');
     }, 500);
     setTimeout(() => {
-      createOnePokemonScreen(i, oneDetailedPokemonCard);
+      createOnePokemonScreen(i, onePokemon);
       onePokemonScreen = true;
     }, 5000)
   }
-  if (onePokemonScreen) {
-    createOnePokemonScreen(i, oneDetailedPokemonCard);
-  }
+ 
 }
 
 function closeDetailedPokemonScreen() {
 
-
+  let onePokemon = document.getElementById('onePokemon');
+  if (window.innerWidth <= 700 && onePokemonScreen) {
+    document.getElementById('allPokemon').classList.remove('d-none');
+    onePokemon.classList.add('d-none');
+    onePokemonScreen = false;
+  }
+  if (window.innerWidth > 700 && onePokemonScreen) {
+    document.getElementById('allPokemon').classList.remove('all-pokemon-open-menu');
+    setTimeout(() => {
+      onePokemon.classList.remove('detailed-pokemon-static');
+    }, 500);
+    setTimeout(() => {
+      onePokemonScreen = false;
+    }, 5000)
+  }
 }
 
-function createOnePokemonScreen(i, oneDetailedPokemonCard) {
+function createOnePokemonScreen(i, onePokemon) {
   let currentPokemon = allLoadedPokemons[i];
   [typeOne, typeTwo] = comparePokemonType(currentPokemon);
-  oneDetailedPokemonCard.innerHTML = renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+  onePokemon.innerHTML = renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
   renderPokemonInformation(currentPokemon, i);
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
