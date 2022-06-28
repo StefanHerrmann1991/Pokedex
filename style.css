@@ -24,19 +24,30 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
+    margin-left: 5%;
+    margin-right: 2%;
+
 }
+
+.details-container {
+    display: flex;
+    flex-direction: column;}
+
 
 .close-btn {
     background-color: rgb(182, 25, 25);
 }
 
 .close-btn-pic {
-   
+
     cursor: pointer;
     background-color: rgb(182, 25, 25);
 }
-.close-btn-pic img { height: 100px;}
+
+.close-btn-pic img {
+    height: 150px;
+}
 
 .more-pokemon {
     height: 40px;
@@ -158,7 +169,12 @@ div {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-end;
+
+}
+
+.cross-container {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .all-pokemon-open-menu {
@@ -393,7 +409,8 @@ area {
 }
 
 .cross-map {
-    margin-right: 15%;
+    margin-right: 5%;
+    padding-top: 8%;
 }
 
 

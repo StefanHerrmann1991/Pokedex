@@ -145,28 +145,30 @@ function createOnePokemonScreen(i, oneDetailedPokemonCard) {
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
-             <div class="outer-polygon">
-             <div class="border-one-pokemon">
-             <div class="one-pokemon-header" style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-             <h2>${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
-             <img class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}">
-             <div class="align-items" id="onePokemonType-${i}"></div>
-             </div>
-             </div>
-             </div>
-             <div class="one-pokemon-details">
-             <div class="mgn-l">
-             <div class="close-details">
-             <div id="abilities-${i}"></div>
-             <div id="weight-${i}"></div>
-             <div id="height-${i}"></div> 
-             <div class="close-btn" id="closeBtn">
-             </div>
-             <button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="PNG/close.png"></button></div>
-             </div>
-             <div id="crossPosition"></div>
-             </div> 
-             </div>        
+  <div class="outer-polygon">
+      <div class="border-one-pokemon">
+          <div class="one-pokemon-header"
+              style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
+              <h2>${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
+              <img class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}">
+              <div class="align-items" id="onePokemonType-${i}"></div>
+          </div>
+      </div>
+  </div>
+  <div class="one-pokemon-details">
+      <div class="close-details">
+          <div class="details-container">
+              <div id="abilities-${i}"></div>
+              <div id="weight-${i}"></div>
+              <div id="height-${i}"></div>
+          </div>
+          <div class="close-btn" id="closeBtn">
+          <button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="PNG/close.png"></button>
+          </div>
+       </div>
+  </div>
+  <div class="cross-container" id="crossPosition"></div>
+  </div>      
          `;
 }
 
