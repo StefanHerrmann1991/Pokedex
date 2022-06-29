@@ -453,7 +453,7 @@ area {
 
     .detailed-pokemon-on {
         background-color: rgb(182, 25, 25);
-        height: 900px;
+        height: 100%;
         width: 100%;
         animation: paused;
     }
