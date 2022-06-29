@@ -14,7 +14,7 @@ let onePokemonScreen = false;
  */
 let numberOfLoadedPokemons = 0;
 /**
- * In this variable the number or name of the Pokemon which has been clicked is stored.
+ * This variable represents the number or the name of the Pokemon which has been clicked.
  *  @type {numer|string}
  */
 
@@ -105,49 +105,63 @@ function renderPokemon() {
   }
 }
 
+window.addEventListener("resize", checkWindowResize);
+
+
+function checkWindowResize() {
+  showDetailedPokemonScreen(currentPokemon);
+}
+
 async function showDetailedPokemonScreen(i) {
   currentPokemon = i;
+
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
 
-  onePokemon.classList.remove('detailed-pokemon-off');
-  allPokemon.classList.remove('all-pokemon-menu-close');
-
-  setTimeout(() => {
-    onePokemon.classList.add('detailed-pokemon-on');
-    allPokemon.classList.add('all-pokemon-menu-open');
-  }, 500);
-  setTimeout(() => {
-    createOnePokemonScreen(i, onePokemon)
-  }, 5000);
-
-}
-
-
-/* async function showDetailedPokemonScreen(i) {
-  currentPokemon = i;
-  let onePokemon = document.getElementById('onePokemon');
-  let allPokemon = document.getElementById('allPokemon');
-  if (window.innerWidth <= 700 && !onePokemonScreen) {
-    allPokemon.classList.add('d-none');
-    onePokemon.classList.add('detailed-pokemon-on');
-    onePokemon.classList.remove('detailed-pokemon-off');
-    createOnePokemonScreen(i, onePokemon);
+  if (!onePokemonScreen) {
+    if (window.innerWidth > 700) {
+      setTimeout(() => {
+        onePokemon.classList.add('detailed-pokemon-on');
+        allPokemon.classList.add('all-pokemon-menu-on');
+      }, 500);
+      setTimeout(() => {
+        createOnePokemonScreen(i, onePokemon)
+      }, 3500);
+    }
+    if (window.innerWidth <= 700) {
+      onePokemon.classList.add('detailed-pokemon-on');
+      allPokemon.classList.add('all-pokemon-menu-on');
+      createOnePokemonScreen(i, onePokemon);
+    }
     onePokemonScreen = true;
   }
-  if (window.innerWidth > 700 && !onePokemonScreen) {
-    allPokemon.classList.add('all-pokemon-menu-open');
-    setTimeout(() => {
-      onePokemon.classList.add('detailed-pokemon-on');
-      onePokemon.classList.remove('detailed-pokemon-off');
-    }, 500);
-    setTimeout(() => {
-      createOnePokemonScreen(i, onePokemon);
-      onePokemonScreen = true;
-    }, 5000)
-  }
 }
 
+function closeDetailedPokemonScreen() {
+  currentPokemon;
+  let onePokemon = document.getElementById('onePokemon');
+  let allPokemon = document.getElementById('allPokemon');
+  if (onePokemonScreen) {
+    if (window.innerWidth > 700) {
+      onePokemon.classList.remove('detailed-pokemon-on');
+      onePokemon.classList.add('detailed-pokemon-off');
+     
+      setTimeout(() => {
+          allPokemon.classList.remove('all-pokemon-menu-on');
+          onePokemonScreen = false;
+    
+      }, 2500);
+      setTimeout(() => {
+        onePokemon.innerHTML = '';
+        onePokemon.classList.remove('detailed-pokemon-off');
+      }, 3500);
+    }
+    if (window.innerWidth <= 700) {
+      onePokemon.innerHTML = '';
+    }
+  }
+}
+/*
 function closeDetailedPokemonScreen() {
 
   let onePokemon = document.getElementById('onePokemon');
@@ -176,9 +190,11 @@ function createOnePokemonScreen(i, onePokemon) {
   [typeOne, typeTwo] = comparePokemonType(currentPokemon);
   onePokemon.innerHTML = renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
   renderPokemonInformation(currentPokemon, i);
+  insertCloseBtn();
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
 }
+
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
@@ -199,10 +215,9 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
               <div id="weight-${i}"></div>
               <div id="height-${i}"></div>
           </div>
-          <div class="close-btn" id="closeBtn">
-          <button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="PNG/close.png"></button>
-          </div>
-       </div>
+      <div class="close-btn" id="closeBtn">
+      </div>
+  </div>
   </div>
   <div class="cross-container" id="crossPosition"></div>
   </div>      
@@ -274,6 +289,12 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
  * 
  * @param {number} i The current Pokemon ID.
  */
+
+function insertCloseBtn() {
+  let closeBtn = document.getElementById('closeBtn');
+  let text = `<button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="PNG/close.png"></button>`
+  closeBtn.insertAdjacentHTML('afterbegin', text)
+}
 
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
@@ -394,6 +415,7 @@ function nextPokemon(i) {
     } else {
       i = 0;
     }
+    createOnePokemonScreen(i, onePokemon);
     showDetailedPokemonScreen(i);
   }
 }
@@ -411,6 +433,7 @@ function lastPokemon(i) {
   else {
     i = allLoadedPokemons.length - 1;
   }
+  createOnePokemonScreen(i, onePokemon);
   showDetailedPokemonScreen(i);
 }
 

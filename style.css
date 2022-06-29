@@ -4,7 +4,6 @@
     width: 100%;
 }
 
-
 .header {
     width: 100%;
     display: flex;
@@ -142,11 +141,6 @@ h1 {
     justify-content: flex-start;
 }
 
-.one-pokemon {
-    width: 50%;
-
-}
-
 .pokemon-img {
     height: 200px;
     width: 200px;
@@ -164,12 +158,10 @@ div {
     overflow: auto;
 }
 
-
 .one-pokemon-details {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
 }
 
 .cross-container {
@@ -184,7 +176,8 @@ div {
     align-items: center;
 }
 
-.all-pokemon-menu-open {
+
+.all-pokemon-menu-on {
     animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
 
@@ -202,7 +195,7 @@ div {
     }
 }
 
-.all-pokemon-close-menu {
+.all-pokemon-menu-off {
     animation: closePokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
 }
 
@@ -225,6 +218,7 @@ div {
     margin-top: 0px;
     height: 900px;
     width: 50%;
+    outline: solid 5.5px black;
     z-index: 0;
     position: sticky;
     top: 0;
@@ -235,14 +229,13 @@ div {
     from {
         height: 900px;
         width: 50%;
-        outline: solid 5.5px black;     
+        outline: solid 5.5px black;
     }
-
     to {
         height: 0px;
         width: 0%;
         outline: none;
-    }
+        }
 }
 
 .detailed-pokemon-on {
@@ -458,14 +451,17 @@ area {
 
 @media (max-width: 700px) {
 
-    .detailed-pokemon-static {
+    .detailed-pokemon-on {
         background-color: rgb(182, 25, 25);
         height: 900px;
         width: 100%;
         animation: paused;
     }
 
-    .all-pokemon-open-menu {
+    .all-pokemon-menu-open {
+        animation: paused;
+    }
+    .all-pokemon-menu-close {
         animation: paused;
     }
 
