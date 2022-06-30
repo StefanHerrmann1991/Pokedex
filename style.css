@@ -1,5 +1,7 @@
 /* pokemon types */
 
+
+
 .pokedex {
     width: 100%;
 }
@@ -31,7 +33,8 @@
 
 .details-container {
     display: flex;
-    flex-direction: column;}
+    flex-direction: column;
+}
 
 
 .close-btn {
@@ -231,11 +234,12 @@ div {
         width: 50%;
         outline: solid 5.5px black;
     }
+
     to {
         height: 0px;
         width: 0%;
         outline: none;
-        }
+    }
 }
 
 .detailed-pokemon-on {
@@ -447,7 +451,7 @@ area {
 
 .cross-map {
     margin-right: 5%;
-   }
+}
 
 @media (max-width: 700px) {
 
@@ -461,6 +465,7 @@ area {
     .all-pokemon-menu-open {
         animation: paused;
     }
+
     .all-pokemon-menu-close {
         animation: paused;
     }
@@ -536,3 +541,5 @@ area {
         height: 100px;
     }
 }
+
+

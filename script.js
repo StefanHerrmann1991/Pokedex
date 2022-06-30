@@ -84,7 +84,7 @@ function pokemonType(pokemon) {
 }
 
 /**
- * Ask for a pokemon from PokeAPI
+ * The function asks for a pokemon from PokeAPI.
  * @param {number} pokemonId PokemonId that is asked for.
  * @returns Returns the ID of a Pokemon.
  */
@@ -95,6 +95,12 @@ async function getPokemonById(pokemonId) {
   let pokemon = await responsePokemon.json();
   return pokemon;
 }
+
+/**
+ * The function renders the Pokemon Cards seen on the screen.
+ * It converts the names of Pokemon to upper case and inserts different colors depending on the type of the corresponding Pokemon.
+ * Also it loads pictures of the Pokemon from the loadedPokemon array.
+ */
 
 function renderPokemon() {
   let pokemon = document.getElementById('allPokemon');
@@ -115,6 +121,10 @@ function renderPokemon() {
   }
 }
 
+/**
+ * The event listener checks the width of the screen when its altered.
+ * @param {callback} checkWindowResize Renders the detailed Pokemon information while changing the window size. 
+ */
 window.addEventListener("resize", checkWindowResize);
 
 /**
@@ -129,6 +139,8 @@ function checkWindowResize() {
     changeWindow = false;
   }
 }
+
+/** */
 
 async function showDetailedPokemonScreen(i) {
   currentPokemon = i;
@@ -179,7 +191,7 @@ function closeDetailedPokemonScreen() {
     }
   }
 }
-
+/** */
 function createOnePokemonScreen(i, onePokemon) {
   let currentPokemon = allLoadedPokemons[i];
   [typeOne, typeTwo] = comparePokemonType(currentPokemon);
@@ -189,7 +201,7 @@ function createOnePokemonScreen(i, onePokemon) {
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
 }
-
+/** */
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
@@ -218,25 +230,25 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   </div>      
          `;
 }
-
+/** */
 function renderPokemonInformation(currentPokemon, i) {
   getHeight(currentPokemon, i);
   getWeight(currentPokemon, i);
   getAbilities(currentPokemon, i);
 }
-
+/** */
 function getHeight(currentPokemon, i) {
   let height = document.getElementById(`height-${i}`);
   let text = `<div>Height: ${currentPokemon['height']}</div>`;
   height.insertAdjacentHTML('afterbegin', text);
 };
-
+/** */
 function getWeight(currentPokemon, i) {
   let weight = document.getElementById(`weight-${i}`);
   let text = `<div>Weight: ${currentPokemon['weight']}</div>`;
   weight.insertAdjacentHTML('afterbegin', text);
 };
-
+/** */
 async function getAbilities(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
   let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
@@ -245,6 +257,7 @@ async function getAbilities(currentPokemon, i) {
   abilities.insertAdjacentHTML('afterbegin', text);
 };
 
+/** */
 
 async function getPokemonStats(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
@@ -284,9 +297,7 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
 
 
 /**
- * The function enables the responsivness of the cross element.
- * 
- * @param {number} i The current Pokemon ID.
+ * The function generates the yellow triangle to close the detailed Pokemon screen.
  */
 
 function insertCloseBtn() {
@@ -294,6 +305,12 @@ function insertCloseBtn() {
   let text = `<button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="PNG/close.png"></button>`
   closeBtn.insertAdjacentHTML('afterbegin', text)
 }
+
+/**
+ * The function enables the responsivness of the cross element.
+ * 
+ * @param {number} i The current Pokemon ID.
+ */
 
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
@@ -334,21 +351,12 @@ function generateCross(sideLength, i) {
   return cross;
 }
 
-function searchTopic(jsonSubmenus) {
-  let jsonSubmenu = [];
-  for (let k = 0; k < jsonSubmenus.length; k++) {
-    jsonSubmenu.push(jsonSubmenus[k]);
-  }
-  return [jsonSubmenu];
-}
-
-function assignToId(name, arrays, index) {
-  let nameId = document.getElementById(`${name}-${index}`)
-  for (let m = 0; m < arrays.length; m++) {
-    const array = array[i];
-  }
-  return [index, name, nameId]
-}
+/**
+ * 
+ * @param {number} currentPokemons The current Pokemon.
+ * @param {number} i The number of the Pokemon depending on the current Pokemon.
+ * @returns The types of the current Pokemon
+ */
 
 function showPokemonTypeOnePokemon(currentPokemons, i) {
   let pokemonsType = document.getElementById(`onePokemonType-${i}`);
@@ -467,35 +475,5 @@ function padLeadingZeros(num, size) {
   return s;
 }
 
-function typewriter(text) {
-  // set up text to print, each item in array is new line
-  let aText = new Array(`${text}`);
-  let iSpeed = 100; // time delay of print out
-  let iIndex = 0; // start printing array at this posision
-  let iArrLength = aText[0].length; // the length of the text array
-  let iScrollAt = 20; // start scrolling up at this many lines
-
-  let iTextPos = 0; // initialise text position
-  let sContents = ''; // initialise contents variable
-  let iRow; // initialise current row
-  sContents = ' ';
-  iRow = Math.max(0, iIndex - iScrollAt);
-  let destination = document.getElementById(`${text}`);
-
-  while (iRow < iIndex) {
-    sContents += aText[iRow++] + '<br />';
-  }
-  destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + "|";
-  if (iTextPos++ == iArrLength) {
-    iTextPos = 0;
-    iIndex++;
-    if (iIndex != aText.length) {
-      iArrLength = aText[iIndex].length;
-      setTimeout("typewriter()", 500);
-    }
-  } else {
-    setTimeout("typewriter()", iSpeed);
-  }
-}
 
 
