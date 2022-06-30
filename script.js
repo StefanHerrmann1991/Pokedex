@@ -27,7 +27,8 @@ let currentPokemon;
 let scroll = true;
 
 /**
- * 
+ * The variable is altered to show if the window changes in its width. 
+ * @type {boolean}
 */
 
 let changeWindow = false;
@@ -40,7 +41,7 @@ async function init() {
   await renderPokemon();
 }
 
-
+/* id="typedtext" */
 
 /**
  * Ask for Pokemon from Poke API 
@@ -116,11 +117,16 @@ function renderPokemon() {
 
 window.addEventListener("resize", checkWindowResize);
 
+/**
+ * The function checks the window size and show the correct detailed Pokemon information.
+ */
+
 function checkWindowResize() {
   console.log(window.innerWidth)
   if (onePokemonScreen) {
     changeWindow = true;
     showDetailedPokemonScreen(currentPokemon);
+    changeWindow = false;
   }
 }
 
@@ -199,7 +205,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   </div>
   <div class="one-pokemon-details">
       <div class="close-details">
-          <div class="details-container">
+          <div class="details-container">  
               <div id="abilities-${i}"></div>
               <div id="weight-${i}"></div>
               <div id="height-${i}"></div>
@@ -461,6 +467,35 @@ function padLeadingZeros(num, size) {
   return s;
 }
 
-/* function updateProgressBar() {
-   
-} */
+function typewriter(text) {
+  // set up text to print, each item in array is new line
+  let aText = new Array(`${text}`);
+  let iSpeed = 100; // time delay of print out
+  let iIndex = 0; // start printing array at this posision
+  let iArrLength = aText[0].length; // the length of the text array
+  let iScrollAt = 20; // start scrolling up at this many lines
+
+  let iTextPos = 0; // initialise text position
+  let sContents = ''; // initialise contents variable
+  let iRow; // initialise current row
+  sContents = ' ';
+  iRow = Math.max(0, iIndex - iScrollAt);
+  let destination = document.getElementById(`${text}`);
+
+  while (iRow < iIndex) {
+    sContents += aText[iRow++] + '<br />';
+  }
+  destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + "|";
+  if (iTextPos++ == iArrLength) {
+    iTextPos = 0;
+    iIndex++;
+    if (iIndex != aText.length) {
+      iArrLength = aText[iIndex].length;
+      setTimeout("typewriter()", 500);
+    }
+  } else {
+    setTimeout("typewriter()", iSpeed);
+  }
+}
+
+
