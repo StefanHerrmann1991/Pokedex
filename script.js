@@ -27,12 +27,21 @@ let currentPokemon;
 let scroll = true;
 
 /**
+ * 
+*/
+
+let changeWindow = false;
+
+/**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
 async function init() {
   await loadPokemonInArray();
   await renderPokemon();
 }
+
+
+
 /**
  * Ask for Pokemon from Poke API 
  */
@@ -108,18 +117,23 @@ function renderPokemon() {
 window.addEventListener("resize", checkWindowResize);
 
 function checkWindowResize() {
-  showDetailedPokemonScreen(currentPokemon);
+  console.log(window.innerWidth)
+  if (onePokemonScreen) {
+    changeWindow = true;
+    showDetailedPokemonScreen(currentPokemon);
+  }
 }
 
 async function showDetailedPokemonScreen(i) {
   currentPokemon = i;
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
-  if (!onePokemonScreen) {
+  if (!onePokemonScreen || changeWindow) {
     if (window.innerWidth > 700) {
       setTimeout(() => {
         onePokemon.classList.add('detailed-pokemon-on');
         allPokemon.classList.add('all-pokemon-menu-on');
+        allPokemon.classList.remove('d-none');
       }, 500);
       setTimeout(() => {
         createOnePokemonScreen(i, onePokemon)
@@ -159,29 +173,6 @@ function closeDetailedPokemonScreen() {
     }
   }
 }
-/*
-function closeDetailedPokemonScreen() {
-
-  let onePokemon = document.getElementById('onePokemon');
-  let allPokemon = document.getElementById('allPokemon');
-
-  if (window.innerWidth <= 700 && onePokemonScreen) {
-    allPokemon.classList.remove('d-none');
-    onePokemon.classList.remove('detailed-pokemon-on');
-    onePokemon.classList.add('detailed-pokemon-off');
-    onePokemonScreen = false;
-  }
-  if (window.innerWidth > 700 && onePokemonScreen) {
-    document.getElementById('allPokemon').classList.remove('all-pokemon-menu-open');
-    setTimeout(() => {
-      onePokemon.classList.remove('detailed-pokemon-on');
-      onePokemon.classList.add('detailed-pokemon-off');
-    }, 500);
-    setTimeout(() => {
-      onePokemonScreen = false;
-    }, 5000)
-  }
-} */
 
 function createOnePokemonScreen(i, onePokemon) {
   let currentPokemon = allLoadedPokemons[i];
@@ -252,6 +243,10 @@ async function getAbilities(currentPokemon, i) {
 async function getPokemonStats(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
   let pokemonAbility = await getPokemonInformation(currentPokemon, 'base_stat', 'stats');
+  let percent = (currentQuestion + 1) / questions.length;
+  percent = Math.round(percent * 100);
+  document.getElementById('stats').innerHTML = `${percent} %`;
+  document.getElementById('progress-bar').style = `width: ${percent}%;`;
 }
 
 /**
@@ -384,8 +379,8 @@ window.onscroll = async function () {
 
 async function loadPokemonInArray() {
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
-    currentPokemon = await getPokemonById(j);
-    allLoadedPokemons.push(currentPokemon);
+    currentPokemons = await getPokemonById(j);
+    allLoadedPokemons.push(currentPokemons);
   }
 }
 
@@ -465,3 +460,7 @@ function padLeadingZeros(num, size) {
   while (s.length < size) s = "0" + s;
   return s;
 }
+
+/* function updateProgressBar() {
+   
+} */
