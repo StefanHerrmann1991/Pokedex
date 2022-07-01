@@ -218,7 +218,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
           <div class="one-pokemon-header"
               style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
               <h2>${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
-              <img class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}">
+              <div><img id="bigImg" class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}"></div>
               <div class="align-items" id="onePokemonType-${i}"></div>
           </div>
       </div>
@@ -241,6 +241,13 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   </div>      
          `;
 }
+
+function bigImg() {
+
+
+  document.getElementById('bigImg').innerHTML;
+}
+
 /** */
 function renderPokemonInformation(currentPokemon, i) {
   getHeight(currentPokemon, i);
