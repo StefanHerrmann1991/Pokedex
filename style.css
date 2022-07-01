@@ -103,8 +103,61 @@ h1 {
         0px 2px 0px 0px rgb(74, 68, 68);
 }
 
+.each-stat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-bar {
+    position: relative;
+    width: 25vw;
+    height: 1em;
+    background-color: #111;
+    border-radius: 1.5em;
+    color: black;
+}
+.progress-bar::before {
+    content: attr(data-label);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    left: 0.1em;
+    top: 0.1em;
+    bottom: 0.1em;
+    width: calc(var(--width, 0) * 1%);
+    min-width: 2rem;
+    max-width: calc(100% - 1rem);
+    background-color: white;
+    border-radius: 1em;
+  
+}
+
 .border-style-header {
     display: flex;
+}
+
+.stats-name {
+    width: 100%;
+}
+
+.stats-bar {
+    background-color: white;
+    display: flex;    
+    height: 1rem; 
+    overflow: hidden;    
+    font-size: .75rem;    
+    background-color: #e9ecef;    
+    border-radius: 
+    0.25rem;}
+
+
+.stats {
+    background-color: black;
+    height: 1rem;   
+    border-radius: 40px;  
 }
 
 .left-box {

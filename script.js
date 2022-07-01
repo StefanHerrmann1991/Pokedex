@@ -54,7 +54,13 @@ async function searchPokemon() {
   scroll = true;
 }
 
+
+/**
+ * This function searches for Pokemon with the given name or ID in the input field.
+ * The pokemon will be loaded in the detailed Pokemon screen.
+ */
 async function getPokemonByName() {
+  onePokemonScreen = false;
   let pokemonName = document.getElementById('pokedexSearch').value;
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
   let responsePokemon = await fetch(url);
@@ -128,7 +134,7 @@ function renderPokemon() {
 window.addEventListener("resize", checkWindowResize);
 
 /**
- * The function checks the window size and show the correct detailed Pokemon information.
+ * The function checks the window size and shows the correct detailed Pokemon information.
  */
 
 function checkWindowResize() {
@@ -140,7 +146,7 @@ function checkWindowResize() {
   }
 }
 
-/** */
+/** The function opens the detailed Pokemon screen on the left side of the screen*/
 
 async function showDetailedPokemonScreen(i) {
   currentPokemon = i;
@@ -201,7 +207,9 @@ function createOnePokemonScreen(i, onePokemon) {
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
 }
-/** */
+/** 
+ * The function renders the Pokemon pictures in the detailed Pokemon screen. 
+*/
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
@@ -221,6 +229,9 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
               <div id="abilities-${i}"></div>
               <div id="weight-${i}"></div>
               <div id="height-${i}"></div>
+              <div>
+              <table class="stats-name" id="statsName"></table>
+              </div>
           </div>
       <div class="close-btn" id="closeBtn">
       </div>
@@ -235,6 +246,7 @@ function renderPokemonInformation(currentPokemon, i) {
   getHeight(currentPokemon, i);
   getWeight(currentPokemon, i);
   getAbilities(currentPokemon, i);
+  getPokemonStats(currentPokemon, i);
 }
 /** */
 function getHeight(currentPokemon, i) {
@@ -260,12 +272,20 @@ async function getAbilities(currentPokemon, i) {
 /** */
 
 async function getPokemonStats(currentPokemon, i) {
-  let abilities = document.getElementById(`abilities-${i}`);
-  let pokemonAbility = await getPokemonInformation(currentPokemon, 'base_stat', 'stats');
-  let percent = (currentQuestion + 1) / questions.length;
-  percent = Math.round(percent * 100);
-  document.getElementById('stats').innerHTML = `${percent} %`;
-  document.getElementById('progress-bar').style = `width: ${percent}%;`;
+
+  for (let j = 0; j < currentPokemon['stats'].length; j++) {
+    const stat = currentPokemon['stats'][j]['stat']['name'];
+    const base_stat = currentPokemon['stats'][j]['base_stat'];
+    document.getElementById('statsName').innerHTML += `
+    <tr>
+        <td><div><nobr>${upperCase(stat)}:</nobr></div></td>
+        <td><div class="progress-bar" style="--width:${base_stat}" data-label="${base_stat}"> </div></td>
+    </tr>
+   
+ `;
+    console.log(stat);
+    console.log(base_stat);
+  }
 }
 
 /**
