@@ -41,7 +41,7 @@ async function init() {
   await renderPokemon();
 }
 
-/* id="typedtext" */
+
 
 /**
  * Ask for Pokemon from Poke API 
@@ -153,24 +153,33 @@ async function showDetailedPokemonScreen(i) {
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
-    if (window.innerWidth > 700) {
-      setTimeout(() => {
-        onePokemon.classList.add('detailed-pokemon-on');
-        allPokemon.classList.add('all-pokemon-menu-on');
-        allPokemon.classList.remove('d-none');
-      }, 500);
-      setTimeout(() => {
-        createOnePokemonScreen(i, onePokemon)
-      }, 3500);
-    }
+    openBigScreen(onePokemon, allPokemon, i);
     if (window.innerWidth <= 700) {
-      createOnePokemonScreen(i, onePokemon);
-      allPokemon.classList.add('d-none');
-      onePokemon.classList.add('detailed-pokemon-on');
+      openSmallScreen(onePokemon, allPokemon, i);
     }
     onePokemonScreen = true;
   }
 }
+
+function openBigScreen(onePokemon, allPokemon, i) {
+  if (window.innerWidth > 700) {
+    setTimeout(() => {
+      onePokemon.classList.add('detailed-pokemon-on');
+      allPokemon.classList.add('all-pokemon-menu-on');
+      allPokemon.classList.remove('d-none');
+    }, 500);
+    setTimeout(() => {
+      createOnePokemonScreen(i, onePokemon)
+    }, 3500);
+  }
+}
+
+function openSmallScreen(onePokemon, allPokemon, i) {
+  createOnePokemonScreen(i, onePokemon);
+  allPokemon.classList.add('d-none');
+  onePokemon.classList.add('detailed-pokemon-on');
+}
+
 
 function closeDetailedPokemonScreen() {
   currentPokemon;
@@ -178,25 +187,34 @@ function closeDetailedPokemonScreen() {
   let allPokemon = document.getElementById('allPokemon');
   if (onePokemonScreen) {
     if (window.innerWidth > 700) {
-      onePokemon.classList.remove('detailed-pokemon-on');
-      onePokemon.classList.add('detailed-pokemon-off');
-      setTimeout(() => {
-        allPokemon.classList.remove('all-pokemon-menu-on');
-        onePokemonScreen = false;
-      }, 2500);
-      setTimeout(() => {
-        onePokemon.innerHTML = '';
-        onePokemon.classList.remove('detailed-pokemon-off');
-      }, 3500);
+      closeBigScreen(onePokemon, allPokemon)
     }
     if (window.innerWidth <= 700) {
-      onePokemon.innerHTML = '';
-      allPokemon.classList.remove('d-none');
-      onePokemon.classList.remove('detailed-pokemon-on');
-      onePokemonScreen = false;
+      closeSmallScreen(onePokemon, allPokemon)
     }
   }
 }
+
+function closeBigScreen(onePokemon, allPokemon) {
+  onePokemon.classList.replace('detailed-pokemon-on', 'detailed-pokemon-off');
+  setTimeout(() => {
+    allPokemon.classList.remove('all-pokemon-menu-on');
+    onePokemonScreen = false;
+  }, 2500);
+  setTimeout(() => {
+    onePokemon.innerHTML = '';
+    onePokemon.classList.remove('detailed-pokemon-off');
+  }, 3500);
+}
+
+function closeSmallScreen(onePokemon, allPokemon) {
+  onePokemon.innerHTML = '';
+  allPokemon.classList.remove('d-none');
+  onePokemon.classList.remove('detailed-pokemon-on');
+  onePokemonScreen = false;
+}
+
+
 /** */
 function createOnePokemonScreen(i, onePokemon) {
   let currentPokemon = allLoadedPokemons[i];
@@ -243,17 +261,21 @@ function bigImg() {
   document.getElementById('bigImg').innerHTML;
 }
 
-/** */
+/** 
+* 
+*/
 function renderPokemonInformation(currentPokemon, i) {
   getAbilities(currentPokemon, i);
   getPokemonStats(currentPokemon, i);
   getProperties(currentPokemon);
   /* progressBar(); */
 }
-/** */
+/**
+ * The function loads the properties from the current Pokemon and renders them in the detailed Pokemon screen.
+ * */
 function getProperties(currentPokemon) {
   let details = document.getElementById(`properties`);
-  let text =   `
+  let text = `
   <div>Height: ${currentPokemon['height']}</div>
   <div>Weight: ${currentPokemon['weight']}</div>
   <div>Base Experience: ${currentPokemon['base_experience']}</div>  
@@ -281,7 +303,7 @@ async function getPokemonStats(currentPokemon) {
     document.getElementById('statsName').innerHTML += `
     <tr>
         <td><div><nobr>${upperCase(stat)}:</nobr></div></td>
-        <td><div class="progress-bar" style="--width:${base_stat/3}" data-label="${base_stat}"> </div></td>
+        <td><div class="progress-bar" style="--width:${base_stat / 3}" data-label="${base_stat}"> </div></td>
     </tr>
    `;
     console.log(stat);
