@@ -229,6 +229,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
               <div id="abilities-${i}"></div>
               <div id="weight-${i}"></div>
               <div id="height-${i}"></div>
+              <div id="base_experience-${i}"></div>
               <div>
               <table class="stats-name" id="statsName"></table>
               </div>
@@ -252,8 +253,10 @@ function bigImg() {
 function renderPokemonInformation(currentPokemon, i) {
   getHeight(currentPokemon, i);
   getWeight(currentPokemon, i);
+  getBaseExperience(currentPokemon, i);
   getAbilities(currentPokemon, i);
   getPokemonStats(currentPokemon, i);
+  /* progressBar(); */
 }
 /** */
 function getHeight(currentPokemon, i) {
@@ -267,6 +270,14 @@ function getWeight(currentPokemon, i) {
   let text = `<div>Weight: ${currentPokemon['weight']}</div>`;
   weight.insertAdjacentHTML('afterbegin', text);
 };
+
+/** */
+function getBaseExperience(currentPokemon, i) {
+  let experience = document.getElementById(`base_experience-${i}`);
+  let text = `<div>Base Experience: ${currentPokemon['base_experience']}</div>`;
+  experience.insertAdjacentHTML('afterbegin', text);
+};
+
 /** */
 async function getAbilities(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
@@ -278,7 +289,7 @@ async function getAbilities(currentPokemon, i) {
 
 /** */
 
-async function getPokemonStats(currentPokemon, i) {
+async function getPokemonStats(currentPokemon) {
 
   for (let j = 0; j < currentPokemon['stats'].length; j++) {
     const stat = currentPokemon['stats'][j]['stat']['name'];
@@ -368,7 +379,7 @@ function generateCross(sideLength, i) {
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
   cross = `
-       <img class='cross-map' src='img/Cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
+       <img class='cross-map' src='img/cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
          <map name='image-map'>
              <area target="" alt="up"    title="up"      coords="${coord1},0,${coord2},${coord1}" shape="rect">
              <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
@@ -503,4 +514,14 @@ function padLeadingZeros(num, size) {
 }
 
 
+/* function progressBar() {
+  if (onePokemonScreen) {
+    const progressBar = document.getElementsByClassName('progress-bar');
+ setInterval(() => {
+      const computedStyle = getComputedStyle(progressBar);
+      const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
+      progressBar.style.setProperty('--width', width + 0.1);
+    }, 10)
+  }
+} */
 
