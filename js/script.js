@@ -303,13 +303,24 @@ async function getPokemonStats(currentPokemon) {
     document.getElementById('statsName').innerHTML += `
     <tr>
         <td><div><nobr>${upperCase(stat)}:</nobr></div></td>
-        <td><div class="progress-bar" style="--width:${base_stat / 3}" data-label="${base_stat}"> </div></td>
+        <td><div class="progress-bar" id="progressBar${j}" style="--width:${base_stat / 3}" data-label="${base_stat}"> </div></td>
     </tr>
    `;
-    console.log(stat);
-    console.log(base_stat);
+  /*  progressBar(j, base_stat); */
   }
 }
+
+/* function progressBar(j, base_stat) {
+  if (onePokemonScreen) {
+    const progressBar = document.getElementById(`progressBar${j}`);
+    setTimeout(() => {
+    setInterval(() => {
+      const computedStyle = getComputedStyle(progressBar);
+      const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
+      progressBar.style.setProperty(`--width:${base_stat/ 3}`, width + 1);
+    }, 10)}, 6500);
+  }
+} */
 
 /**
  * The function searches through the list of pokemon JSON objects and returns there properties.
@@ -335,9 +346,7 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
       pokemonProperty.push(element);
     }
   }
-  console.log(pokemonProperty);
   return [pokemonProperty];
-
 }
 
 
@@ -521,14 +530,5 @@ function padLeadingZeros(num, size) {
 }
 
 
-/* function progressBar() {
-  if (onePokemonScreen) {
-    const progressBar = document.getElementsByClassName('progress-bar');
- setInterval(() => {
-      const computedStyle = getComputedStyle(progressBar);
-      const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
-      progressBar.style.setProperty('--width', width + 0.1);
-    }, 10)
-  }
-} */
+
 
