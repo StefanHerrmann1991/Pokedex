@@ -244,8 +244,6 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
 }
 
 function bigImg() {
-
-
   document.getElementById('bigImg').innerHTML;
 }
 
@@ -282,10 +280,11 @@ function getBaseExperience(currentPokemon, i) {
 async function getAbilities(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
   let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
-  console.log(pokemonAbility)
-  let text = `<div>Abilities: ${pokemonAbility}</div>`;
+  console.log(pokemonAbility); 
+  let text = `<div><u>Abilities</u><div>${pokemonAbility}</div></div>`    
   abilities.insertAdjacentHTML('afterbegin', text);
 };
+
 
 /** */
 
@@ -299,8 +298,7 @@ async function getPokemonStats(currentPokemon) {
         <td><div><nobr>${upperCase(stat)}:</nobr></div></td>
         <td><div class="progress-bar" style="--width:${base_stat}" data-label="${base_stat}"> </div></td>
     </tr>
-   
- `;
+   `;
     console.log(stat);
     console.log(base_stat);
   }
@@ -353,7 +351,7 @@ function insertCloseBtn() {
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
   if (window.innerWidth <= 700) {
-    let text = generateCross(200, i);
+    let text = generateCross(150, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 700 && window.innerWidth < 1100) {
@@ -361,7 +359,7 @@ function insertCross(i) {
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 1100) {
-    let text = generateCross(150, i);
+    let text = generateCross(200, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
 }

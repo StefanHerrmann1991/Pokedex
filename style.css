@@ -103,6 +103,7 @@ h1 {
     font-size: 15px;
     font-family: 'Press Start 2P';
     letter-spacing: 0px;
+    margin-right: 30px;
 }
 
 .pokedex-search {
@@ -138,7 +139,8 @@ h1 {
     height: 1em;
     background-color: rgb(6, 6, 125);
     border-radius: 1.5em;
-    color: rgb(6, 6, 125);;
+    color: rgb(6, 6, 125);
+    ;
 }
 
 .progress-bar::before {
@@ -533,6 +535,35 @@ area {
 
 @media (max-width: 700px) {
 
+    .left-box {
+        outline: none !important;
+    }
+
+    .links {
+        margin-left: -10px;
+    }
+
+    .links a {
+        margin-right: 0px;
+    }
+
+    .pokedex {
+        display: flex;
+        justify-content: center;
+    }
+
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header>*:first-child {
+        align-self: center;
+        margin-right: 0px;
+
+    }
+
     .detailed-pokemon-on {
         background-color: rgb(182, 25, 25);
         height: 100%;
@@ -590,10 +621,23 @@ area {
 
 @media (max-width: 600px) {
 
+    .links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .links a {
+        margin-top: 10px;
+    }
+
     .pokemon-img {
         height: 150px;
         width: 150px;
     }
+
+
 
     .one-pokemon-header {
         margin-left: 10%;
@@ -615,7 +659,13 @@ area {
         font-size: 45px;
     }
 
+    .left-box {
+        height: 40px;
+        border-bottom: solid 2.5px black;
+       }
+
     .header {
-        height: 100px;
+        height: 150px;
+        border-bottom: solid 2.5px black;
     }
 }
