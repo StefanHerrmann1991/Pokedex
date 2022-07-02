@@ -329,7 +329,7 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
 
 function insertCloseBtn() {
   let closeBtn = document.getElementById('closeBtn');
-  let text = `<button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="PNG/close.png"></button>`
+  let text = `<button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="img/close.png"></button>`
   closeBtn.insertAdjacentHTML('afterbegin', text)
 }
 
@@ -368,7 +368,7 @@ function generateCross(sideLength, i) {
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
   cross = `
-       <img class='cross-map' src='PNG/Cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
+       <img class='cross-map' src='img/Cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
          <map name='image-map'>
              <area target="" alt="up"    title="up"      coords="${coord1},0,${coord2},${coord1}" shape="rect">
              <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
