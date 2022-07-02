@@ -225,14 +225,10 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   </div>
   <div class="one-pokemon-details">
       <div class="close-details">
-          <div class="details-container">  
+          <div class="details-container">
+              <div id="properties"></div>  
               <div id="abilities-${i}"></div>
-              <div id="weight-${i}"></div>
-              <div id="height-${i}"></div>
-              <div id="base_experience-${i}"></div>
-              <div>
-              <table class="stats-name" id="statsName"></table>
-              </div>
+              <table class="stats-name" id="statsName"></table>              
           </div>
       <div class="close-btn" id="closeBtn">
       </div>
@@ -249,39 +245,28 @@ function bigImg() {
 
 /** */
 function renderPokemonInformation(currentPokemon, i) {
-  getHeight(currentPokemon, i);
-  getWeight(currentPokemon, i);
-  getBaseExperience(currentPokemon, i);
   getAbilities(currentPokemon, i);
   getPokemonStats(currentPokemon, i);
+  getProperties(currentPokemon);
   /* progressBar(); */
 }
 /** */
-function getHeight(currentPokemon, i) {
-  let height = document.getElementById(`height-${i}`);
-  let text = `<div>Height: ${currentPokemon['height']}</div>`;
-  height.insertAdjacentHTML('afterbegin', text);
-};
-/** */
-function getWeight(currentPokemon, i) {
-  let weight = document.getElementById(`weight-${i}`);
-  let text = `<div>Weight: ${currentPokemon['weight']}</div>`;
-  weight.insertAdjacentHTML('afterbegin', text);
-};
-
-/** */
-function getBaseExperience(currentPokemon, i) {
-  let experience = document.getElementById(`base_experience-${i}`);
-  let text = `<div>Base Experience: ${currentPokemon['base_experience']}</div>`;
-  experience.insertAdjacentHTML('afterbegin', text);
-};
+function getProperties(currentPokemon) {
+  let details = document.getElementById(`properties`);
+  let text =   `
+  <div>Height: ${currentPokemon['height']}</div>
+  <div>Weight: ${currentPokemon['weight']}</div>
+  <div>Base Experience: ${currentPokemon['base_experience']}</div>  
+  `;
+  details.insertAdjacentHTML('afterbegin', text);
+}
 
 /** */
 async function getAbilities(currentPokemon, i) {
   let abilities = document.getElementById(`abilities-${i}`);
   let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
-  console.log(pokemonAbility); 
-  let text = `<div><u>Abilities</u><div>${pokemonAbility}</div></div>`    
+  a = pokemonAbility.join(' and ');
+  let text = `<div><u>Abilities</u><div>${a}</div></div>`;
   abilities.insertAdjacentHTML('afterbegin', text);
 };
 
@@ -296,7 +281,7 @@ async function getPokemonStats(currentPokemon) {
     document.getElementById('statsName').innerHTML += `
     <tr>
         <td><div><nobr>${upperCase(stat)}:</nobr></div></td>
-        <td><div class="progress-bar" style="--width:${base_stat}" data-label="${base_stat}"> </div></td>
+        <td><div class="progress-bar" style="--width:${base_stat/3}" data-label="${base_stat}"> </div></td>
     </tr>
    `;
     console.log(stat);
@@ -328,7 +313,9 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
       pokemonProperty.push(element);
     }
   }
+  console.log(pokemonProperty);
   return [pokemonProperty];
+
 }
 
 
