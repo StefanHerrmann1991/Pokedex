@@ -34,8 +34,16 @@ let scroll = true;
 let changeWindow = false;
 
 /**
+ * The variable is altered when the right or left cross button is clicked.
+ * It shall prevent laoding the stats and properties from the Pokemon screen to be loaded simultaneously.
+ * @type {boolean}
+ */
+
+let stats = false;
+/**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
+
 async function init() {
   await loadPokemonInArray();
   await renderPokemon();
@@ -108,12 +116,12 @@ async function getPokemonById(pokemonId) {
  * Also it loads pictures of the Pokemon from the loadedPokemon array.
  */
 
-function renderPokemon() {
+async function renderPokemon() {
   let pokemon = document.getElementById('allPokemon');
   pokemon.innerHTML = "";
   for (let i = 0; i < allLoadedPokemons.length; i++) {
     let loadedPokemon = allLoadedPokemons[i];
-    [typeOne, typeTwo] = comparePokemonType(loadedPokemon);
+    [typeOne, typeTwo] = await comparePokemonType(loadedPokemon);
     pokemon.innerHTML += `
          <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
          style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
@@ -148,8 +156,8 @@ function checkWindowResize() {
 
 /** The function opens the detailed Pokemon screen on the left side of the screen*/
 
-async function showDetailedPokemonScreen(i) {
-  currentPokemon = i;
+function showDetailedPokemonScreen(i) {
+
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
@@ -216,11 +224,11 @@ function closeSmallScreen(onePokemon, allPokemon) {
 
 
 /** */
-function createOnePokemonScreen(i, onePokemon) {
-  let currentPokemon = allLoadedPokemons[i];
-  [typeOne, typeTwo] = comparePokemonType(currentPokemon);
-  onePokemon.innerHTML = renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
-  renderPokemonInformation(currentPokemon, i);
+async function createOnePokemonScreen(i, onePokemon) {
+  currentPokemon = await allLoadedPokemons[i];
+  [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
+  onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+  togglePokemonInformation();
   insertCloseBtn();
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
@@ -245,7 +253,6 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
       <div class="close-details">
           <div class="details-container">
               <div id="properties"></div>  
-              <div id="abilities-${i}"></div>
               <table class="stats-name" id="statsName"></table>              
           </div>
       <div class="close-btn" id="closeBtn">
@@ -261,41 +268,41 @@ function bigImg() {
   document.getElementById('bigImg').innerHTML;
 }
 
+
+
 /** 
 * 
 */
-function renderPokemonInformation(currentPokemon, i) {
-  getAbilities(currentPokemon, i);
-  getPokemonStats(currentPokemon, i);
-  getProperties(currentPokemon);
-  /* progressBar(); */
+function togglePokemonInformation() {
+  if (!stats) {
+    document.getElementById('statsName').innerHTML = '';
+    getProperties(currentPokemon);
+    stats = true;
+  }
+  else {
+    document.getElementById('properties').innerHTML = '';
+    getPokemonStats(currentPokemon);
+    stats = false;
+  }
+
 }
 /**
  * The function loads the properties from the current Pokemon and renders them in the detailed Pokemon screen.
  * */
-function getProperties(currentPokemon) {
-  let details = document.getElementById(`properties`);
+async function getProperties(currentPokemon) {
+  let details = document.getElementById('properties');
+  let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
   let text = `
   <div>Height: ${currentPokemon['height']}</div>
   <div>Weight: ${currentPokemon['weight']}</div>
   <div>Base Experience: ${currentPokemon['base_experience']}</div>  
+  <div><u>Abilities</u><div>${pokemonAbility}</div></div>
   `;
   details.insertAdjacentHTML('afterbegin', text);
 }
 
 /** */
-async function getAbilities(currentPokemon, i) {
-  let abilities = document.getElementById(`abilities-${i}`);
-  let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
-  a = pokemonAbility.join(' and ');
-  let text = `<div><u>Abilities</u><div>${a}</div></div>`;
-  abilities.insertAdjacentHTML('afterbegin', text);
-};
-
-
-/** */
-
-async function getPokemonStats(currentPokemon) {
+function getPokemonStats(currentPokemon) {
 
   for (let j = 0; j < currentPokemon['stats'].length; j++) {
     const stat = currentPokemon['stats'][j]['stat']['name'];
@@ -306,21 +313,9 @@ async function getPokemonStats(currentPokemon) {
         <td><div class="progress-bar" id="progressBar${j}" style="--width:${base_stat / 3}" data-label="${base_stat}"> </div></td>
     </tr>
    `;
-  /*  progressBar(j, base_stat); */
   }
 }
 
-/* function progressBar(j, base_stat) {
-  if (onePokemonScreen) {
-    const progressBar = document.getElementById(`progressBar${j}`);
-    setTimeout(() => {
-    setInterval(() => {
-      const computedStyle = getComputedStyle(progressBar);
-      const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
-      progressBar.style.setProperty(`--width:${base_stat/ 3}`, width + 1);
-    }, 10)}, 6500);
-  }
-} */
 
 /**
  * The function searches through the list of pokemon JSON objects and returns there properties.
@@ -397,9 +392,9 @@ function generateCross(sideLength, i) {
   cross = `
        <img class='cross-map' src='img/cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
          <map name='image-map'>
-             <area target="" alt="up"    title="up"      coords="${coord1},0,${coord2},${coord1}" shape="rect">
+             <area target="" alt="up"    title="up"      onclick="togglePokemonInformation()" coords="${coord1},0,${coord2},${coord1}" shape="rect">
              <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
-             <area target="" alt="down"  title="down"    coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
+             <area target="" alt="down"  title="down"    onclick="togglePokemonInformation()" coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
              <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
          </map> `;
   return cross;
@@ -412,10 +407,10 @@ function generateCross(sideLength, i) {
  * @returns The types of the current Pokemon
  */
 
-function showPokemonTypeOnePokemon(currentPokemons, i) {
+function showPokemonTypeOnePokemon(currentPokemon, i) {
   let pokemonsType = document.getElementById(`onePokemonType-${i}`);
-  for (let j = 0; j < currentPokemons['types'].length; j++) {
-    const type = currentPokemons['types'][j]['type']['name'];
+  for (let j = 0; j < currentPokemon['types'].length; j++) {
+    const type = currentPokemon['types'][j]['type']['name'];
     pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
   }
   return pokemonsType;
@@ -434,13 +429,17 @@ function showPokemonType(currentPokemons, i) {
  * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
  * It loads always 10 new Pokemon when the scrollbar hits the button.
  */
-window.onscroll = async function () {
+
+
+window.onscroll = function () {
   if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true) {
-    numberOfLoadedPokemons += 10;
-    await loadPokemonInArray();
+    numberOfLoadedPokemons += 20;
+    loadPokemonInArray();
     renderPokemon();
+    console.log("scroll");
   }
 }
+
 /**
  * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
  */

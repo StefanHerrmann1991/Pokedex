@@ -533,15 +533,6 @@ h2 {
     background-color: black;
 }
 
-.footer {
-    height: 100px;
-    position: absolute;
-    background-color: rgb(182, 25, 25);
-    color: white;
-    width: 100%;
-    border-top: solid 5.5px black;
-    top: 90%;
-}
 
 area {
     cursor: pointer;
@@ -549,6 +540,8 @@ area {
 
 .cross-map {
     margin-right: 5%;
+   margin-bottom: 5%;
+
 }
 
 @media (max-width: 900px) {
@@ -623,6 +616,7 @@ area {
 
     .one-pokemon-screeen {
         width: 100%;
+        position: relative;
     }
 
     h1 {
