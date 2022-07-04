@@ -146,8 +146,7 @@ window.addEventListener("resize", checkWindowResize);
  */
 
 function checkWindowResize() {
-  console.log(window.innerWidth)
-  if (onePokemonScreen) {
+   if (onePokemonScreen) {
     changeWindow = true;
     showDetailedPokemonScreen(currentPokemon);
     changeWindow = false;
@@ -225,9 +224,10 @@ function closeSmallScreen(onePokemon, allPokemon) {
 
 /** */
 async function createOnePokemonScreen(i, onePokemon) {
+ 
   currentPokemon = await allLoadedPokemons[i];
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
-  onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo)
+  onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
   togglePokemonInformation();
   insertCloseBtn();
   insertCross(i);
@@ -268,10 +268,9 @@ function bigImg() {
   document.getElementById('bigImg').innerHTML;
 }
 
-
-
 /** 
-* 
+* The function enabels the user to click on the upper and lower button of the control pad to get more information
+about the clicked Pokemon.
 */
 function togglePokemonInformation() {
   if (!stats) {
@@ -407,10 +406,10 @@ function generateCross(sideLength, i) {
  * @returns The types of the current Pokemon
  */
 
-function showPokemonTypeOnePokemon(currentPokemon, i) {
+function showPokemonTypeOnePokemon(currentPokemons, i) {
   let pokemonsType = document.getElementById(`onePokemonType-${i}`);
-  for (let j = 0; j < currentPokemon['types'].length; j++) {
-    const type = currentPokemon['types'][j]['type']['name'];
+  for (let j = 0; j < currentPokemons['types'].length; j++) {
+    const type = currentPokemons['types'][j]['type']['name'];
     pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
   }
   return pokemonsType;
@@ -436,8 +435,7 @@ window.onscroll = function () {
     numberOfLoadedPokemons += 20;
     loadPokemonInArray();
     renderPokemon();
-    console.log("scroll");
-  }
+    }
 }
 
 /**
