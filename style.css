@@ -267,6 +267,8 @@ div {
 .cross-container {
     display: flex;
     justify-content: flex-end;
+    bottom:0;
+    position: relative;
 }
 
 

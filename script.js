@@ -146,7 +146,7 @@ window.addEventListener("resize", checkWindowResize);
  */
 
 function checkWindowResize() {
-   if (onePokemonScreen) {
+  if (onePokemonScreen) {
     changeWindow = true;
     showDetailedPokemonScreen(currentPokemon);
     changeWindow = false;
@@ -167,6 +167,8 @@ function showDetailedPokemonScreen(i) {
     onePokemonScreen = true;
   }
 }
+
+
 
 function openBigScreen(onePokemon, allPokemon, i) {
   if (window.innerWidth > 700) {
@@ -224,14 +226,16 @@ function closeSmallScreen(onePokemon, allPokemon) {
 
 /** */
 async function createOnePokemonScreen(i, onePokemon) {
- 
+
   currentPokemon = await allLoadedPokemons[i];
+  i = currentPokemon['id'];
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
   onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
   togglePokemonInformation();
   insertCloseBtn();
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
+
 }
 /** 
  * The function renders the Pokemon pictures in the detailed Pokemon screen. 
@@ -264,15 +268,12 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
          `;
 }
 
-function bigImg() {
-  document.getElementById('bigImg').innerHTML;
-}
-
 /** 
 * The function enabels the user to click on the upper and lower button of the control pad to get more information
 about the clicked Pokemon.
 */
 function togglePokemonInformation() {
+ 
   if (!stats) {
     document.getElementById('statsName').innerHTML = '';
     getProperties(currentPokemon);
@@ -389,15 +390,39 @@ function generateCross(sideLength, i) {
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
   cross = `
-       <img class='cross-map' src='img/cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
+       <img class='cross-map' id="crossMap" src='img/cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
          <map name='image-map'>
-             <area target="" alt="up"    title="up"      onclick="togglePokemonInformation()" coords="${coord1},0,${coord2},${coord1}" shape="rect">
-             <area target="" alt="left"  title="left"    onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
-             <area target="" alt="down"  title="down"    onclick="togglePokemonInformation()" coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
-             <area target="" alt="right" title="right"   onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
+             <area target="" alt="up"    title="up"     id="up" onclick="togglePokemonInformation(); toggleCross('up')" coords="${coord1},0,${coord2},${coord1}" shape="rect">
+             <area target="" alt="left"  title="left"   id="left" onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
+             <area target="" alt="down"  title="down"   id="down" onclick="togglePokemonInformation(); toggleCross('down')" coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
+             <area target="" alt="right" title="right"  id="right" onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
          </map> `;
   return cross;
 }
+
+
+function toggleCross(id) {
+
+
+  if (id == 'up') {
+    document.getElementById('crossMap').src = "img/up.png";
+  }
+  if (id == 'down') {
+    document.getElementById('crossMap').src = "img/down.png";
+  }
+  if (id == 'left') {
+    document.getElementById('crossMap').src = "img/left.png";
+  }
+  if (id == 'right') {
+    document.getElementById('crossMap').src = "img/right.png";
+  }
+
+  setTimeout(() => {
+    document.getElementById('crossMap').src = "img/cross.png";
+  }, 500);
+
+}
+
 
 /**
  * 
@@ -435,7 +460,7 @@ window.onscroll = function () {
     numberOfLoadedPokemons += 20;
     loadPokemonInArray();
     renderPokemon();
-    }
+  }
 }
 
 /**
@@ -467,15 +492,19 @@ document.addEventListener('mousedown', function (event) {
  */
 
 function nextPokemon(i) {
-  {
-    if (i < allLoadedPokemons.length - 1) {
-      i++;
-    } else {
-      i = 0;
+  toggleCross('right');
+  setTimeout(() => {
+    {
+      if (i < allLoadedPokemons.length - 1) {
+        i++;
+      } else {
+        i = 0;
+      }
+      createOnePokemonScreen(i, onePokemon);
+      showDetailedPokemonScreen(i);
     }
-    createOnePokemonScreen(i, onePokemon);
-    showDetailedPokemonScreen(i);
-  }
+  }, 500);
+ 
 }
 
 /**
@@ -485,14 +514,21 @@ function nextPokemon(i) {
  */
 
 function lastPokemon(i) {
-  if (i > 0) {
-    i--;
-  }
-  else {
-    i = allLoadedPokemons.length - 1;
-  }
-  createOnePokemonScreen(i, onePokemon);
-  showDetailedPokemonScreen(i);
+  toggleCross('left');
+  setTimeout(() => {
+    {
+      if (i > 0) {
+        i--;
+      }
+      else {
+        i = allLoadedPokemons.length - 1;
+      }
+      createOnePokemonScreen(i, onePokemon);
+      showDetailedPokemonScreen(i);
+    }
+  }, 500);
+ 
+
 }
 
 /**
