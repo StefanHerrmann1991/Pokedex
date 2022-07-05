@@ -47,9 +47,18 @@ let changeWindow = false;
  */
 
 let stats = false;
+
+/**
+ * The varbiable saves the current position of the actual Pokemon as number. This is necessary for the resize function which checks the screen width.
+ */
+
+
+let  actualPokemonNumber = 0;
+
 /**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
+
 
 async function init() {
   await loadPokemonInArray();
@@ -139,6 +148,7 @@ async function renderPokemon() {
          </div>
          </div>`;
     pokemonsType = showPokemonType(loadedPokemon, i);
+    console.log(loadedPokemon);
   }
 }
 
@@ -155,27 +165,34 @@ window.addEventListener("resize", checkWindowResize);
 function checkWindowResize() {
   if (onePokemonScreen) {
     changeWindow = true;
-    showDetailedPokemonScreen(currentPokemon);
+    showDetailedPokemonScreen(actualPokemonNumber);
     changeWindow = false;
   }
 }
 
 /** The function opens the detailed Pokemon screen on the left side of the screen*/
 
-function showDetailedPokemonScreen(id , currentPokemon) {
+function showDetailedPokemonScreen(i) {
 
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
-    openBigScreen(onePokemon, allPokemon, id);
-    if (window.innerWidth <= 700) {
-      openSmallScreen(onePokemon, allPokemon, id);
-    }
+    if (window.innerWidth <= 700) { openSmallScreen(onePokemon, allPokemon, i); }
+    if (window.innerWidth > 700) { openBigScreen(onePokemon, allPokemon, i); }
     onePokemonScreen = true;
   }
+if (onePokemonScreen && !changeWindow) {
+  createOnePokemonScreen(i, onePokemon);
 }
 
+}
 
+/**
+ * 
+ * @param {ID} onePokemon 
+ * @param {ID} allPokemon 
+ * @param {*} id 
+ */
 
 function openBigScreen(onePokemon, allPokemon, id) {
   if (window.innerWidth > 700) {
@@ -235,14 +252,13 @@ function closeSmallScreen(onePokemon, allPokemon) {
 async function createOnePokemonScreen(i, onePokemon) {
 
   currentPokemon = await allLoadedPokemons[i];
-  id = currentPokemon['id'];
+ actualPokemonNumber = i;
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
   onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
   togglePokemonInformation();
   insertCloseBtn();
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
-
 }
 /** 
  * The function renders the Pokemon pictures in the detailed Pokemon screen. 
@@ -280,7 +296,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
 about the clicked Pokemon.
 */
 function togglePokemonInformation() {
- 
+
   if (!stats) {
     document.getElementById('statsName').innerHTML = '';
     getProperties(currentPokemon);
@@ -510,7 +526,7 @@ function nextPokemon(i) {
       showDetailedPokemonScreen(i);
     }
   }, 500);
- 
+
 }
 
 /**
@@ -533,7 +549,7 @@ function lastPokemon(i) {
       showDetailedPokemonScreen(i);
     }
   }, 500);
- 
+
 
 }
 
