@@ -14,11 +14,18 @@ let onePokemonScreen = false;
  */
 let numberOfLoadedPokemons = 0;
 /**
- * This variable represents the number or the name of the Pokemon which has been clicked.
- *  @type {numer|string}
+ * This variable represents the name of the Pokemon which has been clicked.
+ *  @type {string}
  */
 
 let currentPokemon;
+
+/**
+ * This variable represents the number of the Pokemon which has been clicked.
+ *  @type {number}
+ */
+
+let id;
 
 /**
  * The variable prevents the user from scrolling down during the search function.
@@ -155,14 +162,14 @@ function checkWindowResize() {
 
 /** The function opens the detailed Pokemon screen on the left side of the screen*/
 
-function showDetailedPokemonScreen(i) {
+function showDetailedPokemonScreen(id , currentPokemon) {
 
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
-    openBigScreen(onePokemon, allPokemon, i);
+    openBigScreen(onePokemon, allPokemon, id);
     if (window.innerWidth <= 700) {
-      openSmallScreen(onePokemon, allPokemon, i);
+      openSmallScreen(onePokemon, allPokemon, id);
     }
     onePokemonScreen = true;
   }
@@ -170,7 +177,7 @@ function showDetailedPokemonScreen(i) {
 
 
 
-function openBigScreen(onePokemon, allPokemon, i) {
+function openBigScreen(onePokemon, allPokemon, id) {
   if (window.innerWidth > 700) {
     setTimeout(() => {
       onePokemon.classList.add('detailed-pokemon-on');
@@ -178,13 +185,13 @@ function openBigScreen(onePokemon, allPokemon, i) {
       allPokemon.classList.remove('d-none');
     }, 500);
     setTimeout(() => {
-      createOnePokemonScreen(i, onePokemon)
+      createOnePokemonScreen(id, onePokemon)
     }, 3500);
   }
 }
 
-function openSmallScreen(onePokemon, allPokemon, i) {
-  createOnePokemonScreen(i, onePokemon);
+function openSmallScreen(onePokemon, allPokemon, id) {
+  createOnePokemonScreen(id, onePokemon);
   allPokemon.classList.add('d-none');
   onePokemon.classList.add('detailed-pokemon-on');
 }
@@ -228,7 +235,7 @@ function closeSmallScreen(onePokemon, allPokemon) {
 async function createOnePokemonScreen(i, onePokemon) {
 
   currentPokemon = await allLoadedPokemons[i];
-  i = currentPokemon['id'];
+  id = currentPokemon['id'];
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
   onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
   togglePokemonInformation();
@@ -416,7 +423,6 @@ function toggleCross(id) {
   if (id == 'right') {
     document.getElementById('crossMap').src = "img/right.png";
   }
-
   setTimeout(() => {
     document.getElementById('crossMap').src = "img/cross.png";
   }, 500);
