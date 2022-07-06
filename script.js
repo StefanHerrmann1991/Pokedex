@@ -519,13 +519,28 @@ function showPokemonType(currentPokemons, i) {
  */
 
 
-window.onscroll = function () {
+window.onscroll = async function () {
   if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
+    scroll = false;
     numberOfLoadedPokemons += 20;
-    loadPokemonInArray();
-    renderPokemon();
-  }
+    await loadPokemonInArray();
+    await renderPokemon();
+    scroll = true;
+
+     }
 }
+
+/* 
+window.onscroll = async function () {
+  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
+    scroll = false;
+    numberOfLoadedPokemons += 20;
+    await loadPokemonInArray();
+    await renderPokemon();
+     }
+setTimeout( () => { scroll = true;}, 2000);
+
+} */
 
 /**
  * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
