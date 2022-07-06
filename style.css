@@ -476,7 +476,7 @@ body {
 }
 
 .pokemon-type-style {
-    width: 90px;
+    width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -545,6 +545,7 @@ h2 {
 
 
 .outer-polygon {
+    
     border-top: solid 1px black;
     border-bottom: solid 1px black;
     clip-path: polygon(93% 7%, 93% 62%, 72.1% 93%, 5% 93%, 5% 7%);
