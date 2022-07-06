@@ -154,8 +154,7 @@ async function renderPokemon() {
          </div>
          </div>`;
     pokemonsType = showPokemonType(loadedPokemon, i);
-    console.log(loadedPokemon);
-  }
+    }
 }
 
 /**
@@ -427,7 +426,7 @@ function insertCloseBtn() {
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
   if (window.innerWidth <= 700) {
-    let text = generateCross(100, i);
+    let text = generateCross(150, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 700 && window.innerWidth < 1100) {
