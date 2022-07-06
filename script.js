@@ -41,9 +41,9 @@ let scroll = true;
 let changeWindow = false;
 
 /**
- * The variable is altered when the right or left cross button is clicked.
+ * 
+ * @type {boolean} The variable is altered when the right or left cross button is clicked.
  * It shall prevent laoding the stats and properties from the Pokemon screen to be loaded simultaneously.
- * @type {boolean}
  */
 
 let stats = false;
@@ -53,11 +53,15 @@ let stats = false;
  */
 
 
-let  actualPokemonNumber = 0;
-
+let actualPokemonNumber = 0;
+/**
+ *  @type {boolean} The variable tests if the current pokemon is laoded via the search bar.
+ */
+let search = false; 
 /**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
+
 
 
 async function init() {
@@ -65,32 +69,34 @@ async function init() {
   await renderPokemon();
 }
 
-
-
-/**
- * Ask for Pokemon from Poke API 
- */
-async function searchPokemon() {
-  scroll = false;
-  await getPokemonByName();
-  await showDetailedPokemonScreen(currentPokemon);
-  await loadPokemonInArray();
-  scroll = true;
-}
-
-
 /**
  * This function searches for Pokemon with the given name or ID in the input field.
  * The pokemon will be loaded in the detailed Pokemon screen.
  */
-async function getPokemonByName() {
+async function getPokemonByName(i) {
   onePokemonScreen = false;
   let pokemonName = document.getElementById('pokedexSearch').value;
-  let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+  pokemonNameToLowerCase = pokemonName.toLowerCase(); 
+  let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
   let responsePokemon = await fetch(url);
   let pokemon = await responsePokemon.json();
   numberOfLoadedPokemons = pokemon['id'];
-  currentPokemon = Number(pokemon['id'] - 1);
+  await loadPokemonInArray();
+  actualPokemonNumber = Number(pokemon['id'] - 1);
+  i = Number(pokemon['id'] - 1);
+  return i;
+ 
+}
+
+/**
+ * Ask for Pokemon from Poke API 
+ */
+ async function searchPokemon() {
+  scroll = false;
+  let i = await getPokemonByName();
+  await showDetailedPokemonScreen(i);
+  scroll = true;
+ 
 }
 /**
  * The functions takes a word and returns the string with the first letter in upper case
@@ -141,7 +147,7 @@ async function renderPokemon() {
     pokemon.innerHTML += `
          <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
          style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} # ${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
+         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} #${padLeadingZeros(loadedPokemon['id'], 4)}</nobr></h2>
          <div class="pokemon-card-description">
          <div id="pokemonType-${i}"></div>
          <img class="pokemon-img" src="${loadedPokemon['sprites']['front_default']}">
@@ -162,11 +168,13 @@ window.addEventListener("resize", checkWindowResize);
  * The function checks the window size and shows the correct detailed Pokemon information.
  */
 
-function checkWindowResize() {
+async function checkWindowResize() {
   if (onePokemonScreen) {
     changeWindow = true;
-    showDetailedPokemonScreen(actualPokemonNumber);
+    scroll = false;
+    await showDetailedPokemonScreen(actualPokemonNumber);
     changeWindow = false;
+    scroll = true;
   }
 }
 
@@ -181,20 +189,20 @@ function showDetailedPokemonScreen(i) {
     if (window.innerWidth > 700) { openBigScreen(onePokemon, allPokemon, i); }
     onePokemonScreen = true;
   }
-if (onePokemonScreen && !changeWindow) {
-  createOnePokemonScreen(i, onePokemon);
-}
+  if (onePokemonScreen && !changeWindow) {
+    createOnePokemonScreen(i, onePokemon);
+  }
 
 }
 
 /**
- * 
- * @param {ID} onePokemon 
- * @param {ID} allPokemon 
- * @param {*} id 
+ * The function opens the Pokemon screen when the window has a width over 700 px and renders the Pokemon at the appropriate position.
+ * @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
+ * @param {ID} allPokemon The ID of the container where the Pokemon screen for all Pokemon is rendered.
+ * @param {number} i The running index of the current Pokemon.
  */
 
-function openBigScreen(onePokemon, allPokemon, id) {
+async function openBigScreen(onePokemon, allPokemon, i) {
   if (window.innerWidth > 700) {
     setTimeout(() => {
       onePokemon.classList.add('detailed-pokemon-on');
@@ -202,17 +210,27 @@ function openBigScreen(onePokemon, allPokemon, id) {
       allPokemon.classList.remove('d-none');
     }, 500);
     setTimeout(() => {
-      createOnePokemonScreen(id, onePokemon)
+      createOnePokemonScreen(i, onePokemon)
     }, 3500);
   }
 }
 
-function openSmallScreen(onePokemon, allPokemon, id) {
-  createOnePokemonScreen(id, onePokemon);
+/**
+ * The function opens the Pokemon screen when the window has a width less than 700 px and renders the Pokemon at the appropriate position.
+ * @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
+ * @param {ID} allPokemon The ID of the container where the Pokemon screen for all Pokemon is rendered.
+ * @param {number} i The running index of the current Pokemon.
+ */
+
+async function openSmallScreen(onePokemon, allPokemon, id) {
+  await createOnePokemonScreen(id, onePokemon);
   allPokemon.classList.add('d-none');
   onePokemon.classList.add('detailed-pokemon-on');
 }
 
+/**
+ * The function closes the Pokemon screen.
+ */
 
 function closeDetailedPokemonScreen() {
   currentPokemon;
@@ -227,6 +245,11 @@ function closeDetailedPokemonScreen() {
     }
   }
 }
+/**
+ *  The function closes the Pokemon screen at a width smaller bigger than 700px.
+ *  @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
+ * @param {ID} allPokemon The ID of the container where the Pokemon screen for all Pokemon is rendered.
+ */
 
 function closeBigScreen(onePokemon, allPokemon) {
   onePokemon.classList.replace('detailed-pokemon-on', 'detailed-pokemon-off');
@@ -240,6 +263,12 @@ function closeBigScreen(onePokemon, allPokemon) {
   }, 3500);
 }
 
+/**
+ *  The function closes the Pokemon screen at a width smaller smaller than 700px.
+ *  @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
+ * @param {ID} allPokemon The ID of the container where the Pokemon screen for all Pokemon is rendered.
+ */
+
 function closeSmallScreen(onePokemon, allPokemon) {
   onePokemon.innerHTML = '';
   allPokemon.classList.remove('d-none');
@@ -248,11 +277,14 @@ function closeSmallScreen(onePokemon, allPokemon) {
 }
 
 
-/** */
+/**
+ * 
+ * @param {number} i The running index of the current Pokemon.
+ * @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
+ */
 async function createOnePokemonScreen(i, onePokemon) {
-
   currentPokemon = await allLoadedPokemons[i];
- actualPokemonNumber = i;
+  actualPokemonNumber = i;
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
   onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
   togglePokemonInformation();
@@ -260,9 +292,14 @@ async function createOnePokemonScreen(i, onePokemon) {
   insertCross(i);
   showPokemonTypeOnePokemon(currentPokemon, i);
 }
-/** 
- * The function renders the Pokemon pictures in the detailed Pokemon screen. 
-*/
+/**
+ * 
+ * @param {JSON} currentPokemon A JSON object with the information about the current Pokemon.
+ * @param {number} i The running index of the  current Pokemon.
+ * @param {string} typeOne The first type of the current Pokemon.
+ * @param {string} typeTwo The second type of the current Pokemon.
+ * @returns A tamplate literal for the current Pokemon.
+ */
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
@@ -270,7 +307,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
       <div class="border-one-pokemon">
           <div class="one-pokemon-header"
               style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-              <h2>${upperCase(currentPokemon['name'])} # ${padLeadingZeros(currentPokemon['id'], 3)}</h2>
+              <h2>${upperCase(currentPokemon['name'])} #${padLeadingZeros(currentPokemon['id'], 4)}</h2>
               <div><img id="bigImg" class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}"></div>
               <div class="align-items" id="onePokemonType-${i}"></div>
           </div>
@@ -292,8 +329,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
 }
 
 /** 
-* The function enabels the user to click on the upper and lower button of the control pad to get more information
-about the clicked Pokemon.
+* The function enabels the user to click on the upper and lower button of the control pad to get more information about the clicked Pokemon.
 */
 function togglePokemonInformation() {
 
@@ -310,8 +346,9 @@ function togglePokemonInformation() {
 
 }
 /**
- * The function loads the properties from the current Pokemon and renders them in the detailed Pokemon screen.
- * */
+ * The function loads the properties from the current Pokemon and renders them into the detailed Pokemon screen.
+ * @param {JSON} currentPokemon A JSON object with the information about the current Pokemon.
+ */
 async function getProperties(currentPokemon) {
   let details = document.getElementById('properties');
   let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
@@ -324,7 +361,10 @@ async function getProperties(currentPokemon) {
   details.insertAdjacentHTML('afterbegin', text);
 }
 
-/** */
+/**
+ * The function loads the base stats from the current Pokemon and renders them into the detailed Pokemon screen.
+ * @param {JSON} currentPokemon A JSON object with the information about the current Pokemon.
+ */
 function getPokemonStats(currentPokemon) {
 
   for (let j = 0; j < currentPokemon['stats'].length; j++) {
@@ -374,12 +414,12 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
 
 function insertCloseBtn() {
   let closeBtn = document.getElementById('closeBtn');
-  let text = `<button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="img/close.png"></button>`
-  closeBtn.insertAdjacentHTML('afterbegin', text)
+  let text = `<button class="close-btn-pic" onclick="closeDetailedPokemonScreen()"><img src="img/close.png"></button>`;
+  closeBtn.insertAdjacentHTML('afterbegin', text);
 }
 
 /**
- * The function enables the responsivness of the cross element.
+ * The function enables the responsivness of the map cross element.
  * 
  * @param {number} i The current Pokemon ID.
  */
@@ -387,15 +427,15 @@ function insertCloseBtn() {
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
   if (window.innerWidth <= 700) {
-    let text = generateCross(150, i);
+    let text = generateCross(100, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 700 && window.innerWidth < 1100) {
-    let text = generateCross(150, i);
+    let text = generateCross(100, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 1100) {
-    let text = generateCross(200, i);
+    let text = generateCross(150, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
 }
@@ -423,29 +463,29 @@ function generateCross(sideLength, i) {
   return cross;
 }
 
+/**
+ * The function simulates pressing the control pad.
+ * @param {string} position The parameter resembles the 
+ */
 
-function toggleCross(id) {
+function toggleCross(position) {
 
-
-  if (id == 'up') {
+  if (position == 'up') {
     document.getElementById('crossMap').src = "img/up.png";
   }
-  if (id == 'down') {
+  if (position == 'down') {
     document.getElementById('crossMap').src = "img/down.png";
   }
-  if (id == 'left') {
+  if (position == 'left') {
     document.getElementById('crossMap').src = "img/left.png";
   }
-  if (id == 'right') {
+  if (position == 'right') {
     document.getElementById('crossMap').src = "img/right.png";
   }
   setTimeout(() => {
     document.getElementById('crossMap').src = "img/cross.png";
   }, 500);
-
 }
-
-
 /**
  * 
  * @param {number} currentPokemons The current Pokemon.
@@ -453,9 +493,9 @@ function toggleCross(id) {
  * @returns The types of the current Pokemon
  */
 
-function showPokemonTypeOnePokemon(currentPokemons, i) {
+async function showPokemonTypeOnePokemon(currentPokemons, i) {
   let pokemonsType = document.getElementById(`onePokemonType-${i}`);
-  for (let j = 0; j < currentPokemons['types'].length; j++) {
+  for (let j = 0; j < await currentPokemons['types'].length; j++) {
     const type = currentPokemons['types'][j]['type']['name'];
     pokemonsType.innerHTML += `<div style="background: var(--${type})" class="pokemon-type-style pixel-shadow mgn-l mgn-b">${type}</div>`
   }
@@ -478,7 +518,7 @@ function showPokemonType(currentPokemons, i) {
 
 
 window.onscroll = function () {
-  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true) {
+  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
     numberOfLoadedPokemons += 20;
     loadPokemonInArray();
     renderPokemon();
@@ -493,7 +533,7 @@ async function loadPokemonInArray() {
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
     currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
-  }
+    }
 }
 
 /**
@@ -513,7 +553,7 @@ document.addEventListener('mousedown', function (event) {
  * @param {number} i The ID of the actual Pokemon.
  */
 
-function nextPokemon(i) {
+async function nextPokemon(i) {
   toggleCross('right');
   setTimeout(() => {
     {
@@ -535,7 +575,7 @@ function nextPokemon(i) {
  * @param {number} i The ID of the actual Pokemon.
  */
 
-function lastPokemon(i) {
+async function lastPokemon(i) {
   toggleCross('left');
   setTimeout(() => {
     {
