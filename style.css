@@ -219,8 +219,14 @@ td {
     border-radius: 40px;
 }
 
+
+:root {
+    --border-width1: ;
+}
+
 .left-box {
-    height: 100px;
+ 
+    height: 10vh; /* 8vh */
     background-color: rgb(182, 25, 25);
     width: 50%;
     border-bottom: solid 5.5px black;
@@ -231,23 +237,25 @@ td {
 }
 
 .triangular-box {
-    width: 0;
+
+    position:relative; 
+    width: 0.5vh;
     height: 0;
-    top: 2px;
     border-style: solid;
-    border-width: 105.5px 158px 0 0;
+    border-width: 10.5vh 15.5vh 0 0;
     border-color: black transparent transparent transparent;
+    z-index: 100;
 }
 
 .inner-triangle {
-    position: relative;
-    top: -105.5px;
+    position:absolute;
+    top: -10.5vh; 
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 100px 150px 0 0;
+    border-width: 10.1vh 14.9vh 0 0;
     border-color: #b61818 transparent transparent transparent;
-    z-index: 100;
+   
 
 }
 
@@ -434,6 +442,7 @@ body {
     --ground: #E2BF65;
     --fairy: #D685AD;
     --bug: #A6B91A;
+ 
 }
 
 
@@ -659,6 +668,7 @@ div {
     h2 {
         font-size: 25px;
     }
+
 
     .triangular-box {
         display: none;
