@@ -84,8 +84,7 @@ async function getPokemonByName(i) {
   await loadPokemonInArray();
   actualPokemonNumber = Number(pokemon['id'] - 1);
   i = Number(pokemon['id'] - 1);
-  return i;
- 
+  return i; 
 }
 
 /**
@@ -305,6 +304,7 @@ async function createOnePokemonScreen(i, onePokemon) {
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
+  <div class="one-pokemon-pic">
   <div class="outer-polygon">
       <div class="border-one-pokemon">
           <div class="one-pokemon-header"
@@ -314,6 +314,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
               <div class="align-items" id="onePokemonType-${i}"></div>
           </div>
       </div>
+  </div>
   </div>
   <div class="one-pokemon-details">
       <div class="close-details">
