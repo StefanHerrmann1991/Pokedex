@@ -219,17 +219,12 @@ td {
     border-radius: 40px;
 }
 
-
-:root {
-    --border-width1: ;
-}
-
 .left-box {
  
     height: 10vh; /* 8vh */
     background-color: rgb(182, 25, 25);
     width: 50%;
-    border-bottom: solid 5.5px black;
+    border-bottom: solid 0.6vh black;
     z-index: 100;
     display: flex;
     align-items: center;
@@ -237,23 +232,23 @@ td {
 }
 
 .triangular-box {
-
+    margin-left: -0.2vh;
     position:relative; 
-    width: 0.5vh;
+    width: 0.3vh;
     height: 0;
     border-style: solid;
-    border-width: 10.5vh 15.5vh 0 0;
+    border-width: 10.62vh  15.5vh 0 0;
     border-color: black transparent transparent transparent;
     z-index: 100;
 }
 
 .inner-triangle {
     position:absolute;
-    top: -10.5vh; 
+    top: -10.62vh ; 
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 10.1vh 14.9vh 0 0;
+    border-width: 10.2vh 14.9vh 0 0;
     border-color: #b61818 transparent transparent transparent;
    
 
@@ -343,7 +338,7 @@ div {
     margin-top: 0px;
     height: 95vh;
     width: 50%;
-    outline: solid 5.5px black;
+    outline: solid 0.6vh black;
     z-index: 0;
     position: sticky;
     top: 0;
@@ -354,7 +349,7 @@ div {
     from {
         height: 95vh;
         width: 50%;
-        outline: solid 5.5px black;
+        outline: solid 0.6vh black;
     }
 
     to {
@@ -384,7 +379,7 @@ div {
     to {
         height: 95vh;
         width: 50%;
-        outline: solid 5.5px black;
+        outline: solid 0.6vh black;
     }
 }
 
