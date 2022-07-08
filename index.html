@@ -43,9 +43,11 @@
         <div class="border-style-header">
             <div id="leftBox" class="left-box transformation">
                 <div class="pokedex-search-btn-inp">
-                    <input autocomplete="on" id="pokedexSearch" placeholder="Choose your Pokemon" type="text">
-                    <button onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
-                        search</button>
+                    <form autocomplete="off"><input type="text" name="q" id="q" onKeyUp="showResults(this.value)" />
+                        <div id="pokedexSearch"></div>
+                        </form>
+              <!--       <button onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
+                        search</button> -->
                 </div>
             </div>
             <div class="triangular-box">

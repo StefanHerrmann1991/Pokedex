@@ -157,6 +157,17 @@ async function renderPokemon() {
   }
 }
 
+const filteredData = []
+
+function completePokemonName() {
+  const result = pokemonNames.find( pokemon => pokemon == document.getElementById('pokedexSearch').value);
+  return result;
+}
+
+
+
+
+
 /**
  * The event listener checks the width of the screen when its altered.
  * @param {callback} checkWindowResize Renders the detailed Pokemon information while changing the window size. 
