@@ -111,9 +111,9 @@ function autocompleteMatch(input) {
   if (input == '') {
     return [];
   }
-  var reg = new RegExp(input)
+  let reg = new RegExp(input)
   return pokemonNames.filter(function(term) {
-	  if (term.match(reg)) {
+	  if (term.toLowerCase().match(reg)) {
   	  return term;
 	  }
   });
