@@ -73,10 +73,11 @@ async function init() {
  * This function searches for Pokemon with the given name or ID in the input field.
  * The pokemon will be loaded in the detailed Pokemon screen.
  */
-async function getPokemonByName(i) {
+async function getPokemonByName() {
   onePokemonScreen = false;
-  let pokemonName = document.getElementById('pokedexSearch').value;
-  pokemonNameToLowerCase = pokemonName.toLowerCase(); 
+  event.preventDefault();
+  let name = document.forms["pokedexSearchForm"].pokemonName.value;
+  pokemonNameToLowerCase = name.toLowerCase(); 
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
   let responsePokemon = await fetch(url);
   let pokemon = await responsePokemon.json();
@@ -84,7 +85,7 @@ async function getPokemonByName(i) {
   await loadPokemonInArray();
   actualPokemonNumber = Number(pokemon['id'] - 1);
   i = Number(pokemon['id'] - 1);
-  return i; 
+  return i
 }
 
 /**
@@ -105,6 +106,31 @@ async function getPokemonByName(i) {
 function upperCase(pokemonNameUpperCase) {
   return pokemonNameUpperCase.charAt(0).toUpperCase() + pokemonNameUpperCase.slice(1);
 }
+
+function autocompleteMatch(input) {
+  if (input == '') {
+    return [];
+  }
+  var reg = new RegExp(input)
+  return pokemonNames.filter(function(term) {
+	  if (term.match(reg)) {
+  	  return term;
+	  }
+  });
+}
+
+function showResults(val) {
+  res = document.getElementById("pokedexSearch");
+  res.innerHTML = '';
+  let list = '';
+  let terms = autocompleteMatch(val);
+  for (i = 0; i < terms.length; i++) {
+    console.log(terms[i])
+    list += `<option value="${terms[i]}">${terms[i]}</option>`;
+  }
+  res.innerHTML = `<select name="pokemonName">${list}</select>`;
+}
+
 
 /* this function sets the color of a Pokemon depending on its type */
 function pokemonType(pokemon) {
