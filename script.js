@@ -128,7 +128,7 @@ function showResults(val) {
     console.log(terms[i])
     list += `<option value="${terms[i]}">${terms[i]}</option>`;
   }
-  res.innerHTML = `<select name="pokemonName">${list}</select>`;
+  res.innerHTML = `${list}`;
 }
 
 
@@ -172,7 +172,7 @@ async function renderPokemon() {
     pokemon.innerHTML += `
          <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
          style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} #${padLeadingZeros(loadedPokemon['id'], 4)}</nobr></h2>
+         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} #${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
          <div class="pokemon-card-description">
          <div id="pokemonType-${i}"></div>
          <img class="pokemon-img" src="${loadedPokemon['sprites']['front_default']}">
@@ -346,7 +346,7 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
       <div class="border-one-pokemon">
           <div class="one-pokemon-header"
               style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-              <h2>${upperCase(currentPokemon['name'])} #${padLeadingZeros(currentPokemon['id'], 4)}</h2>
+              <h2>${upperCase(currentPokemon['name'])} #${padLeadingZeros(currentPokemon['id'], 3)}</h2>
               <div><img id="bigImg" class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}"></div>
               <div class="align-items" id="onePokemonType-${i}"></div>
           </div>
