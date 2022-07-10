@@ -222,7 +222,9 @@ function showDetailedPokemonScreen(i) {
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
     if (window.innerWidth <= 700) { openSmallScreen(onePokemon, allPokemon, i); }
-    if (window.innerWidth > 700) { openBigScreen(onePokemon, allPokemon, i); }
+    if (window.innerWidth > 700) { 
+      openBigScreen(onePokemon, allPokemon, i);
+      scrollFunction(); }
   }
   if (onePokemonScreen && !changeWindow) {
     createOnePokemonScreen(i, onePokemon);
@@ -264,6 +266,10 @@ async function openSmallScreen(onePokemon, allPokemon, id) {
   allPokemon.classList.add('d-none');
   onePokemon.classList.add('detailed-pokemon-on');
   onePokemonScreen = true;
+}
+
+function scrollFunction() {
+   document.getElementById("onePokemon").scrollIntoView(true);
 }
 
 /**
