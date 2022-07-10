@@ -377,11 +377,12 @@ div {
 
 
 .all-pokemon-menu-on {
-    animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
+    animation: openPokedex-allPokemon 3500ms linear 1000ms 1 forwards;
 }
 
 @keyframes openPokedex-allPokemon {
     33% {
+        justify-content: flex-start;
         width: 100%;
     }
 
@@ -390,7 +391,9 @@ div {
     }
 
     100% {
+       
         width: 48%;
+   
     }
 }
 
