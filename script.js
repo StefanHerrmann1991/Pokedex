@@ -109,7 +109,7 @@ function upperCase(pokemonNameUpperCase) {
 
 function autocompleteMatch(input) {
   if (input == '') {
-    return [];
+     return [];
   }
   let reg = new RegExp(input)
   return pokemonNames.filter(function(term) {

@@ -62,7 +62,7 @@ h2 {
 }
 
 div {
-    font-size: 18px !important;
+    font-size: 18px;
 }
 
 .close-details {
@@ -141,20 +141,12 @@ button {
     height: 3vh;
 }
 
-.pokedex-search select {
+.pokedex-search-select {
     border: none;
     margin: 0px;
     padding: 0px;
-    height: 3vh;
+    height: 3.3vh;
 }
-
-.pokedex-search option {
-    border: none;
-    margin: 0px;
-    padding: 0px;
-    height: 3vh;
-}
-
 
 .pokeball {
     margin-top: 170px;
@@ -286,6 +278,7 @@ div {
 .all-pokemon {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     padding-right: 4px;
     overflow: auto;
 }
@@ -311,23 +304,6 @@ div {
 }
 
 
-.all-pokemon-menu-on {
-    animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
-}
-
-@keyframes openPokedex-allPokemon {
-    33% {
-        width: 100%;
-    }
-
-    66% {
-        width: 75%;
-    }
-
-    100% {
-        width: 48%;
-    }
-}
 
 .all-pokemon-menu-off {
     animation: closePokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
@@ -400,6 +376,23 @@ div {
 }
 
 
+.all-pokemon-menu-on {
+    animation: openPokedex-allPokemon 2500ms ease-in-out 1000ms 1 forwards;
+}
+
+@keyframes openPokedex-allPokemon {
+    33% {
+        width: 100%;
+    }
+
+    66% {
+        width: 75%;
+    }
+
+    100% {
+        width: 48%;
+    }
+}
 
 
 .pokemon-img:hover {

@@ -45,13 +45,14 @@
         <div class="border-style-header">
             <div id="leftBox" class="left-box transformation">
                 <div>
-                    <form class="pokedex-search" autocomplete="off" id="pokedexSearchForm"><input name="q" id="q"
+                    <form class="pokedex-search" autocomplete="off" id="pokedexSearchForm"><input placeholder="Find your Pokemon..." name="q" id="q"
                             onKeyUp="showResults(this.value)" />
-                        <select name="pokemonName" id="pokedexSearch"></select>
+                        <select class="pokedex-search-select" name="pokemonName" id="pokedexSearch"></select>
                         <button type="submit" onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
                             search</button>
                     </form>
                 </div>
+                
             </div>
             <div class="triangular-box">
                 <div class="inner-triangle"></div>
