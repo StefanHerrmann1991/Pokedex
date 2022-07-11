@@ -3,6 +3,11 @@
 
 /* subsides */
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .formalities {
     color: black;
     margin-left: 40px;
@@ -133,17 +138,10 @@ button {
 
 }
 
-.pokedex-search input {
-   
-}
-
-input, select{
+input, select {
     box-sizing: border-box;
     height: 3vh;
-  }
-
-
-
+}
 
 .links {
     margin-bottom: 10px;
@@ -667,9 +665,9 @@ area {
         margin-left: 0px;
     }
 
-  
 
-   .links {
+
+    .links {
         display: flex;
         flex-direction: column;
         justify-content: center;

@@ -31,7 +31,7 @@ let id;
  * The variable prevents the user from scrolling down during the search function.
  * @type {boolean} is activated or deactivated during the search function for Pokemon.
  */
-let scroll = true;
+let isScrolled = false;
 
 /**
  * The variable is altered to show if the window changes in its width. 
@@ -43,7 +43,7 @@ let changeWindow = false;
 /**
  * 
  * @type {boolean} The variable is altered when the right or left cross button is clicked.
- * It shall prevent laoding the stats and properties from the Pokemon screen to be loaded simultaneously.
+ * It shall prevent loading the stats and properties from the Pokemon screen to be loaded simultaneously.
  */
 
 let stats = false;
@@ -55,7 +55,7 @@ let stats = false;
 
 let actualPokemonNumber = 0;
 /**
- *  @type {boolean} The variable tests if the current pokemon is laoded via the search bar.
+ *  @type {boolean} The variable tests if the current pokemon is loaded via the search bar.
  */
 let search = false;
 /**
@@ -64,7 +64,6 @@ let search = false;
 
 
 async function init() {
-  
   await loadPokemonInArray();
   await renderPokemon();
 }
@@ -92,11 +91,8 @@ async function getPokemonByName() {
  * Ask for Pokemon from Poke API 
  */
 async function searchPokemon() {
-  scroll = false;
   let i = await getPokemonByName();
   await showDetailedPokemonScreen(i);
-  scroll = true;
-
 }
 /**
  * The functions takes a word and returns the string with the first letter in upper case
@@ -183,17 +179,6 @@ async function renderPokemon() {
   }
 }
 
-const filteredData = []
-
-function completePokemonName() {
-  const result = pokemonNames.find(pokemon => pokemon == document.getElementById('pokedexSearch').value);
-  return result;
-}
-
-
-
-
-
 /**
  * The event listener checks the width of the screen when its altered.
  * @param {callback} checkWindowResize Renders the detailed Pokemon information while changing the window size. 
@@ -204,30 +189,44 @@ window.addEventListener("resize", checkWindowResize);
  * The function checks the window size and shows the correct detailed Pokemon information.
  */
 
+
 async function checkWindowResize() {
-  if (onePokemonScreen) {
-    scroll = false;
+  if (onePokemonScreen && isScrolled  == false) {
     changeWindow = true;
     await showDetailedPokemonScreen(actualPokemonNumber);
     changeWindow = false;
-    scroll = true;
+    console.log('the reason is resize' + allLoadedPokemons);
+  }
+}
+
+/**
+ * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
+ * It loads always 10 new Pokemon when the scrollbar hits the button.
+ */
+
+
+ window.onscroll = async function () {
+  if (window.scrollY + window.innerHeight >= document.body.clientHeight && isScrolled == false && changeWindow == false) {
+    isScrolled = true;
+    numberOfLoadedPokemons += 20;
+    await loadPokemonInArray();
+    await renderPokemon();
+    isScrolled = false;
   }
 }
 
 /** The function opens the detailed Pokemon screen on the left side of the screen*/
 
-function showDetailedPokemonScreen(i) {
+async function showDetailedPokemonScreen(i) {
 
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
     if (window.innerWidth <= 800) { openSmallScreen(onePokemon, allPokemon, i); }
-    if (window.innerWidth > 800) {
-      openBigScreen(onePokemon, allPokemon, i);
-    }
+    if (window.innerWidth > 800) { openBigScreen(onePokemon, allPokemon, i); }
   }
   if (onePokemonScreen && !changeWindow) {
-    createOnePokemonScreen(i, onePokemon);
+    await createOnePokemonScreen(i, onePokemon);
   }
 }
 
@@ -246,12 +245,11 @@ async function openBigScreen(onePokemon, allPokemon, i) {
       allPokemon.classList.remove('d-none');
 
     }, 500);
-    setTimeout(() => {
-      createOnePokemonScreen(i, onePokemon);
+    setTimeout(async () => {
+      await createOnePokemonScreen(i, onePokemon);
       scrollFunction('smooth');
       onePokemonScreen = true;
     }, 3500);
-
   }
 }
 
@@ -558,21 +556,7 @@ function showPokemonType(currentPokemons, i) {
   return pokemonsType;
 }
 
-/**
- * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
- * It loads always 10 new Pokemon when the scrollbar hits the button.
- */
 
-
-window.onscroll = async function () {
-  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
-    scroll = false;
-    numberOfLoadedPokemons += 20;
-    await loadPokemonInArray();
-    await renderPokemon();
-    scroll = true;
-  }
-}
 
 /**
  * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
@@ -580,9 +564,13 @@ window.onscroll = async function () {
 
 async function loadPokemonInArray() {
 
+
+  if (!changeWindow) {
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
     currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
+  }
+  console.log(allLoadedPokemons);
   }
 }
 
@@ -617,7 +605,6 @@ async function nextPokemon(i) {
       showDetailedPokemonScreen(i);
     }
   }, 500);
-  scrollFunction('instant');
 }
 
 /**
