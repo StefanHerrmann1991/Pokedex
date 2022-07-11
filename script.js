@@ -63,8 +63,8 @@ let search = false;
  */
 
 
-
 async function init() {
+  
   await loadPokemonInArray();
   await renderPokemon();
 }
@@ -221,15 +221,14 @@ function showDetailedPokemonScreen(i) {
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
-    if (window.innerWidth <= 700) { openSmallScreen(onePokemon, allPokemon, i); }
-    if (window.innerWidth > 700) {
+    if (window.innerWidth <= 800) { openSmallScreen(onePokemon, allPokemon, i); }
+    if (window.innerWidth > 800) {
       openBigScreen(onePokemon, allPokemon, i);
     }
   }
   if (onePokemonScreen && !changeWindow) {
     createOnePokemonScreen(i, onePokemon);
   }
-
 }
 
 /**
@@ -240,7 +239,7 @@ function showDetailedPokemonScreen(i) {
  */
 
 async function openBigScreen(onePokemon, allPokemon, i) {
-  if (window.innerWidth > 700) {
+  if (window.innerWidth > 800) {
     setTimeout(() => {
       onePokemon.classList.add('detailed-pokemon-on');
       allPokemon.classList.add('all-pokemon-menu-on');
@@ -283,10 +282,10 @@ function closeDetailedPokemonScreen() {
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (onePokemonScreen) {
-    if (window.innerWidth > 700) {
+    if (window.innerWidth > 800) {
       closeBigScreen(onePokemon, allPokemon)
     }
-    if (window.innerWidth <= 700) {
+    if (window.innerWidth <= 800) {
       closeSmallScreen(onePokemon, allPokemon)
     }
   }

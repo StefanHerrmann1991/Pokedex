@@ -96,6 +96,8 @@ div {
     width: 25px;
 }
 
+
+
 .more-pokemon {
     height: 40px;
 }
@@ -132,23 +134,14 @@ button {
 }
 
 .pokedex-search input {
-    height: 3vh;
+   
 }
 
-.pokedex-search div {
-    border: none;
-    margin: 0px;
-    padding: 0px;
+input, select{
+    box-sizing: border-box;
     height: 3vh;
-}
+  }
 
-.pokedex-search-select {
-    border: none;
-    margin: 0px;
-    padding: 0px;
-    height: 3vh;
-    
-}
 
 
 
@@ -674,11 +667,9 @@ area {
         margin-left: 0px;
     }
 
-}
+  
 
-@media (max-width: 600px) {
-
-    .links {
+   .links {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -722,34 +713,6 @@ area {
     }
 }
 
-/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    h2 {
-        font-size: 22px !important;
-    }
-
-    div {
-        font-size: 16px;
-    }
-
-    .pokemon-card {
-        margin-left: 10px;
-        max-width: 240px;
-        }
-
-
-    .mgn-l {
-        margin-left: 0px;
-        
-    }
-
-    .pokemon-card-description {
-        display: flex;
-        align-items: center;
-        flex-direction: column-reverse;
-
-    }
-
-} */
 
 @media (max-height: 700px) and (min-width: 1000px) {
 
