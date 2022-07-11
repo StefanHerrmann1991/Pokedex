@@ -55,6 +55,7 @@
 h1 {
     font-size: 50px;
     margin-left: 5%;
+    margin-top: 12px;
 }
 
 h2 {
@@ -145,14 +146,14 @@ button {
     border: none;
     margin: 0px;
     padding: 0px;
-    height: 3.3vh;
+    height: 3vh;
+    
 }
 
-.pokeball {
-    margin-top: 170px;
-    height: 200px;
-    width: 200px;
-    z-index: 2;
+
+
+.links {
+    margin-bottom: 10px;
 }
 
 .links a {
@@ -162,6 +163,7 @@ button {
     font-family: 'Press Start 2P';
     letter-spacing: 0px;
     margin-right: 30px;
+
 }
 
 .each-stat {
@@ -391,9 +393,9 @@ div {
     }
 
     100% {
-       
+
         width: 48%;
-   
+
     }
 }
 
@@ -520,7 +522,6 @@ h2 {
     padding-right: 20%;
     flex-direction: column;
     align-items: center;
-
     clip-path: polygon(100% 0%, 100% 64.5%, 74% 100%, 0% 100%, 0% 0%);
 }
 
@@ -567,7 +568,8 @@ area {
 
 
 
-@media (max-width: 780px) {
+@media (max-width: 800px) {
+
 
     nobr {
         font-size: 20px;
@@ -580,7 +582,6 @@ area {
     .progress-bar::before {
         font-size: 10px !important;
     }
-
 
 
     .left-box {
@@ -602,7 +603,9 @@ area {
     .pokedex {
         display: flex;
         justify-content: center;
+
     }
+
 
     .header {
         display: flex;
@@ -684,6 +687,7 @@ area {
 
     .links a {
         margin-top: 10px;
+
     }
 
     .header {
@@ -705,6 +709,16 @@ area {
     .header {
         height: 150px;
         border-bottom: solid 2.5px black;
+    }
+
+    .close-btn-pic img {
+        height: 100px;
+        width: 12.5px;
+    }
+
+
+    div {
+        font-size: 14px;
     }
 }
 
@@ -736,3 +750,29 @@ area {
     }
 
 } */
+
+@media (max-height: 700px) and (min-width: 1000px) {
+
+    .header {
+        flex-direction: row;
+    }
+
+    .pokemon-card {
+        height: 150px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    div {
+        font-size: 14px
+    }
+
+    .close-btn-pic img {
+        height: 100px;
+        width: 12.5px;
+    }
+
+
+}

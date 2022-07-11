@@ -206,8 +206,8 @@ window.addEventListener("resize", checkWindowResize);
 
 async function checkWindowResize() {
   if (onePokemonScreen) {
-    changeWindow = true;
     scroll = false;
+    changeWindow = true;
     await showDetailedPokemonScreen(actualPokemonNumber);
     changeWindow = false;
     scroll = true;
@@ -222,9 +222,9 @@ function showDetailedPokemonScreen(i) {
   let allPokemon = document.getElementById('allPokemon');
   if (!onePokemonScreen || changeWindow) {
     if (window.innerWidth <= 700) { openSmallScreen(onePokemon, allPokemon, i); }
-    if (window.innerWidth > 700) { 
+    if (window.innerWidth > 700) {
       openBigScreen(onePokemon, allPokemon, i);
-      scrollFunction(); }
+    }
   }
   if (onePokemonScreen && !changeWindow) {
     createOnePokemonScreen(i, onePokemon);
@@ -245,9 +245,11 @@ async function openBigScreen(onePokemon, allPokemon, i) {
       onePokemon.classList.add('detailed-pokemon-on');
       allPokemon.classList.add('all-pokemon-menu-on');
       allPokemon.classList.remove('d-none');
+
     }, 500);
     setTimeout(() => {
-      createOnePokemonScreen(i, onePokemon)
+      createOnePokemonScreen(i, onePokemon);
+      scrollFunction('smooth');
       onePokemonScreen = true;
     }, 3500);
 
@@ -268,8 +270,8 @@ async function openSmallScreen(onePokemon, allPokemon, id) {
   onePokemonScreen = true;
 }
 
-function scrollFunction() {
-   document.getElementById("onePokemon").scrollIntoView(true);
+function scrollFunction(currentBehavior) {
+  document.getElementById("onePokemon").scrollIntoView({ block: 'start', behavior: `${currentBehavior}` });
 }
 
 /**
@@ -379,12 +381,12 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
 */
 function togglePokemonInformation() {
 
-  if (!stats) {
+  if (!stats && !changeWindow) {
     document.getElementById('statsName').innerHTML = '';
     getProperties(currentPokemon);
     stats = true;
   }
-  else {
+  else if (!changeWindow) {
     document.getElementById('properties').innerHTML = '';
     getPokemonStats(currentPokemon);
     stats = false;
@@ -473,7 +475,7 @@ function insertCloseBtn() {
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
   if (window.innerWidth <= 700) {
-    let text = generateCross(150, i);
+    let text = generateCross(100, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 700 && window.innerWidth < 1100) {
@@ -481,7 +483,7 @@ function insertCross(i) {
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 1100) {
-    let text = generateCross(150, i);
+    let text = generateCross(120, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
 }
@@ -499,7 +501,7 @@ function generateCross(sideLength, i) {
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
   cross = `
-       <img class='cross-map' id="crossMap" src='img/cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
+       <img class='cross-map' id="crossMap" src='img/cross.png' usemap='#image-map' height="${sideLength}vh" width="${sideLength}vh">
          <map name='image-map'>
              <area target="" alt="up"    title="up"     id="up" onclick="togglePokemonInformation(); toggleCross('up')" coords="${coord1},0,${coord2},${coord1}" shape="rect">
              <area target="" alt="left"  title="left"   id="left" onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
@@ -570,27 +572,15 @@ window.onscroll = async function () {
     await loadPokemonInArray();
     await renderPokemon();
     scroll = true;
-
   }
 }
-
-/* 
-window.onscroll = async function () {
-  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
-    scroll = false;
-    numberOfLoadedPokemons += 20;
-    await loadPokemonInArray();
-    await renderPokemon();
-     }
-setTimeout( () => { scroll = true;}, 2000);
-
-} */
 
 /**
  * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
  */
 
 async function loadPokemonInArray() {
+
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
     currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
@@ -623,11 +613,12 @@ async function nextPokemon(i) {
       } else {
         i = 0;
       }
+
       createOnePokemonScreen(i, onePokemon);
       showDetailedPokemonScreen(i);
     }
   }, 500);
-
+  scrollFunction('instant');
 }
 
 /**
@@ -647,7 +638,6 @@ async function lastPokemon(i) {
         i = allLoadedPokemons.length - 1;
       }
       createOnePokemonScreen(i, onePokemon);
-      showDetailedPokemonScreen(i);
     }
   }, 500);
 
