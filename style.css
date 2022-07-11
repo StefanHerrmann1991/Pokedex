@@ -1,12 +1,4 @@
-/* pokemon types */
-
-
 /* subsides */
-
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
 
 .formalities {
     color: black;
@@ -20,11 +12,9 @@ html, body {
     padding: 0px;
 }
 
-
 .help {
     color: black;
 }
-
 
 /* Pokedex */
 
@@ -351,7 +341,7 @@ div {
     z-index: 0;
     position: sticky;
     top: 0;
-    animation: closePokedex-onePokemon 2500ms ease-in-out 1000ms 1 forwards;
+    animation: closePokedex-onePokemon 1500ms ease-in-out 1000ms 1 forwards;
 }
 
 @keyframes closePokedex-onePokemon {
@@ -370,7 +360,7 @@ div {
 
 
 .all-pokemon-menu-on {
-    animation: openPokedex-allPokemon 3500ms linear 1000ms 1 forwards;
+    animation: openPokedex-allPokemon 1500ms linear 1000ms 1 forwards;
 }
 
 @keyframes openPokedex-allPokemon {

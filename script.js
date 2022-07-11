@@ -1,3 +1,6 @@
+
+let alreadyResized = false;
+
 /**
  * In this array all Pokemon from the API will be pushed.
  * @type {Array.json} 
@@ -191,11 +194,11 @@ window.addEventListener("resize", checkWindowResize);
 
 
 async function checkWindowResize() {
-  if (onePokemonScreen && isScrolled  == false) {
+
+  if (onePokemonScreen && !isScrolled) {
     changeWindow = true;
     await showDetailedPokemonScreen(actualPokemonNumber);
     changeWindow = false;
-    console.log('the reason is resize' + allLoadedPokemons);
   }
 }
 
@@ -205,7 +208,7 @@ async function checkWindowResize() {
  */
 
 
- window.onscroll = async function () {
+window.onscroll = async function () {
   if (window.scrollY + window.innerHeight >= document.body.clientHeight && isScrolled == false && changeWindow == false) {
     isScrolled = true;
     numberOfLoadedPokemons += 20;
@@ -221,7 +224,7 @@ async function showDetailedPokemonScreen(i) {
 
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
-  if (!onePokemonScreen || changeWindow) {
+  if (!onePokemonScreen) {
     if (window.innerWidth <= 800) { openSmallScreen(onePokemon, allPokemon, i); }
     if (window.innerWidth > 800) { openBigScreen(onePokemon, allPokemon, i); }
   }
@@ -563,14 +566,9 @@ function showPokemonType(currentPokemons, i) {
  */
 
 async function loadPokemonInArray() {
-
-
-  if (!changeWindow) {
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
     currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
-  }
-  console.log(allLoadedPokemons);
   }
 }
 
@@ -600,9 +598,7 @@ async function nextPokemon(i) {
       } else {
         i = 0;
       }
-
       createOnePokemonScreen(i, onePokemon);
-      showDetailedPokemonScreen(i);
     }
   }, 500);
 }
