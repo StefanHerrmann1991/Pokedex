@@ -298,12 +298,12 @@ function closeDetailedPokemonScreen() {
 
 function closeBigScreen(onePokemon, allPokemon) {
   onePokemon.classList.replace('detailed-pokemon-on', 'detailed-pokemon-off');
+  setTimeout(() => { onePokemon.innerHTML = ''; }, 1500);
   setTimeout(() => {
     allPokemon.classList.remove('all-pokemon-menu-on');
     onePokemonScreen = false;
   }, 2500);
   setTimeout(() => {
-    onePokemon.innerHTML = '';
     onePokemon.classList.remove('detailed-pokemon-off');
   }, 3500);
 }
