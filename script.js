@@ -121,7 +121,7 @@ function autocompleteMatch(input) {
 }
 
 function showResults(val) {
-  res = document.getElementById("pokedexSearch");
+  res = document.getElementById("pokedexSearchInput");
   res.innerHTML = '';
   let list = '';
   let terms = autocompleteMatch(val);
@@ -129,7 +129,7 @@ function showResults(val) {
     console.log(terms[i])
     list += `<option value="${terms[i]}">${terms[i]}</option>`;
   }
-  res.innerHTML = `<select name="pokemonName">${list}</select>`;
+  res.innerHTML = `<datalist id="pokedexSearch" name="pokemonName">${list}</datalist>`;
 }
 
 
