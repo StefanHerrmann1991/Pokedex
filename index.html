@@ -48,12 +48,11 @@
                     <form class="pokedex-search" autocomplete="off" id="pokedexSearchForm"><input
                             placeholder="Find your Pokemon..." onKeyUp="showResults(this.value.toLowerCase())" />
                         <select class="pokedex-search-select" name="pokemonName" id="pokedexSearch"></select>
-                        <button type="submit" onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
-                            search</button>
                     </form>
-                    <img id="loadingScreen"  src="img/loading.png">
+                    <button type="submit" onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
+                        search</button>
+                    <img id="loadingScreen" src="img/loading.png">
                 </div>
-
             </div>
             <div class="triangular-box">
                 <div class="inner-triangle"></div>

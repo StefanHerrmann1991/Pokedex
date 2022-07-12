@@ -63,8 +63,6 @@ let search = false;
  * This function loads and renders the pokemon in an array when the side is loaded
  */
 
-
-
 async function init() {
   await loadPokemonInArray();
   await renderPokemon();
@@ -77,15 +75,17 @@ async function init() {
 async function getPokemonByName() {
   onePokemonScreen = false;
   event.preventDefault();
+  loadingBar(true);
   let name = document.forms["pokedexSearchForm"].pokemonName.value;
   pokemonNameToLowerCase = name.toLowerCase();
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
   let responsePokemon = await fetch(url);
   let pokemon = await responsePokemon.json();
-  await loadPokemonInArray();
   numberOfLoadedPokemons = pokemon['id'];
   actualPokemonNumber = Number(pokemon['id'] - 1);
   i = Number(pokemon['id'] - 1);
+  await loadPokemonInArray();
+  loadingBar(false);
   return i
 }
 
@@ -591,16 +591,19 @@ setTimeout( () => { scroll = true;}, 2000);
  */
 
 async function loadPokemonInArray() {
-  loadingScreen();
+
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
     currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
   }
 }
 
-async function loadingScreen() {
-  let loading = document.getElementById('loadingScreen');
-  loading.classList.add('loading');
+function loadingBar(loadingScreen) {
+
+  let pokemonLoad = document.getElementById('loadingScreen');
+  if (loadingScreen) { pokemonLoad.classList.add('loading'); }
+  else { pokemonLoad.classList.remove('loading'); }
+
 }
 
 /**
