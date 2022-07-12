@@ -1,6 +1,4 @@
 
-let alreadyResized = false;
-
 /**
  * In this array all Pokemon from the API will be pushed.
  * @type {Array.json} 
@@ -34,7 +32,7 @@ let id;
  * The variable prevents the user from scrolling down during the search function.
  * @type {boolean} is activated or deactivated during the search function for Pokemon.
  */
-let isScrolled = false;
+let scroll = true;
 
 /**
  * The variable is altered to show if the window changes in its width. 
@@ -46,7 +44,7 @@ let changeWindow = false;
 /**
  * 
  * @type {boolean} The variable is altered when the right or left cross button is clicked.
- * It shall prevent loading the stats and properties from the Pokemon screen to be loaded simultaneously.
+ * It shall prevent laoding the stats and properties from the Pokemon screen to be loaded simultaneously.
  */
 
 let stats = false;
@@ -58,12 +56,13 @@ let stats = false;
 
 let actualPokemonNumber = 0;
 /**
- *  @type {boolean} The variable tests if the current pokemon is loaded via the search bar.
+ *  @type {boolean} The variable tests if the current pokemon is laoded via the search bar.
  */
 let search = false;
 /**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
+
 
 
 async function init() {
@@ -83,8 +82,8 @@ async function getPokemonByName() {
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
   let responsePokemon = await fetch(url);
   let pokemon = await responsePokemon.json();
-  numberOfLoadedPokemons = pokemon['id'];
   await loadPokemonInArray();
+  numberOfLoadedPokemons = pokemon['id'];
   actualPokemonNumber = Number(pokemon['id'] - 1);
   i = Number(pokemon['id'] - 1);
   return i
@@ -94,8 +93,11 @@ async function getPokemonByName() {
  * Ask for Pokemon from Poke API 
  */
 async function searchPokemon() {
+  scroll = false;
   let i = await getPokemonByName();
   await showDetailedPokemonScreen(i);
+  scroll = true;
+
 }
 /**
  * The functions takes a word and returns the string with the first letter in upper case
@@ -110,7 +112,7 @@ function autocompleteMatch(input) {
   if (input == '') {
     return [];
   }
-  let reg = new RegExp(input)
+  var reg = new RegExp(input)
   return pokemonNames.filter(function (term) {
     if (term.toLowerCase().match(reg)) {
       return term;
@@ -127,7 +129,7 @@ function showResults(val) {
     console.log(terms[i])
     list += `<option value="${terms[i]}">${terms[i]}</option>`;
   }
-  res.innerHTML = `${list}`;
+  res.innerHTML = `<select name="pokemonName">${list}</select>`;
 }
 
 
@@ -138,8 +140,8 @@ function pokemonType(pokemon) {
   for (let i = 0; i < pokemon['types'].length; i++) {
     const type = pokemon['types'][i]['type']['name'];
     pokemonType.innerHTML += `<h2 style="background-color: var(--normal);
-         background-image: linear-gradient(deg, var(--${pokemon['types'][0]['type']['name']}), var(--${pokemon['types'][1]['type']['name']}) );">${type}</h2>
-  `
+          background-image: linear-gradient(deg, var(--${pokemon['types'][0]['type']['name']}), var(--${pokemon['types'][1]['type']['name']}) );">${type}</h2>
+   `
   }
 }
 
@@ -169,18 +171,29 @@ async function renderPokemon() {
     let loadedPokemon = allLoadedPokemons[i];
     [typeOne, typeTwo] = await comparePokemonType(loadedPokemon);
     pokemon.innerHTML += `
-         <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
-         style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-         <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} #${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
-         <div class="pokemon-card-description">
-         <div id="pokemonType-${i}"></div>
-         <img class="pokemon-img" src="${loadedPokemon['sprites']['front_default']}">
-         </div>
-         </div>`;
+          <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
+          style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
+          <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} #${padLeadingZeros(loadedPokemon['id'], 4)}</nobr></h2>
+          <div class="pokemon-card-description">
+          <div id="pokemonType-${i}"></div>
+          <img class="pokemon-img" src="${loadedPokemon['sprites']['front_default']}">
+          </div>
+          </div>`;
     pokemonsType = showPokemonType(loadedPokemon, i);
 
   }
 }
+
+const filteredData = []
+
+function completePokemonName() {
+  const result = pokemonNames.find(pokemon => pokemon == document.getElementById('pokedexSearch').value);
+  return result;
+}
+
+
+
+
 
 /**
  * The event listener checks the width of the screen when its altered.
@@ -192,29 +205,13 @@ window.addEventListener("resize", checkWindowResize);
  * The function checks the window size and shows the correct detailed Pokemon information.
  */
 
-
 async function checkWindowResize() {
-
-  if (onePokemonScreen && !isScrolled) {
+  if (onePokemonScreen) {
     changeWindow = true;
-    await showDetailedPokemonScreen(actualPokemonNumber);
+    scroll = false;
+    closeDetailedPokemonScreen();
     changeWindow = false;
-  }
-}
-
-/**
- * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
- * It loads always 10 new Pokemon when the scrollbar hits the button.
- */
-
-
-window.onscroll = async function () {
-  if (window.scrollY + window.innerHeight >= document.body.clientHeight && isScrolled == false && changeWindow == false) {
-    isScrolled = true;
-    numberOfLoadedPokemons += 20;
-    await loadPokemonInArray();
-    await renderPokemon();
-    isScrolled = false;
+    scroll = true;
   }
 }
 
@@ -240,6 +237,7 @@ async function showDetailedPokemonScreen(i) {
  * @param {number} i The running index of the current Pokemon.
  */
 
+
 async function openBigScreen(onePokemon, allPokemon, i) {
   if (window.innerWidth > 800) {
     setTimeout(() => {
@@ -256,6 +254,7 @@ async function openBigScreen(onePokemon, allPokemon, i) {
   }
 }
 
+
 /**
  * The function opens the Pokemon screen when the window has a width less than 700 px and renders the Pokemon at the appropriate position.
  * @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
@@ -263,8 +262,8 @@ async function openBigScreen(onePokemon, allPokemon, i) {
  * @param {number} i The running index of the current Pokemon.
  */
 
-async function openSmallScreen(onePokemon, allPokemon, id) {
-  await createOnePokemonScreen(id, onePokemon);
+async function openSmallScreen(onePokemon, allPokemon, i) {
+  await createOnePokemonScreen(i, onePokemon);
   allPokemon.classList.add('d-none');
   onePokemon.classList.add('detailed-pokemon-on');
   onePokemonScreen = true;
@@ -349,31 +348,31 @@ async function createOnePokemonScreen(i, onePokemon) {
 
 function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
-  <div class="one-pokemon-pic">
-  <div class="outer-polygon">
-      <div class="border-one-pokemon">
-          <div class="one-pokemon-header"
-              style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
-              <h2>${upperCase(currentPokemon['name'])} #${padLeadingZeros(currentPokemon['id'], 3)}</h2>
-              <div><img id="bigImg" class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}"></div>
-              <div class="align-items" id="onePokemonType-${i}"></div>
-          </div>
-      </div>
-  </div>
-  </div>
-  <div class="one-pokemon-details">
-      <div class="close-details">
-          <div class="details-container">
-              <div id="properties"></div>  
-              <table class="stats-name" id="statsName"></table>              
-          </div>
-      <div class="close-btn" id="closeBtn">
-      </div>
-  </div>
-  </div>
-  <div class="cross-container" id="crossPosition"></div>
-  </div>      
-         `;
+   <div class="one-pokemon-pic">
+   <div class="outer-polygon">
+       <div class="border-one-pokemon">
+           <div class="one-pokemon-header"
+               style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
+               <h2>${upperCase(currentPokemon['name'])} #${padLeadingZeros(currentPokemon['id'], 4)}</h2>
+               <div><img id="bigImg" class="pokemon-img big-img" src="${currentPokemon['sprites']['front_default']}"></div>
+               <div class="align-items" id="onePokemonType-${i}"></div>
+           </div>
+       </div>
+   </div>
+   </div>
+   <div class="one-pokemon-details">
+       <div class="close-details">
+           <div class="details-container">
+               <div id="properties"></div>  
+               <table class="stats-name" id="statsName"></table>              
+           </div>
+       <div class="close-btn" id="closeBtn">
+       </div>
+   </div>
+   </div>
+   <div class="cross-container" id="crossPosition"></div>
+   </div>      
+          `;
 }
 
 /** 
@@ -381,12 +380,12 @@ function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
 */
 function togglePokemonInformation() {
 
-  if (!stats && !changeWindow) {
+  if (!stats) {
     document.getElementById('statsName').innerHTML = '';
     getProperties(currentPokemon);
     stats = true;
   }
-  else if (!changeWindow) {
+  else {
     document.getElementById('properties').innerHTML = '';
     getPokemonStats(currentPokemon);
     stats = false;
@@ -401,11 +400,11 @@ async function getProperties(currentPokemon) {
   let details = document.getElementById('properties');
   let pokemonAbility = await getPokemonInformation(currentPokemon, 'abilities', 'ability', 'name');
   let text = `
-  <div>Height: ${currentPokemon['height']}</div>
-  <div>Weight: ${currentPokemon['weight']}</div>
-  <div>Base Experience: ${currentPokemon['base_experience']}</div>  
-  <div><u>Abilities</u><div>${pokemonAbility}</div></div>
-  `;
+   <div>Height: ${currentPokemon['height']}</div>
+   <div>Weight: ${currentPokemon['weight']}</div>
+   <div>Base Experience: ${currentPokemon['base_experience']}</div>  
+   <div><u>Abilities</u><div>${pokemonAbility}</div></div>
+   `;
   details.insertAdjacentHTML('afterbegin', text);
 }
 
@@ -419,11 +418,11 @@ function getPokemonStats(currentPokemon) {
     const stat = currentPokemon['stats'][j]['stat']['name'];
     const base_stat = currentPokemon['stats'][j]['base_stat'];
     document.getElementById('statsName').innerHTML += `
-    <tr>
-        <td><div><nobr>${upperCase(stat)}:</nobr></div></td>
-        <td><div class="progress-bar" id="progressBar${j}" style="--width:${base_stat / 3}" data-label="${base_stat}"> </div></td>
-    </tr>
-   `;
+     <tr>
+         <td><div><nobr>${upperCase(stat)}:</nobr></div></td>
+         <td><div class="progress-bar" id="progressBar${j}" style="--width:${base_stat / 3}" data-label="${base_stat}"> </div></td>
+     </tr>
+    `;
   }
 }
 
@@ -474,16 +473,16 @@ function insertCloseBtn() {
 
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
-  if (window.innerWidth <= 700) {
-    let text = generateCross(100, i);
+  if (window.innerWidth <= 800) {
+    let text = generateCross(150, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
-  if (window.innerWidth > 700 && window.innerWidth < 1100) {
+  if (window.innerWidth > 800 && window.innerWidth < 1100) {
     let text = generateCross(100, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
   if (window.innerWidth > 1100) {
-    let text = generateCross(120, i);
+    let text = generateCross(150, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
 }
@@ -501,13 +500,13 @@ function generateCross(sideLength, i) {
   let coord1 = sideLength * 3 / 8;
   let coord2 = sideLength * 5 / 8;
   cross = `
-       <img class='cross-map' id="crossMap" src='img/cross.png' usemap='#image-map' height="${sideLength}vh" width="${sideLength}vh">
-         <map name='image-map'>
-             <area target="" alt="up"    title="up"     id="up" onclick="togglePokemonInformation(); toggleCross('up')" coords="${coord1},0,${coord2},${coord1}" shape="rect">
-             <area target="" alt="left"  title="left"   id="left" onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
-             <area target="" alt="down"  title="down"   id="down" onclick="togglePokemonInformation(); toggleCross('down')" coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
-             <area target="" alt="right" title="right"  id="right" onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
-         </map> `;
+        <img class='cross-map' id="crossMap" src='img/cross.png' usemap='#image-map' height="${sideLength}px" width="${sideLength}px">
+          <map name='image-map'>
+              <area target="" alt="up"    title="up"     id="up" onclick="togglePokemonInformation(); toggleCross('up')" coords="${coord1},0,${coord2},${coord1}" shape="rect">
+              <area target="" alt="left"  title="left"   id="left" onclick="lastPokemon(${i})" coords="0,${coord1},${coord1},${coord2}" shape="rect">
+              <area target="" alt="down"  title="down"   id="down" onclick="togglePokemonInformation(); toggleCross('down')" coords="${coord2},${coord2},${coord1},${sideLength}" shape="rect">
+              <area target="" alt="right" title="right"  id="right" onclick="nextPokemon(${i})"  coords="${sideLength},${coord1},${coord2},${coord2}" shape="rect">   
+          </map> `;
   return cross;
 }
 
@@ -559,17 +558,49 @@ function showPokemonType(currentPokemons, i) {
   return pokemonsType;
 }
 
+/**
+ * When the user scrolls down new Pokemon will be loaded and then rendered on the screen.
+ * It loads always 10 new Pokemon when the scrollbar hits the button.
+ */
 
+
+window.onscroll = async function () {
+  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
+    scroll = false;
+    numberOfLoadedPokemons += 20;
+    await loadPokemonInArray();
+    await renderPokemon();
+    scroll = true;
+
+  }
+}
+
+/* 
+window.onscroll = async function () {
+  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
+    scroll = false;
+    numberOfLoadedPokemons += 20;
+    await loadPokemonInArray();
+    await renderPokemon();
+     }
+setTimeout( () => { scroll = true;}, 2000);
+} */
 
 /**
  * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
  */
 
 async function loadPokemonInArray() {
+  loadingScreen();
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
     currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
   }
+}
+
+async function loadingScreen() {
+  let loading = document.getElementById('loadingScreen');
+  loading.classList.add('loading');
 }
 
 /**
@@ -591,6 +622,7 @@ document.addEventListener('mousedown', function (event) {
 
 async function nextPokemon(i) {
   toggleCross('right');
+  stats = false;
   setTimeout(() => {
     {
       if (i < allLoadedPokemons.length - 1) {
@@ -601,6 +633,7 @@ async function nextPokemon(i) {
       createOnePokemonScreen(i, onePokemon);
     }
   }, 500);
+
 }
 
 /**
@@ -611,6 +644,7 @@ async function nextPokemon(i) {
 
 async function lastPokemon(i) {
   toggleCross('left');
+  stats = false;
   setTimeout(() => {
     {
       if (i > 0) {
@@ -656,7 +690,5 @@ function padLeadingZeros(num, size) {
   while (s.length < size) s = "0" + s;
   return s;
 }
-
-
 
 
