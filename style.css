@@ -34,6 +34,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(359deg);
     }
@@ -751,6 +752,12 @@ area {
 
 }
 
-@media (min-width: 320px) {
-h1 a {font-size: 40px;}
+@media (min-width: 320px) and (max-width: 450px) {
+    h1 a {
+        font-size: 40px;
+    }
+
+    .left-box {
+        height: 14vh;
+    }
 }

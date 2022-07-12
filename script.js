@@ -473,7 +473,7 @@ function insertCloseBtn() {
 
 function insertCross(i) {
   let crossPosition = document.getElementById('crossPosition');
-  if (window.innerWidth <= 800) {
+  if (window.innerWidth <= 800 && window.innerWidth > 600) {
     let text = generateCross(150, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
@@ -485,6 +485,11 @@ function insertCross(i) {
     let text = generateCross(150, i);
     crossPosition.insertAdjacentHTML('afterbegin', text)
   };
+  if (window.innerWidth >= 320 && window.innerWidth <= 600) {
+    let text = generateCross(100, i);
+    crossPosition.insertAdjacentHTML('afterbegin', text)
+  };
+
 }
 
 /**
