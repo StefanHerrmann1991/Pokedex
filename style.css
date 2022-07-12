@@ -9,7 +9,12 @@
 .formalities h2 {
     display: flex;
     justify-content: flex-start;
-    padding: 0px;
+    padding: 0px !important;
+    margin: 0px;
+}
+
+.help-img {
+    width: 85%;
 }
 
 .help {
