@@ -76,17 +76,23 @@ async function getPokemonByName() {
   onePokemonScreen = false;
   event.preventDefault();
   loadingBar(true);
-  let name = document.forms["pokedexSearchForm"].pokemonName.value;
+  
+  let name = document.getElementById('pokedexSearchInput').value;
   pokemonNameToLowerCase = name.toLowerCase();
-  let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
-  let responsePokemon = await fetch(url);
-  let pokemon = await responsePokemon.json();
-  numberOfLoadedPokemons = pokemon['id'];
-  actualPokemonNumber = Number(pokemon['id'] - 1);
-  i = Number(pokemon['id'] - 1);
-  await loadPokemonInArray();
+  pokemonNamesToLowerCase = pokemonNames.map(name => name.toLowerCase());
+  if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
+    let responsePokemon = await fetch(url);
+    let pokemon = await responsePokemon.json();
+    numberOfLoadedPokemons = pokemon['id'];
+    actualPokemonNumber = Number(pokemon['id'] - 1);
+    i = Number(pokemon['id'] - 1);
+    await loadPokemonInArray();
+    await showDetailedPokemonScreen(i);
+    return i;
+  }
+  else {alert ("The Pokemon doesn't exist")}
   loadingBar(false);
-  return i
 }
 
 /**
@@ -94,8 +100,7 @@ async function getPokemonByName() {
  */
 async function searchPokemon() {
   scroll = false;
-  let i = await getPokemonByName();
-  await showDetailedPokemonScreen(i);
+  await getPokemonByName();
   scroll = true;
 
 }

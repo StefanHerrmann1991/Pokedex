@@ -45,10 +45,8 @@
         <div class="border-style-header">
             <div id="leftBox" class="left-box transformation">
                 <div class="search-and-loading">
-                    <form autocomplete="off" name="pokedexSearchForm">
                     <input name="pokemonName" id="pokedexSearchInput" list="pokedexSearch" placeholder="Find your Pokemon..."
                         onKeyUp="showResults(this.value.toLowerCase())">
-                    </form>
                     <button type="submit" onclick="searchPokemon()" class="search-symbol material-symbols-outlined">
                         search</button>
                     <img id="loadingScreen" src="img/loading.png">
