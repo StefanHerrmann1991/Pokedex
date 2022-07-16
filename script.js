@@ -53,8 +53,6 @@ let stats = false;
  * The varbiable saves the current position of the actual Pokemon as number. This is necessary for the resize function which checks the screen width.
  */
 
-
-let actualPokemonNumber = 0;
 /**
  *  @type {boolean} The variable tests if the current pokemon is laoded via the search bar.
  */
@@ -76,22 +74,18 @@ async function getPokemonByName() {
   onePokemonScreen = false;
   event.preventDefault();
   loadingBar(true);
-  
   let name = document.getElementById('pokedexSearchInput').value;
   pokemonNameToLowerCase = name.toLowerCase();
   pokemonNamesToLowerCase = pokemonNames.map(name => name.toLowerCase());
-  if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1) {
+  if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
     let responsePokemon = await fetch(url);
-    let pokemon = await responsePokemon.json();
-    numberOfLoadedPokemons = pokemon['id'];
-    actualPokemonNumber = Number(pokemon['id'] - 1);
-    i = Number(pokemon['id'] - 1);
-    await loadPokemonInArray();
+    currentPokemon = await responsePokemon.json();
+    i = Number(currentPokemon['id'] - 1);
     await showDetailedPokemonScreen(i);
-    return i;
+    loadingBar(false);
   }
-  else {alert ("The Pokemon doesn't exist")}
+  else { alert("The Pokemon doesn't exist") }
   loadingBar(false);
 }
 
@@ -326,15 +320,13 @@ function closeSmallScreen(onePokemon, allPokemon) {
   onePokemonScreen = false;
 }
 
-
 /**
  * 
  * @param {number} i The running index of the current Pokemon.
  * @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
  */
 async function createOnePokemonScreen(i, onePokemon) {
-  currentPokemon = await allLoadedPokemons[i];
-  actualPokemonNumber = i;
+  if (allLoadedPokemons.length > i) currentPokemon = await allLoadedPokemons[i];
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
   onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
   togglePokemonInformation();
@@ -612,7 +604,7 @@ function loadingBar(loadingScreen) {
 
   let pokemonLoad = document.getElementById('loadingScreen');
   if (loadingScreen) { pokemonLoad.classList.add('loading'); }
-  else { pokemonLoad.classList.remove('loading'); }
+  else if (!loadingScreen) { pokemonLoad.classList.remove('loading'); }
 
 }
 
