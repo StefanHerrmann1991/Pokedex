@@ -68,10 +68,6 @@ async function init() {
   await renderPokemon();
 }
 
-let searchedPokemonRange = {
-  'start': [], 'end': []
-}
-
 /**
  * This function searches for Pokemon with the given name or ID in the input field.
  * The pokemon will be loaded in the detailed Pokemon screen.
@@ -90,6 +86,7 @@ async function getPokemonByName() {
     i = Number(currentPokemon['id'] - 1);
     currentPokemonNumber = Number(currentPokemon['id'] - 1);
     await showDetailedPokemonScreen(i);
+    await lessPokemon();
     loadingBar(false);
   }
   else { alert("The Pokemon doesn't exist") }
@@ -583,28 +580,24 @@ async function loadPokemonInArray() {
   }
 }
 
-/*searchedPokemonRange   */
-
-
 async function morePokemon() {
-  searchedPokemonRange.end.push(currentPokemonNumber);
-  for (let j = currentPokemonNumber; j < currentPokemonNumber + 20; j++) {
+  let pokemonNumber = Number(currentPokemonNumber + 20)
+  for (let j = currentPokemonNumber; j < pokemonNumber ; j++) {
     currentPokemons = await getPokemonById(j);
+ /*    if (allLoadedPokemons.filter(currentPokemonNumber - 20) == currentPokemonNumber) { break; } */
     allLoadedPokemons.push(currentPokemons);
-    allLoadedPokemons.sort((a, b) => (a - b));
-    if (searchedPokemonRange.end == currentPokemonNumber) { break; }
-  }
+     }
+     allLoadedPokemons.sort((a, b) => (a - b));
 }
 
-
 async function lessPokemon() {
-  searchedPokemonRange.start.push(currentPokemonNumber);
-  for (let j = currentPokemonNumber; j > currentPokemonNumber - 20; j--) {
+  let pokemonNumber = Number(currentPokemonNumber -20)
+  for (let j = currentPokemonNumber; j > pokemonNumber; j--) {
     currentPokemons = await getPokemonById(j);
+    /* if (allLoadedPokemons.filter(currentPokemonNumber - 20) == currentPokemonNumber) { break; } */
     allLoadedPokemons.push(currentPokemons);
-    allLoadedPokemons.sort((a, b) => (a - b));
-    if (searchedPokemonRange.start == currentPokemonNumber) { break; }
-  }
+    }
+  allLoadedPokemons.sort((a, b) => (a - b));
 }
 
 function loadingBar(loadingScreen) {
