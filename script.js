@@ -19,6 +19,8 @@ let numberOfLoadedPokemons = 0;
  *  @type {string}
  */
 
+let currentPokemonNumber = 0;
+
 let currentPokemon;
 
 /**
@@ -66,6 +68,10 @@ async function init() {
   await renderPokemon();
 }
 
+let searchedPokemonRange = {
+  'start': [], 'end': []
+}
+
 /**
  * This function searches for Pokemon with the given name or ID in the input field.
  * The pokemon will be loaded in the detailed Pokemon screen.
@@ -82,6 +88,7 @@ async function getPokemonByName() {
     let responsePokemon = await fetch(url);
     currentPokemon = await responsePokemon.json();
     i = Number(currentPokemon['id'] - 1);
+    currentPokemonNumber = Number(currentPokemon['id'] - 1);
     await showDetailedPokemonScreen(i);
     loadingBar(false);
   }
@@ -125,7 +132,6 @@ function showResults(val) {
   let list = '';
   let terms = autocompleteMatch(val);
   for (i = 0; i < terms.length; i++) {
-    console.log(terms[i])
     list += `<option value="${terms[i]}">${terms[i]}</option>`;
   }
   res.innerHTML = `<datalist id="pokedexSearch" name="pokemonName">${list}</datalist>`;
@@ -183,17 +189,6 @@ async function renderPokemon() {
   }
 }
 
-const filteredData = []
-
-function completePokemonName() {
-  const result = pokemonNames.find(pokemon => pokemon == document.getElementById('pokedexSearch').value);
-  return result;
-}
-
-
-
-
-
 /**
  * The event listener checks the width of the screen when its altered.
  * @param {callback} checkWindowResize Renders the detailed Pokemon information while changing the window size. 
@@ -239,17 +234,14 @@ async function showDetailedPokemonScreen(i) {
 
 async function openBigScreen(onePokemon, allPokemon, i) {
   if (window.innerWidth > 800) {
-    setTimeout(() => {
-      onePokemon.classList.add('detailed-pokemon-on');
-      allPokemon.classList.add('all-pokemon-menu-on');
-      allPokemon.classList.remove('d-none');
-
-    }, 500);
+    onePokemon.classList.add('detailed-pokemon-on');
+    allPokemon.classList.add('all-pokemon-menu-on');
+    allPokemon.classList.remove('d-none');
     setTimeout(async () => {
       await createOnePokemonScreen(i, onePokemon);
       scrollFunction('smooth');
       onePokemonScreen = true;
-    }, 3500);
+    }, 1500);
   }
 }
 
@@ -297,14 +289,14 @@ function closeDetailedPokemonScreen() {
 
 function closeBigScreen(onePokemon, allPokemon) {
   onePokemon.classList.replace('detailed-pokemon-on', 'detailed-pokemon-off');
-  setTimeout(() => { onePokemon.innerHTML = ''; }, 1500);
+  setTimeout(() => { onePokemon.innerHTML = ''; }, 800);
   setTimeout(() => {
     allPokemon.classList.remove('all-pokemon-menu-on');
     onePokemonScreen = false;
-  }, 2500);
+  }, 1500);
   setTimeout(() => {
     onePokemon.classList.remove('detailed-pokemon-off');
-  }, 3500);
+  }, 1500);
 }
 
 /**
@@ -565,6 +557,11 @@ function showPokemonType(currentPokemons, i) {
  * It loads always 10 new Pokemon when the scrollbar hits the button.
  */
 
+window.onscroll = async function () {
+  if (window.scrollY + window.innerHeight <= document.body.clientHeight && scroll == true && changeWindow == false) {
+    console.log('top')
+  }
+}
 
 window.onscroll = async function () {
   if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
@@ -573,24 +570,10 @@ window.onscroll = async function () {
     await loadPokemonInArray();
     await renderPokemon();
     scroll = true;
-
   }
 }
 
-/* 
-window.onscroll = async function () {
-  if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
-    scroll = false;
-    numberOfLoadedPokemons += 20;
-    await loadPokemonInArray();
-    await renderPokemon();
-     }
-setTimeout( () => { scroll = true;}, 2000);
-} */
 
-/**
- * The function loads a certain number of Pokemon and pushes them into the allLoadedPokemons array.
- */
 
 async function loadPokemonInArray() {
 
@@ -600,12 +583,34 @@ async function loadPokemonInArray() {
   }
 }
 
-function loadingBar(loadingScreen) {
+/*searchedPokemonRange   */
 
+
+async function morePokemon() {
+  searchedPokemonRange.end.push(currentPokemonNumber);
+  for (let j = currentPokemonNumber; j < currentPokemonNumber + 20; j++) {
+    currentPokemons = await getPokemonById(j);
+    allLoadedPokemons.push(currentPokemons);
+    allLoadedPokemons.sort((a, b) => (a - b));
+    if (searchedPokemonRange.end == currentPokemonNumber) { break; }
+  }
+}
+
+
+async function lessPokemon() {
+  searchedPokemonRange.start.push(currentPokemonNumber);
+  for (let j = currentPokemonNumber; j > currentPokemonNumber - 20; j--) {
+    currentPokemons = await getPokemonById(j);
+    allLoadedPokemons.push(currentPokemons);
+    allLoadedPokemons.sort((a, b) => (a - b));
+    if (searchedPokemonRange.start == currentPokemonNumber) { break; }
+  }
+}
+
+function loadingBar(loadingScreen) {
   let pokemonLoad = document.getElementById('loadingScreen');
   if (loadingScreen) { pokemonLoad.classList.add('loading'); }
   else if (!loadingScreen) { pokemonLoad.classList.remove('loading'); }
-
 }
 
 /**
@@ -668,8 +673,8 @@ async function lastPokemon(i) {
 /**
  * The function load Pokemon types from the API and is used to compare if the pokemon have one or two types.
  * Depending on the number of Pokemon types available the types are returned.
- * @param {number} currentPokemons the ID of the current Pokemon
- * @returns {string} the first type of the current Pokemon
+ * @param {number} currentPokemons The ID of the current Pokemon
+ * @returns The pokemon types e.g. type.
  * 
  */
 
@@ -695,5 +700,7 @@ function padLeadingZeros(num, size) {
   while (s.length < size) s = "0" + s;
   return s;
 }
+
+
 
 

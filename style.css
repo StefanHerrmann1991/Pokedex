@@ -343,8 +343,7 @@ div {
     z-index: 0;
     position: sticky;
     top: 0;
-    animation: openPokedex-onePokemon 2500ms ease-in-out 1000ms 1 forwards;
-}
+    animation: openPokedex-onePokemon 1500ms linear 100ms 1 forwards;}
 
 @keyframes openPokedex-onePokemon {
     from {
@@ -360,37 +359,8 @@ div {
     }
 }
 
-
-
-.detailed-pokemon-off {
-    background-color: rgb(182, 25, 25);
-    margin-top: 0px;
-    height: 95vh;
-    width: 50%;
-    outline: solid 0.6vh black;
-    z-index: 0;
-    position: sticky;
-    top: 0;
-    animation: closePokedex-onePokemon 1500ms ease-in-out 1000ms 1 forwards;
-}
-
-@keyframes closePokedex-onePokemon {
-    from {
-        height: 95vh;
-        width: 50%;
-        outline: solid 0.6vh black;
-    }
-
-    to {
-        height: 0vh;
-        width: 0%;
-        outline: none;
-    }
-}
-
-
 .all-pokemon-menu-on {
-    animation: openPokedex-allPokemon 3000ms linear 1000ms 1 forwards;
+    animation: openPokedex-allPokemon 1500ms linear 100ms 1 forwards;
 }
 
 @keyframes openPokedex-allPokemon {
@@ -408,6 +378,37 @@ div {
         justify-content: center;
     }
 }
+
+
+
+.detailed-pokemon-off {
+    background-color: rgb(182, 25, 25);
+    margin-top: 0px;
+    height: 95vh;
+    width: 50%;
+    outline: solid 0.6vh black;
+    z-index: 0;
+    position: sticky;
+    top: 0;
+    animation: closePokedex-onePokemon 1500ms ease-in-out 500ms 1 forwards;
+}
+
+@keyframes closePokedex-onePokemon {
+    from {
+        height: 95vh;
+        width: 50%;
+        outline: solid 0.6vh black;
+    }
+
+    to {
+        height: 0vh;
+        width: 0%;
+        outline: none;
+    }
+}
+
+
+
 
 
 .pokemon-img:hover {
