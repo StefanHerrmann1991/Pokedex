@@ -19,7 +19,7 @@ let numberOfLoadedPokemons = 0;
  *  @type {string}
  */
 
-let currentPokemonNumber = 0;
+let currentPokemonID = 0;
 
 let currentPokemon;
 
@@ -84,7 +84,7 @@ async function getPokemonByName() {
     let responsePokemon = await fetch(url);
     currentPokemon = await responsePokemon.json();
     i = Number(currentPokemon['id'] - 1);
-    currentPokemonNumber = Number(currentPokemon['id'] - 1);
+    currentPokemonID = Number(currentPokemon['id'] - 1);
     await showDetailedPokemonScreen(i);
     await lessPokemon();
     loadingBar(false);
@@ -581,23 +581,24 @@ async function loadPokemonInArray() {
 }
 
 async function morePokemon() {
-  let pokemonNumber = Number(currentPokemonNumber + 20)
-  for (let j = currentPokemonNumber; j < pokemonNumber ; j++) {
+  let pokemonNumber = Number(currentPokemonID + 20)
+  for (let j = currentPokemonID; j < pokemonNumber; j++) {
     currentPokemons = await getPokemonById(j);
- /*    if (allLoadedPokemons.filter(currentPokemonNumber - 20) == currentPokemonNumber) { break; } */
+    if (allLoadedPokemons['id'].includes(currentPokemonID) > -1) { break; }
     allLoadedPokemons.push(currentPokemons);
-     }
-     allLoadedPokemons.sort((a, b) => (a - b));
+  }
+  allLoadedPokemons.sort((a, b) => (a - b));
 }
 
 async function lessPokemon() {
-  let pokemonNumber = Number(currentPokemonNumber -20)
-  for (let j = currentPokemonNumber; j > pokemonNumber; j--) {
-    currentPokemons = await getPokemonById(j);
-    /* if (allLoadedPokemons.filter(currentPokemonNumber - 20) == currentPokemonNumber) { break; } */
+  let pokemonNumber = Number(currentPokemonID - 20);
+  for (let j = currentPokemonID; j > pokemonNumber; j--) {
+    let currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
-    }
-  allLoadedPokemons.sort((a, b) => (a - b));
+    for 
+    if (allLoadedPokemons.map(object => object.id).indexOf(`${j}`) == true) { break; }
+  }
+  allLoadedPokemons.sort((a, b) => (b - a));
 }
 
 function loadingBar(loadingScreen) {
