@@ -584,7 +584,7 @@ async function morePokemon() {
   let pokemonNumber = Number(currentPokemonID + 20)
   for (let j = currentPokemonID; j < pokemonNumber; j++) {
     currentPokemons = await getPokemonById(j);
-    if (allLoadedPokemons['id'].includes(currentPokemonID) > -1) { break; }
+    if (allLoadedPokemons['id'].indexOf(currentPokemonID) > -1) { break; }
     allLoadedPokemons.push(currentPokemons);
   }
   allLoadedPokemons.sort((a, b) => (a - b));
@@ -594,11 +594,17 @@ async function lessPokemon() {
   let pokemonNumber = Number(currentPokemonID - 20);
   for (let j = currentPokemonID; j > pokemonNumber; j--) {
     let currentPokemons = await getPokemonById(j);
-    allLoadedPokemons.push(currentPokemons);
-    for 
-    if (allLoadedPokemons.map(object => object.id).indexOf(`${j}`) == true) { break; }
+    const values = allLoadedPokemons.map(object => object.id);
+    console.log(values);
+    if (values.indexOf(currentPokemons['id']) > -1) { break; }
+    else {
+      allLoadedPokemons.push(currentPokemons);
+      
+    }
+    console.log(values)
+    values.sort((a, b) => (a - b));
   }
-  allLoadedPokemons.sort((a, b) => (b - a));
+
 }
 
 function loadingBar(loadingScreen) {
