@@ -83,11 +83,12 @@ async function getPokemonByName() {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
     let responsePokemon = await fetch(url);
     currentPokemon = await responsePokemon.json();
-    i = Number(currentPokemon['id'] - 1);
-    currentPokemonID = Number(currentPokemon['id'] - 1);
+    i = Number(currentPokemon['id']);
+    currentPokemonID = Number(currentPokemon['id']);
     await showDetailedPokemonScreen(i);
     await lessPokemon();
     await morePokemon();
+    setTimeout (() => {scrollFunction(`pokemonCard-${i}`,'smooth')}, 1000)
     loadingBar(false);
   }
   else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
