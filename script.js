@@ -79,7 +79,7 @@ async function getPokemonByName() {
   let name = document.getElementById('pokedexSearchInput').value;
   pokemonNameToLowerCase = name.toLowerCase();
   pokemonNamesToLowerCase = pokemonNames.map(name => name.toLowerCase());
-  if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN) {
+  if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN < pokemonNames.length) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
     let responsePokemon = await fetch(url);
     currentPokemon = await responsePokemon.json();
@@ -87,9 +87,10 @@ async function getPokemonByName() {
     currentPokemonID = Number(currentPokemon['id'] - 1);
     await showDetailedPokemonScreen(i);
     await lessPokemon();
+    await morePokemon();
     loadingBar(false);
   }
-  else { alert("The Pokemon doesn't exist") }
+  else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
   loadingBar(false);
 }
 
@@ -182,7 +183,6 @@ async function renderPokemon() {
           </div>
           </div>`;
     pokemonsType = showPokemonType(loadedPokemon, i);
-
   }
 }
 
@@ -236,7 +236,7 @@ async function openBigScreen(onePokemon, allPokemon, i) {
     allPokemon.classList.remove('d-none');
     setTimeout(async () => {
       await createOnePokemonScreen(i, onePokemon);
-      scrollFunction('smooth');
+      scrollFunction('onePokemon', 'smooth');
       onePokemonScreen = true;
     }, 1500);
   }
@@ -257,8 +257,8 @@ async function openSmallScreen(onePokemon, allPokemon, i) {
   onePokemonScreen = true;
 }
 
-function scrollFunction(currentBehavior) {
-  document.getElementById("onePokemon").scrollIntoView({ block: 'start', behavior: `${currentBehavior}` });
+function scrollFunction(id, currentBehavior) {
+  document.getElementById(`${id}`).scrollIntoView({ block: 'start', behavior: `${currentBehavior}` });
 }
 
 /**
@@ -563,8 +563,8 @@ window.onscroll = async function () {
 window.onscroll = async function () {
   if (window.scrollY + window.innerHeight >= document.body.clientHeight && scroll == true && changeWindow == false) {
     scroll = false;
-    numberOfLoadedPokemons += 20;
-    await loadPokemonInArray();
+    currentPokemonID += 20;
+    await morePokemon();
     await renderPokemon();
     scroll = true;
   }
@@ -581,37 +581,41 @@ async function loadPokemonInArray() {
 }
 
 async function morePokemon() {
-  let pokemonNumber = Number(currentPokemonID + 20)
+  let pokemonNumber = Number(currentPokemonID) + 20
   for (let j = currentPokemonID; j < pokemonNumber; j++) {
-    currentPokemons = await getPokemonById(j);
-    if (allLoadedPokemons['id'].indexOf(currentPokemonID) > -1) { break; }
-    allLoadedPokemons.push(currentPokemons);
+    let currentPokemons = await getPokemonById(j);
+    let values = allLoadedPokemons.map(object => object.id);
+    if (values.indexOf(currentPokemons['id'] + 1) > -1) { break; }
+    else {
+      allLoadedPokemons.push(currentPokemons);
+    }
+    allLoadedPokemons.sort((a, b) => (a.id - b.id));
+    await renderPokemon();
   }
-  allLoadedPokemons.sort((a, b) => (a - b));
+  scroll = true;
 }
 
 async function lessPokemon() {
-  let pokemonNumber = Number(currentPokemonID - 20);
+  let pokemonNumber = Number(currentPokemonID) - 20;
   for (let j = currentPokemonID; j > pokemonNumber; j--) {
     let currentPokemons = await getPokemonById(j);
-    const values = allLoadedPokemons.map(object => object.id);
-    console.log(values);
+    let values = allLoadedPokemons.map(object => object.id);
     if (values.indexOf(currentPokemons['id']) > -1) { break; }
     else {
       allLoadedPokemons.push(currentPokemons);
     }
-    console.log(values)
-    values.sort((a, b) => (a - b));
     allLoadedPokemons.sort((a, b) => (a.id - b.id));
     await renderPokemon();
   }
-
+  scroll = true;
 }
 
 function loadingBar(loadingScreen) {
+  scroll = false;
   let pokemonLoad = document.getElementById('loadingScreen');
   if (loadingScreen) { pokemonLoad.classList.add('loading'); }
-  else if (!loadingScreen) { pokemonLoad.classList.remove('loading'); }
+  else if (!loadingScreen) { pokemonLoad.classList.remove('loading'); 
+  scroll = true;}
 }
 
 /**
