@@ -599,10 +599,11 @@ async function lessPokemon() {
     if (values.indexOf(currentPokemons['id']) > -1) { break; }
     else {
       allLoadedPokemons.push(currentPokemons);
-      
     }
     console.log(values)
     values.sort((a, b) => (a - b));
+    allLoadedPokemons.sort((a, b) => (a.id - b.id));
+    await renderPokemon();
   }
 
 }
