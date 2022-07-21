@@ -63,6 +63,9 @@
   * This function loads and renders the pokemon in an array when the side is loaded
   */
  
+let islandDetector = [[],[]]
+
+
  async function init() {
    await loadPokemonInArray();
    await renderPokemon();
@@ -707,4 +710,31 @@
    return s;
  }
  
- 
+ function isInViewport(el) {
+  const rect = el.getBoundingClientRect();
+  return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+
+
+const box = document.getElementById(`pokemonCard-${i}`);
+
+document.addEventListener('scroll', async function () {
+  let values = allLoadedPokemons.map(object => object.id);
+  let difference = function (a, b) { return Math.abs(a - b); }
+
+
+  if (values.differcence > 1) {}
+
+  const messageText = isInViewport(box) ?
+      'The box is visible in the viewport' :
+      'The box is not visible in the viewport';
+await lessPokemon()
+
+}, {
+  passive: true
+});
