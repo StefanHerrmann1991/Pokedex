@@ -83,7 +83,7 @@
      let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
      let responsePokemon = await fetch(url);
      currentPokemon = await responsePokemon.json();
-     i = Number(currentPokemon['id']);
+     i = Number(currentPokemon['id'] - 1);
      currentPokemonID = Number(currentPokemon['id'] - 1 );
      await showDetailedPokemonScreen(i);
      await lessPokemon();
@@ -582,11 +582,11 @@
  }
  
  async function morePokemon() {
-   let pokemonNumber = Number(currentPokemonID) + 20
-   for (let j = currentPokemonID; j < pokemonNumber; j++) {
+   let pokemonNumber = Number(currentPokemonID) + 19
+   for (let j = currentPokemonID + 1; j < pokemonNumber; j++) {
      let currentPokemons = await getPokemonById(j);
      let values = allLoadedPokemons.map(object => object.id);
-     if (values.indexOf(currentPokemons['id'] + 1) > -1) { break; }
+     if (values.indexOf(currentPokemons['id'] ) > -1) { break; }
      else {
        allLoadedPokemons.push(currentPokemons);
      }
