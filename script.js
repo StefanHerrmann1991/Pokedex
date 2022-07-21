@@ -88,7 +88,7 @@
      await showDetailedPokemonScreen(i);
      await lessPokemon();
      await morePokemon();
-     setTimeout (() => {scrollFunction(`pokemonCard-${i}`,'smooth')}, 1000)
+     setTimeout (async () => { await scrollFunction(`pokemonCard-${i}`,'smooth')}, 1500)
      loadingBar(false);
    }
    else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
@@ -175,7 +175,7 @@
      let loadedPokemon = allLoadedPokemons[i];
      [typeOne, typeTwo] = await comparePokemonType(loadedPokemon);
      pokemon.innerHTML += `
-           <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
+           <div class="pokemon-card" id="pokemonCard-${loadedPokemon['id']}" onclick="showDetailedPokemonScreen(${i})"
            style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
            <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} #${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
            <div class="pokemon-card-description">
@@ -586,7 +586,7 @@
    for (let j = currentPokemonID + 1; j < pokemonNumber; j++) {
      let currentPokemons = await getPokemonById(j);
      let values = allLoadedPokemons.map(object => object.id);
-     if (values.indexOf(currentPokemons['id'] ) > -1) { break; }
+     if (values.indexOf(currentPokemons['id']) > -1) { break; }
      else {
        allLoadedPokemons.push(currentPokemons);
      }
