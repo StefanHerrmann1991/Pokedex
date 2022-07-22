@@ -92,11 +92,13 @@ async function getPokemonByName() {
     i = Number(currentPokemon['id'] - 1);
     currentPokemonID = Number(currentPokemon['id'] - 1);
     scroll = false;
+    search = true;
     await showDetailedPokemonScreen(i);
     await lessPokemon();
     await morePokemon();
     setTimeout(async () => { await scrollFunction(`pokemonCard-${i}`, 'smooth') }, 1500)
     scroll = true;
+    search = false;
     loadingBar(false);
   }
   else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
@@ -606,8 +608,21 @@ async function morePokemon() {
     allLoadedPokemons.sort((a, b) => (a.id - b.id));
     await renderPokemon();
   }
-  if (!arrayIsBroken) islandDetector['end'].push(pokemonNumber);
+  if (!arrayIsBroken) {
+    islandDetector['end'].push(pokemonNumber);
+    {
+      islandDetector['end'].push(pokemonNumber);
+      let values1 = allLoadedPokemons.map(object => object.id);
+      let values2 = islandDetector['end'].map(object => object.id);
+     /*  if (values1.indexOf(values2) > -1) { islandDetector['end'].splice(values2, 1)  */}
+    }
+  }
 }
+
+function findCommonElements3(arr1, arr2) {
+  return arr1.some(item => arr2.includes(item))
+}
+
 
 async function lessPokemon() {
   let arrayIsBroken = false;
@@ -627,9 +642,13 @@ async function lessPokemon() {
   }
 
   if (!arrayIsBroken) {
-    islandDetector['start'].slice(pokemonNumber, 1);
     islandDetector['start'].push(pokemonNumber);
-    
+    let values1 = allLoadedPokemons.map(object => object.id);
+    let values2 = islandDetector.map(object => object.id);
+    if (values1.indexOf(values2) > -1)
+      console.log(values2);
+    console.log(values1);
+    islandDetector['start'].splice(values2, 1)
   }
 }
 
@@ -739,11 +758,9 @@ function isInViewport(el) {
 
 document.addEventListener('scroll', async function () {
 
-  /*   let values = Object.values(islandDetector); */
-  /*  valuesEnd = values[0].every();
-   valuesStart = values[1].every(); */
+
   for (let k = 0; k < islandDetector['start'].length; k++) {
-    const el = islandDetector['start'][k];
+    const el = Number(islandDetector['start'][k]) + 10;
     isInViewport(el);
   }
   for (let k = 0; k < islandDetector['end'].length; k++) {
