@@ -581,8 +581,6 @@ window.onscroll = async function () {
   }
 }
 
-
-
 async function loadPokemonInArray() {
 
   for (let j = allLoadedPokemons.length + 1; j < numberOfLoadedPokemons + 20; j++) {
@@ -599,7 +597,6 @@ async function morePokemon() {
     let currentPokemons = await getPokemonById(j);
     let values = allLoadedPokemons.map(object => object.id);
     if (values.indexOf(currentPokemons['id']) > -1) {
-      islandDetector['end'].push(currentPokemons['id']);
       break;
     }
     else {
@@ -610,13 +607,14 @@ async function morePokemon() {
   }
   if (!arrayIsBroken) {
     islandDetector['end'].push(pokemonNumber);
-    {
-      let values1 = allLoadedPokemons.map(object => object.id);
-      let values2 = islandDetector['end'].map(object => object.id);
-      let splicePosition = getArraysIntersection(values1, values2);
-      islandDetector['end'].splice(splicePosition, 1);
-    }
-  }
+    let values1 = allLoadedPokemons.map(object => object.id);
+    let values2 = Object.values(islandDetector['end']);
+    console.log(values1);
+    console.log(values2);
+    let splicePosition = getArraysIntersection(values1, values2);
+    console.log(splicePosition);
+    if(splicePosition > 0) islandDetector['end'].splice(splicePosition, 1);
+   }
 }
 
 function getArraysIntersection(a1, a2) {
@@ -632,7 +630,6 @@ async function lessPokemon() {
     let values = allLoadedPokemons.map(object => object.id);
     if (values.indexOf(currentPokemons['id']) > -1) {
       isBroken = true;
-      islandDetector['start'].push(currentPokemons['id']);
       break;
     }
     else {
@@ -642,15 +639,16 @@ async function lessPokemon() {
     await renderPokemon();
   }
   if (!arrayIsBroken) {
+    islandDetector['start'].push(pokemonNumber);
     let values1 = allLoadedPokemons.map(object => object.id);
-    let values2 = islandDetector['start'].map(object => object.id);
+    let values2 = Object.values(islandDetector['start']);
     let splicePosition = getArraysIntersection(values1, values2);
-    islandDetector['start'].splice(splicePosition, 1);
-  }
+    if(splicePosition > 0) islandDetector['start'].splice(splicePosition, 1);
+    }
 }
 
 
-function checkDoubles(position) {}
+function checkDoubles(position) { }
 
 
 function loadingBar(loadingScreen) {
@@ -757,7 +755,7 @@ function isInViewport(el) {
   );
 }
 
-document.addEventListener('scroll', async function () {
+/* document.addEventListener('scroll', async function () {
 
   for (let k = 0; k < islandDetector['start'].length; k++) {
     const el1 = Number(islandDetector['start'][k]);
@@ -775,4 +773,4 @@ document.addEventListener('scroll', async function () {
   if (isInViewport(el2)) await morePokemon();   
 }, {
   passive: true
-});
+}); */
