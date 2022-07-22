@@ -87,6 +87,8 @@ let loadingBar = false;
      currentPokemon = await responsePokemon.json();
      i = Number(currentPokemon['id'] - 1);
      currentPokemonID = Number(currentPokemon['id'] - 1);
+    await showPokemonFromURL()
+     
      await showDetailedPokemonScreen(i);
      await loadPokemonInArray();
      loadingScreen(false);
@@ -98,6 +100,14 @@ let loadingBar = false;
    loadingScreen(false);
  }
  
+function getPokemonFromURL() {
+
+}
+
+async function showPokemonFromURL() {
+
+}
+
  /**
   * Ask for Pokemon from Poke API 
   */
