@@ -78,17 +78,15 @@ async function getPokemonByName() {
   onePokemonScreen = false;
   event.preventDefault();
   loadingBar = true;
-  loadingScreen(true);
   let name = document.getElementById('pokedexSearchInput').value;
   pokemonNameToLowerCase = name.toLowerCase();
   pokemonNamesToLowerCase = pokemonNames.map(name => name.toLowerCase());
   if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN < pokemonNames.length) {
     let i = await getPokemonFromURL(pokemonNameToLowerCase);
-    await showPokemonFromURL(i);
-  }
+    await showDetailedPokemonScreen(i);
+     }
   else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
-  loadingScreen(false);
-}
+ }
 
 async function getPokemonFromURL(pokemonNameToLowerCase) {
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
@@ -98,23 +96,12 @@ async function getPokemonFromURL(pokemonNameToLowerCase) {
   return i;
 }
 
-async function showPokemonFromURL(i) {
-  await showDetailedPokemonScreen(i);
-  loadingScreen(false);
-  loadingBar = false;
-  if (!loadingBar) setTimeout(() => { scrollFunction(`pokemonCard-${i}`, 'smooth') }, 4000);
-  await showDetailedPokemonScreen(i);
-  await renderPokemon();
-}
 
 /**
  * Ask for Pokemon from Poke API 
  */
 async function searchPokemon() {
-  scroll = false;
-  await getPokemonByName();
-  scroll = true;
-
+    await getPokemonByName();
 }
 /**
  * The functions takes a word and returns the string with the first letter in upper case
@@ -214,6 +201,7 @@ async function checkWindowResize() {
     changeWindow = true;
     scroll = false;
     closeDetailedPokemonScreen();
+    loadingBar = false;
     changeWindow = false;
     scroll = true;
   }
@@ -280,6 +268,7 @@ function scrollFunction(id, currentBehavior) {
 
 function closeDetailedPokemonScreen() {
   currentPokemon;
+  loadingBar = false;
   let onePokemon = document.getElementById('onePokemon');
   let allPokemon = document.getElementById('allPokemon');
   if (onePokemonScreen) {
@@ -328,7 +317,7 @@ function closeSmallScreen(onePokemon, allPokemon) {
  * @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
  */
 async function createOnePokemonScreen(i, onePokemon) {
-  if (allLoadedPokemons.length > i) {currentPokemon = await allLoadedPokemons[i];}
+  if (allLoadedPokemons.length > i) currentPokemon = await allLoadedPokemons[i];
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
   onePokemon.innerHTML = await renderDetailedPokemonScreen(i, typeOne, typeTwo);
   togglePokemonInformation();
@@ -584,17 +573,6 @@ async function loadPokemonInArray() {
     currentPokemons = await getPokemonById(j);
     allLoadedPokemons.push(currentPokemons);
   }
-}
-
-function loadingScreen(loadingScreen) {
-  scroll = false;
-  let pokemonLoad = document.getElementById('loadingScreen');
-  if (loadingScreen) { pokemonLoad.classList.add('loading'); }
-  else if (!loadingScreen) {
-    pokemonLoad.classList.remove('loading');
-    scroll = true;
-  }
-  loadingBar = false;
 }
 
 /**
