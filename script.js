@@ -52,14 +52,6 @@ let changeWindow = false;
 let stats = false;
 
 /**
- * The varbiable saves the current position of the actual Pokemon as number. This is necessary for the resize function which checks the screen width.
- */
-
-/**
- *  @type {boolean} The variable tests if the current pokemon is laoded via the search bar.
- */
-let search = false;
-/**
  * This function loads and renders the pokemon in an array when the side is loaded
  */
 
@@ -74,35 +66,27 @@ async function init() {
  * This function searches for Pokemon with the given name or ID in the input field.
  * The pokemon will be loaded in the detailed Pokemon screen.
  */
-async function getPokemonByName() {
+async function searchPokemon() {
   onePokemonScreen = false;
   event.preventDefault();
   loadingBar = true;
   let name = document.getElementById('pokedexSearchInput').value;
-  pokemonNameToLowerCase = name.toLowerCase();
+  let pokemonNameToLowerCase = name.toLowerCase();
   pokemonNamesToLowerCase = pokemonNames.map(name => name.toLowerCase());
   if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN < pokemonNames.length) {
-    let i = await getPokemonFromURL(pokemonNameToLowerCase);
+    await getPokemonFromURL(pokemonNameToLowerCase);
+    let i = Number(currentPokemon['id'] - 1);
     await showDetailedPokemonScreen(i);
-     }
+  }
   else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
- }
+}
 
 async function getPokemonFromURL(pokemonNameToLowerCase) {
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
   let responsePokemon = await fetch(url);
   currentPokemon = await responsePokemon.json();
-  let i = Number(currentPokemon['id'] - 1);
-  return i;
 }
 
-
-/**
- * Ask for Pokemon from Poke API 
- */
-async function searchPokemon() {
-    await getPokemonByName();
-}
 /**
  * The functions takes a word and returns the string with the first letter in upper case
  * @param {string} pokemonNameUpperCase - The string which first letter should be written in upper case
