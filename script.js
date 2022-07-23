@@ -77,36 +77,45 @@ async function init() {
 async function getPokemonByName() {
   onePokemonScreen = false;
   event.preventDefault();
+  loadingBar = true;
+  loadingScreen(true);
   let name = document.getElementById('pokedexSearchInput').value;
   pokemonNameToLowerCase = name.toLowerCase();
   pokemonNamesToLowerCase = pokemonNames.map(name => name.toLowerCase());
-  if (pokemonIsThere) {
-    await getPokemonFromURL(pokemonNameToLowerCase)
-    await showPokemonFromURL(i)
+  if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN < pokemonNames.length) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
+    debugger;
+    let i = await getPokemonFromURL(pokemonNameToLowerCase);
+    await showPokemonFromURL(i);
+    let responsePokemon = await fetch(url);
+    currentPokemon = await responsePokemon.json();
+    i = Number(currentPokemon['id'] - 1);
+    await showDetailedPokemonScreen(i);
+    loadingScreen(false);
+    loadingBar = false;
+    if (!loadingBar) setTimeout(() => { scrollFunction(`pokemonCard-${i}`, 'smooth') }, 4000);
+    await showDetailedPokemonScreen(i);
+    await renderPokemon();
   }
   else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
   loadingScreen(false);
 }
 
-function pokemonIsThere(pokemonNamesToLowerCase) {
-  pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN < pokemonNames.length
-}
-
 async function getPokemonFromURL(pokemonNameToLowerCase) {
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
-    let responsePokemon = await fetch(url);
-    currentPokemon = await responsePokemon.json();
-    i = Number(currentPokemon['id'] - 1);
-    currentPokemonID = Number(currentPokemon['id'] - 1);
+  let responsePokemon = await fetch(url);
+  currentPokemon = await responsePokemon.json();
+  let i = Number(currentPokemon['id'] - 1);
+  return i;
 }
 
 async function showPokemonFromURL(i) {
   await showDetailedPokemonScreen(i);
-  await loadPokemonInArray();
   loadingScreen(false);
-  if (!loadingBar) setTimeout(() => { scrollFunction(`pokemonCard-${i}`, 'smooth') }, 4000)
+  loadingBar = false;
+  if (!loadingBar) setTimeout(() => { scrollFunction(`pokemonCard-${i}`, 'smooth') }, 4000);
   await showDetailedPokemonScreen(i);
-  await renderPokemon()
+  await renderPokemon();
 }
 
 /**
@@ -114,7 +123,6 @@ async function showPokemonFromURL(i) {
  */
 async function searchPokemon() {
   scroll = false;
-  loadingScreen(true);
   await getPokemonByName();
   scroll = true;
 
@@ -189,7 +197,7 @@ async function renderPokemon() {
   for (let i = 0; i < allLoadedPokemons.length; i++) {
     let loadedPokemon = allLoadedPokemons[i];
     [typeOne, typeTwo] = await comparePokemonType(loadedPokemon);
-    pokemon.innerHTML += `
+    pokemon.innerHTML += /*html*/ `
            <div class="pokemon-card" id="pokemonCard-${i}" onclick="showDetailedPokemonScreen(${i})"
            style="background-image: linear-gradient(to bottom, var(--${typeOne}) 40%, var(--${typeTwo}));">
            <h2 class="mgn-l"><nobr>${upperCase(loadedPokemon['name'])} #${padLeadingZeros(loadedPokemon['id'], 3)}</nobr></h2>
@@ -589,46 +597,15 @@ async function loadPokemonInArray() {
   }
 }
 
-async function morePokemon() {
-  let pokemonNumber = Number(currentPokemonID) + 19
-  for (let j = currentPokemonID + 1; j < pokemonNumber; j++) {
-    let currentPokemons = await getPokemonById(j);
-    let values = allLoadedPokemons.map(object => object.id);
-    if (values.indexOf(currentPokemons['id']) > -1) { break; }
-    else {
-      allLoadedPokemons.push(currentPokemons);
-    }
-    allLoadedPokemons.sort((a, b) => (a.id - b.id));
-    await renderPokemon();
-  }
-  scroll = true;
-}
-
-async function lessPokemon() {
-  let pokemonNumber = Number(currentPokemonID) - 20;
-  for (let j = currentPokemonID; j > pokemonNumber; j--) {
-    let currentPokemons = await getPokemonById(j);
-    let values = allLoadedPokemons.map(object => object.id);
-    if (values.indexOf(currentPokemons['id']) > -1) { break; }
-    else {
-      allLoadedPokemons.push(currentPokemons);
-    }
-    allLoadedPokemons.sort((a, b) => (a.id - b.id));
-    await renderPokemon();
-  }
-  scroll = true;
-}
-
 function loadingScreen(loadingScreen) {
   scroll = false;
-  loadingBar = true;
   let pokemonLoad = document.getElementById('loadingScreen');
   if (loadingScreen) { pokemonLoad.classList.add('loading'); }
   else if (!loadingScreen) {
     pokemonLoad.classList.remove('loading');
-    loadingBar = false;
     scroll = true;
   }
+  loadingBar = false;
 }
 
 /**
