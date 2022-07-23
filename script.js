@@ -423,7 +423,7 @@ function getPokemonInformation(currentPokemon, properties, property, name) {
       pokemonProperty.push(element);
     }
   }
-  return [pokemonProperty];
+  return pokemonProperty;
 }
 
 
