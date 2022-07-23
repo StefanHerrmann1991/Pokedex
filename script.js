@@ -83,19 +83,8 @@ async function getPokemonByName() {
   pokemonNameToLowerCase = name.toLowerCase();
   pokemonNamesToLowerCase = pokemonNames.map(name => name.toLowerCase());
   if (pokemonNamesToLowerCase.indexOf(`${pokemonNameToLowerCase}`) > -1 || !NaN < pokemonNames.length) {
-    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNameToLowerCase}`;
-    debugger;
     let i = await getPokemonFromURL(pokemonNameToLowerCase);
     await showPokemonFromURL(i);
-    let responsePokemon = await fetch(url);
-    currentPokemon = await responsePokemon.json();
-    i = Number(currentPokemon['id'] - 1);
-    await showDetailedPokemonScreen(i);
-    loadingScreen(false);
-    loadingBar = false;
-    if (!loadingBar) setTimeout(() => { scrollFunction(`pokemonCard-${i}`, 'smooth') }, 4000);
-    await showDetailedPokemonScreen(i);
-    await renderPokemon();
   }
   else { alert("We searched all over the Pokemon world but couldn't find the pokemon you requested. Please try again") }
   loadingScreen(false);
@@ -339,9 +328,9 @@ function closeSmallScreen(onePokemon, allPokemon) {
  * @param {ID} onePokemon The ID of the container where the Pokemon screen for one Pokemon is rendered.
  */
 async function createOnePokemonScreen(i, onePokemon) {
-  if (allLoadedPokemons.length > i) currentPokemon = await allLoadedPokemons[i];
+  if (allLoadedPokemons.length > i) {currentPokemon = await allLoadedPokemons[i];}
   [typeOne, typeTwo] = await comparePokemonType(currentPokemon);
-  onePokemon.innerHTML = await renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo);
+  onePokemon.innerHTML = await renderDetailedPokemonScreen(i, typeOne, typeTwo);
   togglePokemonInformation();
   insertCloseBtn();
   if (!loadingBar) insertCross(i);
@@ -356,7 +345,7 @@ async function createOnePokemonScreen(i, onePokemon) {
  * @returns A tamplate literal for the current Pokemon.
  */
 
-function renderDetailedPokemonScreen(currentPokemon, i, typeOne, typeTwo) {
+function renderDetailedPokemonScreen(i, typeOne, typeTwo) {
   return `  <div class="one-pokemon-screen">
     <div class="one-pokemon-pic">
     <div class="outer-polygon">
